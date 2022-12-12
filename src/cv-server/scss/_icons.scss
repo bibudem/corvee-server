@@ -1,0 +1,41 @@
+%cv-i {
+  display: inline-block;
+  fill: currentColor;
+  width: 1em;
+  height: 1em;
+  margin-right: var(--cv-space-width);
+}
+
+.cv-i {
+  &-arrow-back {
+    @extend %cv-i;
+  }
+
+  &-arrow-left {
+    @extend %cv-i;
+  }
+
+  // &-placeholder {
+  //   @extend %cv-i;
+  //   fill: #6c757d;
+  //   opacity: 0.3;
+  // }
+
+  &-rolling {
+    @extend %cv-i;
+    stroke: #4a5f72;
+    opacity: 0.5;
+    stroke-width: 17;
+    stroke-dasharray: 188.4955 64.8318;
+  }
+
+  &-to-be-fixed {
+    @extend %cv-i;
+    fill: #b81607;
+  }
+
+  &-fixed {
+    @extend %cv-i;
+    fill: #6fa738;
+  }
+}

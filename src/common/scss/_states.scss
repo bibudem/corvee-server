@@ -1,0 +1,9 @@
+%widget-state {
+  &:hover,
+  &:active {
+    // color: #000;
+    // background-color: rgb(255, 255, 255);
+    transition: box-shadow 0.2s;
+    box-shadow: rgb(232 237 235) 0px 0px 0px 3px !important;
+  }
+}

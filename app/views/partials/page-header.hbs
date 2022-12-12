@@ -1,0 +1,18 @@
+<header class="cv-page-header">
+  <h1>{{{title}}}</h1>
+  <p>Tapez <code>ALT-L</code> (comme dans «&nbsp;Lien&nbsp;») pour afficher/masquer les liens brisés sur une page du site.</p>
+</header>
+<p class="small">Liens vérifiés le <span class="dropdown cv-jobs-list">
+    <button class="cv-dropdown-toggle dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      {{currentJob.harvestDate}}
+    </button>
+    <span class="cv-dropdown-menu dropdown-menu">
+      {{#each jobs.jobs}}
+      <button class="cv-dropdown-item dropdown-item{{#if (eq ../jobs.current .) }} active{{/if}}" data-value="{{ . }}" {{#if (eq ../jobs.current .) }} aria-current="true" {{/if}}>
+        <span>{{ . }}</span>
+        <span class="cv-drowdown-item-marker">{{#if (eq ../currentJob.defaultJob .) }}*{{/if}}</span>
+      </button>
+      {{/each}}
+    </span>
+  </span>{{#if currentJob.deadline}}<br />
+  Échéance le {{currentJob.deadline}}</p>{{/if}}

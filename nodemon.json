@@ -1,0 +1,9 @@
+{
+  "ext": ".js,.cjs,.json,.hbs",
+  "watch": [
+    "index.js",
+    "config/",
+    "api/",
+    "app/"
+  ]
+}

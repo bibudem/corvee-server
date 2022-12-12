@@ -1,0 +1,74 @@
+.cv-page-header {
+  @extend .text-center;
+
+  & h1 {
+    @extend .mb-4;
+  }
+}
+
+.cv-jobs-list {
+  > .cv-dropdown-toggle {
+    --cv-btn-padding-x: 0.25rem;
+    --cv-btn-box-shadow: 0;
+
+    @extend .btn;
+    @extend .btn-sm;
+    @extend %widget-state;
+
+    color: inherit;
+    position: relative;
+    bottom: 1px;
+    border-width: 0;
+
+    &::after {
+      transition: opacity 0.2s ease-in-out;
+      opacity: 0;
+    }
+
+    &:active {
+      --cv-btn-active-border-color: transparent;
+    }
+
+    &:hover,
+    &:focus,
+    &.show {
+      &::after {
+        transition: opacity 0.2s ease-in-out;
+        opacity: 1;
+      }
+    }
+
+    &:focus-visible {
+      outline: revert;
+    }
+
+    &.show {
+      --cv-btn-active-border-color: transparent;
+    }
+  }
+
+  > .cv-dropdown-menu {
+    --cv-dropdown-font-size: inherit;
+    --cv-dropdown-zindex: 1100;
+
+    @extend .shadow-sm;
+  }
+
+  .cv-dropdown-item {
+    text-align: center;
+
+    &.active {
+      cursor: default;
+    }
+
+    * {
+      pointer-events: none;
+    }
+  }
+
+  .cv-drowdown-item-marker {
+    display: inline-block;
+    text-align: right;
+    width: 0.5em;
+  }
+}

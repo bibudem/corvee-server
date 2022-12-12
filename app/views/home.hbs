@@ -1,0 +1,23 @@
+<main class="cv-page-main">
+
+  {{> page-header title=title currentJob=currentJob jobs=jobs}}
+
+  {{#each job.sections}}
+  <section class="cv-sections">
+    {{#if title}}
+    <h2>{{{title}}}</h2>
+    {{/if}}
+    <ul class="cv-sections-list">
+      {{#each sections}}
+      <li data-section-key="{{key}}">
+        <svg class="cv-i-rolling">
+          <use xlink:href="#icon-rolling"></use>
+        </svg>
+        <a href="sections/{{key}}">{{{title}}}</a>
+        <span class="cv-section-errors">... erreurs</span>
+      </li>
+      {{/each}}
+    </ul>
+  </section>
+  {{/each}}
+</main>

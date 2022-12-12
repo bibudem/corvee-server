@@ -1,0 +1,16 @@
+.cv-download-asset--container {
+  text-align: var(--cv-i-download--container-text-align, center);
+}
+
+.cv-download-asset {
+  @extend .btn;
+  @extend .btn-primary;
+  @extend %widget-state;
+
+  margin-block-start: 1.5em;
+}
+
+.cv-i-download {
+  @extend %cv-i;
+  margin-right: var(--cv-space-width);
+}

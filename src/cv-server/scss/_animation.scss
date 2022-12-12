@@ -1,0 +1,47 @@
+:root {
+  --cv-animate-duration: 1s;
+}
+
+.animate__animated {
+  animation-duration: var(--cv-animate-duration);
+  animation-fill-mode: both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scale3d(0, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: scale3d(0, 0, 0);
+    margin-bottom: 0;
+  }
+}
+
+.animate__fade-in {
+  animation-name: fade-in;
+  animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+
+.animate__fade-out {
+  animation-name: fade-out;
+  animation-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+}

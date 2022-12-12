@@ -1,0 +1,25 @@
+{{> navbar hideChecked=hideChecked }}
+<main class="cv-page-main">
+  {{> page-header title=title currentJob=currentJob jobs=jobs}}
+  <p>
+    Erreurs trouvées&nbsp;: {{ errorsFound }}<br />
+    Erreurs à traiter&nbsp;: <span id="cv-total-errors">{{ errorsToFix }}</span>
+  </p>
+
+  <div class="cv-page-reports-list">
+    {{#each pages}}
+    <section class="cv-page-report">
+      <sticky-sentinel></sticky-sentinel>
+      <header class="cv-page-report-header">
+        <h2 class="cv-page-report-header-title">Page <a href="{{{ url }}}" class="cv-url" target="visualisation">{{{ url }}}</a></h2>
+        <small class="cv-page-report-header-link-count">{{length links}} {{#if (eq (length links) 1) }}lien{{else}}liens{{/if}}</small>
+      </header>
+      {{#each links}}
+      <cv-report id="{{ _id }}" link-id="{{ linkId }}" url="{{ url }}" text="{{ text }}" status="{{ status }}" final-url="{{ finalUrl }}" action="{{ action }}">
+        {{{ messages }}}
+      </cv-report>
+      {{/each}}
+    </section>
+    {{/each}}
+  </div>
+</main>

@@ -1,0 +1,17 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+label {
+  cursor: pointer;
+}
+
+code {
+  background-color: #ebedf0;
+  font-family: var(--cv-code-font);
+  font-size: 0.85em;
+  border-radius: 6px;
+  padding: 0.2em 0.4em;
+}

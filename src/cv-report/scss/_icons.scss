@@ -1,0 +1,44 @@
+%cv-i {
+  display: inline-block;
+  fill: currentColor;
+  width: 1em;
+  height: 1em;
+}
+
+%cv-i-action {
+  @extend %cv-i;
+  margin-right: 0.5em;
+  margin-top: calc(calc(calc(var(--cv-body-line-height) * var(--cv-body-font-size)) - var(--cv-body-font-size)) / 2);
+}
+
+[class*=" cv-i-"],
+[class|="cv-i"] {
+  flex-shrink: 0;
+}
+
+.cv-i {
+  &-warning {
+    @extend %cv-i-action;
+    fill: #fad209;
+  }
+
+  &-to-be-fixed {
+    @extend %cv-i-action;
+    fill: #d63f4e;
+  }
+
+  &-fixed {
+    @extend %cv-i-action;
+    fill: #6fa738;
+  }
+
+  &-ignore {
+    @extend %cv-i-action;
+    fill: #6fa738;
+  }
+
+  &-no-error {
+    @extend %cv-i-action;
+    fill: #6fa738;
+  }
+}

@@ -1,0 +1,36 @@
+$env: env();
+
+@if $env != "production" {
+  body::before {
+    color: red;
+    font-size: 0.9rem;
+    position: absolute;
+    right: 0.5em;
+    top: 0.5em;
+    opacity: 0.6;
+    z-index: 1000000;
+
+    @each $name, $breakpoint in $grid-breakpoints {
+      @media (min-width: $breakpoint) {
+        & {
+          content: "#{$name}";
+        }
+      }
+    }
+  }
+}
+
+$isTrue: $env == "production";
+
+@debug "Working in #{$env} mode.";
+
+// body::after {
+//   color: rgb(34, 106, 213);
+//   font-size: 0.9rem;
+//   position: absolute;
+//   left: 0.5em;
+//   top: 0.5em;
+//   opacity: 0.6;
+//   z-index: 1000000;
+//   content: "#{env()}";
+// }
