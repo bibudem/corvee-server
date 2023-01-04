@@ -9,14 +9,18 @@
   <div class="cv-page-reports-list">
     {{#each pages}}
     <section class="cv-page-report">
-      <sticky-sentinel></sticky-sentinel>
       <header class="cv-page-report-header">
         <h2 class="cv-page-report-header-title">Page <a href="{{{ url }}}" class="cv-url" target="visualisation">{{{ url }}}</a></h2>
         <small class="cv-page-report-header-link-count">{{length links}} {{#if (eq (length links) 1) }}lien{{else}}liens{{/if}}</small>
       </header>
       {{#each links}}
-      <cv-report id="{{ _id }}" link-id="{{ linkId }}" url="{{ url }}" text="{{ text }}" status="{{ status }}" final-url="{{ finalUrl }}" action="{{ action }}">
-        {{{ messages }}}
+      <cv-report report-id="{{ _id }}" action="{{ action }}" link-id="{{ linkId }}">
+        <cv-report-header action="{{ action }}">
+          <h3>
+            <a class="cv-url" href="{{ url }}" target="visualisation">{{ url }}</a>
+          </h3>
+        </cv-report-header>
+        <cv-report-body text="{{ text }}" status="{{ status }}" final-url="{{ finalUrl }}" action="{{ action }}" messages="{{ messages }}"></cv-report-body>
       </cv-report>
       {{/each}}
     </section>

@@ -1,6 +1,6 @@
-import cvSwitchStyles from 'litsass:./scss/cv-switch.scss'
-import checkIcon from 'bundle-text:./assets/icons/check.svg'
-import clearIcon from 'bundle-text:./assets/icons/clear.svg'
+import cvSwitchStyles from './scss/cv-switch.scss'
+import checkIcon from './assets/icons/check.svg'
+import clearIcon from './assets/icons/clear.svg'
 
 export default class CvSwitch extends HTMLElement {
   static get observedAttributes() {

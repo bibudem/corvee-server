@@ -1,0 +1,5 @@
+export const ENTER_KEY = 'Enter'
+export const ESCAPE_KEY = 'Escape'
+export const SPACE_KEY = ' '
+export const TAB_KEY = 'Tab'
+export const L_KEY = 'l'

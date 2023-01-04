@@ -1,4 +1,4 @@
-import { omit } from 'underscore'
+import { omit } from 'lodash-es'
 import config from 'config'
 
 const job = JSON.parse(JSON.stringify(config.get('job')))

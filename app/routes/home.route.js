@@ -1,6 +1,6 @@
 import config from 'config'
 
-export async function homeRoutes(req, res, next) {
+export async function homeRoute(req, res, next) {
   const job = JSON.parse(JSON.stringify(config.get('job')))
   res.render('home', {
     title: config.get('app.home.title'),

@@ -1,3 +1,12 @@
+// $font-size-root: 50px;
+$font-size-base: 16px; // Assumes the browser default, typically `16px`
+
+@function hem($multiplier) {
+  @return $font-size-base * $multiplier;
+}
+
+$rfs-unit: px;
+
 //
 // Options
 //
@@ -10,6 +19,15 @@ $enable-transitions: true;
 //
 $prefix: cv-;
 
+// Spacing
+//
+// Control the default styling of most Bootstrap elements by modifying these
+// variables. Mostly focused on spacing.
+// You can add more entries to the $spacers map, should you need more variation.
+
+// scss-docs-start spacer-variables-maps
+$spacer: hem(1);
+
 // Theme colors
 $primary: #006599;
 
@@ -17,6 +35,70 @@ $font-family-base: "Roboto", sans-serif;
 $body-bg: #fff;
 $body-color: #111;
 
-$border-radius: 0.5rem;
+$border-radius: hem(0.5);
 
 $headings-font-weight: 400;
+
+$small-font-size: 0.8333325em;
+
+// Navs
+
+// scss-docs-start nav-variables
+$nav-link-padding-y: hem(0.5);
+$nav-link-padding-x: hem(1);
+
+// Buttons + Forms
+//
+// Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
+
+// scss-docs-start input-btn-variables
+$input-btn-padding-y: hem(0.375);
+$input-btn-padding-x: hem(0.75);
+
+$input-btn-focus-width: hem(0.25);
+
+$input-btn-padding-y-sm: hem(0.25);
+$input-btn-padding-x-sm: hem(0.5);
+
+$input-btn-padding-y-lg: hem(0.5);
+$input-btn-padding-x-lg: hem(1);
+
+// Dropdowns
+//
+// Dropdown menu container and contents.
+
+// scss-docs-start dropdown-variables
+$dropdown-min-width: hem(8);
+$dropdown-padding-x: 0;
+$dropdown-padding-y: hem(0.5);
+$dropdown-spacer: hem(0.125);
+// $dropdown-font-size:                $font-size-base;
+// $dropdown-color:                    $body-color;
+// $dropdown-bg:                       $white;
+// $dropdown-border-color:             var(--#{$prefix}border-color-translucent);
+// $dropdown-border-radius:            $border-radius;
+// $dropdown-border-width:             $border-width;
+// $dropdown-inner-border-radius:      subtract($dropdown-border-radius, $dropdown-border-width);
+// $dropdown-divider-bg:               $dropdown-border-color;
+// $dropdown-divider-margin-y:         $spacer * .5;
+// $dropdown-box-shadow:               $box-shadow;
+
+// $dropdown-link-color:               $gray-900;
+// $dropdown-link-hover-color:         shade-color($dropdown-link-color, 10%);
+// $dropdown-link-hover-bg:            $gray-200;
+
+// $dropdown-link-active-color:        $component-active-color;
+// $dropdown-link-active-bg:           $component-active-bg;
+
+// $dropdown-link-disabled-color:      $gray-500;
+
+$dropdown-item-padding-y: $spacer * 0.4;
+$dropdown-item-padding-x: $spacer * 0.5;
+
+// $dropdown-header-color:             $gray-600;
+// $dropdown-header-padding-x:         $dropdown-item-padding-x;
+// $dropdown-header-padding-y:         $dropdown-padding-y;
+// // fusv-disable
+// $dropdown-header-padding:           $dropdown-header-padding-y $dropdown-header-padding-x; // Deprecated in v5.2.0
+// fusv-enable
+// scss-docs-end dropdown-variables

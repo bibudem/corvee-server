@@ -1,0 +1,67 @@
+:host {
+  display: inline-block;
+  // cursor: default;
+  // color: var(--cv-body-color);
+  // transform: translateX(-1.5em);
+  // margin-left: -1.5em;
+}
+
+::slotted(img) {
+  outline: 3px solid var(--cv-red);
+  outline-offset: -2px;
+  position: relative;
+}
+
+::slotted(img)::after {
+  content: "";
+  outline: 3px solid blue;
+  outline-offset: -2px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.report-widget-container {
+  position: relative;
+}
+
+.report-widget {
+  --cv-report-widget-open-animation-duration: var(--cv-speed-duration-medium-in);
+  --cv-report-widget-close-animation-duration: var(--cv-speed-duration-medium-out);
+
+  --cv-card-cap-bg: #e0e0e0b3;
+  --cv-card-cap-color: #000;
+  --cv-card-cap-padding-y: 1em;
+  --cv-card-cap-padding-x: 1.5em;
+  --cv-card-color: inherit;
+  --cv-card-spacer-y: 1em;
+  --cv-card-spacer-x: 1.5em;
+  --cv-card-border-radius: 0.5em;
+  --cv-card-inner-border-radius: var(--cv-card-border-radius);
+  --cv-card-box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.25), 0 4px 6px -4px rgb(0 0 0 / 0.25);
+
+  @extend .card;
+
+  display: none;
+  min-width: 450px;
+  max-width: 600px;
+  padding: 0;
+  // z-index: 1;
+  position: relative;
+  cursor: auto;
+
+  &[open] {
+    display: block;
+    z-index: 15001;
+  }
+}
+
+.card-header {
+  font-weight: 500;
+}
+
+cv-report-body {
+  --cv-report-body-margin-left: 0;
+}

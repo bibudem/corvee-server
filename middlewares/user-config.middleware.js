@@ -1,6 +1,5 @@
 import moment from 'moment'
 import config from 'config'
-import { harvestDate } from '../config/job.cjs'
 
 // Default date lang
 moment.locale('fr-CA')
@@ -17,11 +16,11 @@ class UserConfig {
   #req
   #res
 
-  constructor(cookieName, props) {
+  constructor(cookie, props) {
     // this.defaults = defaults
-    this.#cookieName = cookieName
+    this.#cookieName = cookie.name
     this.#cookieOptions = {
-      domain: config.get('app.domain'),
+      ...cookie.options,
       expires: expires < Date.now() ? expires : 0,
     }
     this.#clientProps = {}

@@ -1,0 +1,121 @@
+@use "@material/menu-surface/mdc-menu-surface";
+
+:host {
+  font-size: inherit;
+}
+
+.mdc-deprecated-list {
+  font-size: inherit;
+}
+
+.cv-jobs-list {
+  @extend .dropdown;
+  display: inline-block;
+
+  .cv-dropdown-toggle {
+    $cv-widget-state-box-shadow-padding: 0.25em;
+    --cv-btn-padding-x: 0;
+    --cv-btn-padding-y: 0;
+    --cv-btn-box-shadow: 0;
+    --cv-btn-font-size: inherit;
+
+    @extend .btn;
+    @extend .dropdown-toggle;
+    // @extend %widget-state;
+    @include widget-state(0.25em);
+
+    color: inherit;
+    position: relative;
+    bottom: 1px;
+    border-width: 0;
+    padding-left: 0;
+
+    &:active {
+      --cv-btn-active-border-color: transparent;
+      // box-shadow: #ffffff 0px 0px 0px var(--cv-widget-state-whadow-padding), $cv-widget-state-active-box-shadow-color 0px 0px 0px #{$cv-widget-state-box-shadow-width * 2} !important;
+    }
+
+    &::after {
+      transition: opacity var(--cv-speed-duration-short) ease-in-out;
+      opacity: 0;
+    }
+
+    &:hover,
+    &:focus,
+    &.show {
+      &::after {
+        transition: opacity var(--cv-speed-duration-short) ease-in-out;
+        opacity: 1;
+      }
+    }
+
+    &:focus-visible {
+      outline: revert;
+    }
+
+    &.show {
+      --cv-btn-active-border-color: transparent;
+    }
+  }
+
+  .mdc-menu-surface {
+    --cv-dropdown-font-size: inherit;
+    --cv-dropdown-zindex: 1100;
+
+    @extend .dropdown-menu;
+    // @extend .shadow;
+
+    &.mdc-menu-surface--open {
+      display: inline-block;
+    }
+  }
+
+  [role="menu"] {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  [role="menuitem"] {
+    @extend .dropdown-item;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    outline-offset: -1px;
+
+    &.active {
+      cursor: default;
+    }
+
+    &[aria-curent="true"] {
+      pointer-events: none;
+    }
+
+    .cv-dropdown-item-container {
+      display: inline-flex;
+    }
+
+    .cv-dropdown-item-icon {
+      display: inline-flex;
+      align-items: center;
+      min-width: 1.5em;
+
+      svg {
+        margin: 0;
+      }
+    }
+
+    .cv-dropdown-item-marker {
+      display: inline-block;
+      text-align: center;
+      min-width: 1.5em;
+    }
+
+    * {
+      pointer-events: none;
+    }
+  }
+}

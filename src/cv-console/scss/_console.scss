@@ -1,0 +1,113 @@
+:host {
+  // --cv-body-font-size: 14px;
+  --cv-console-height: var(--cv-navbar-height);
+  --cv-console-box-shadow: 0 -1px 15px rgba(80, 80, 50, 0.5);
+  --cv-console-bg-color: #fff;
+
+  --_console-open: -1;
+  --_console-box-shadow: 0;
+
+  //   color: var(--cv-body-color);
+  //   font-size: var(--cv-body-font-size);
+  //   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  left: 0;
+  line-height: normal;
+  width: 100%;
+  transition: padding-bottom var(--cv-speed-duration-large-in);
+  padding-bottom: 0;
+}
+
+:host([open]) {
+  --_console-box-shadow: var(--cv-console-box-shadow);
+  --_console-open: 0;
+
+  padding-bottom: var(--cv-console-height);
+}
+
+.console-outer {
+  background-color: var(--cv-console-bg-color);
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: var(--_console-box-shadow);
+  height: var(--cv-console-height);
+  position: fixed;
+  top: calc(var(--cv-console-height) * var(--_console-open));
+  width: 100%;
+  z-index: 16001;
+  transition-property: top;
+  transition-duration: var(--cv-speed-duration-large-in);
+}
+
+a:link {
+  text-decoration: underline;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.console-container {
+  height: 100%;
+  left: 50%;
+  margin: 0 0 0 -599px;
+  padding: 1em 0;
+  position: absolute;
+  width: 1198px;
+  display: flex;
+  align-items: baseline;
+}
+
+.console-title {
+  .h1 {
+    color: #bc520b;
+    font-size: 2.3em !important;
+    font-weight: 200;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+}
+
+.console-total-errors {
+  flex-grow: 1;
+  padding-left: 1em;
+
+  strong {
+    font-weight: normal;
+    font-size: 2em;
+  }
+}
+
+.console-content-right {
+  display: flex;
+  align-items: baseline;
+}
+
+.console-date {
+  display: inline-block;
+
+  &::after {
+    content: "|";
+    margin-right: 1.145em;
+  }
+}
+
+.console-btn-close {
+  @extend %widget-state;
+
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 2.2em;
+  height: 2.2em;
+  opacity: 0.7;
+  padding: 0.6em;
+  margin-left: 1em;
+  background-color: transparent;
+  transition: all var(--cv-speed-duration-short) ease-in-out;
+
+  &:hover {
+    opacity: 1;
+  }
+}

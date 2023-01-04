@@ -1,13 +1,28 @@
+const { version } = require('../package.json')
+
 module.exports = {
-  cookie: 'cv',
+  version: version,
+  baseUrl: 'https://corvee.bib.umontreal.ca',
+  // baseUrl: '',
+  aligoliasearch: {
+    applicationID: 'AT9I76OQTC',
+    apiKey: '1feac540f9fa7ed6b180dfbae4a11d82',
+    indexName: 'pages',
+  },
+  cookie: {
+    name: 'cv',
+    options: {
+      domain: 'bib.umontreal.ca',
+      sameSite: 'strict',
+    },
+  },
   home: {
     title: 'Corvée - Liens brisés par section',
   },
-  domain: '',
   actions: [
     {
       key: 'to-be-fixed',
-      long: 'À corriger',
+      long: 'Ce lien est à corriger',
       short: 'À corriger',
     },
     {
@@ -26,4 +41,13 @@ module.exports = {
       short: 'Ignorer',
     },
   ],
+  defaultLinkType: 'A',
+  linkTypes: {
+    A: 'texte',
+    IFRAME: 'cadre <small>(iframe)</small>',
+    IMG: 'image',
+    FORM: 'formulaire',
+    LINK: 'feuille de style',
+    SCRIPT: 'script',
+  },
 }

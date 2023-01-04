@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+.cv-report-header {
+  display: flex;
+  align-items: center;
+}
+
+[class*=" cv-i-"],
+[class|="cv-i"] {
+  background: #0000 radial-gradient(circle, #fff 0%, #fff 70%, #fff0 70%);
+}

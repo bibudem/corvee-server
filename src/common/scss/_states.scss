@@ -1,9 +1,38 @@
+@use "sass:math";
+
+$cv-widget-state-box-shadow-color: rgb(232 237 235);
+$cv-widget-state-active-box-shadow-color: shade-color($cv-widget-state-box-shadow-color, 15%);
+$cv-widget-state-box-shadow-width: math.div(3, 16) * hem(1);
+
 %widget-state {
-  &:hover,
+  box-shadow: #ffffff00 0px 0px 0px $cv-widget-state-box-shadow-width !important;
+
+  &:hover {
+    transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
+    box-shadow: $cv-widget-state-box-shadow-color 0px 0px 0px $cv-widget-state-box-shadow-width !important;
+  }
+
   &:active {
-    // color: #000;
-    // background-color: rgb(255, 255, 255);
-    transition: box-shadow 0.2s;
-    box-shadow: rgb(232 237 235) 0px 0px 0px 3px !important;
+    transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
+    box-shadow: $cv-widget-state-active-box-shadow-color 0px 0px 0px $cv-widget-state-box-shadow-width !important;
+  }
+}
+
+@mixin widget-state($padding: 0) {
+  @if $padding == 0 {
+    @extend %widget-state;
+  } @else {
+    transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
+    box-shadow: #ffffff00 0px 0px 0px $padding, #ffffff00 0px 0px 0px calc($padding + $cv-widget-state-box-shadow-width) !important;
+
+    &:hover {
+      transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
+      box-shadow: #ffffff 0px 0px 0px $padding, $cv-widget-state-box-shadow-color 0px 0px 0px calc($padding + $cv-widget-state-box-shadow-width) !important;
+    }
+
+    &:active {
+      transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
+      box-shadow: #ffffff 0px 0px 0px $padding, $cv-widget-state-active-box-shadow-color 0px 0px 0px calc($padding + $cv-widget-state-box-shadow-width) !important;
+    }
   }
 }

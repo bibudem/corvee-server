@@ -1,0 +1,3 @@
+$icons: to-be-fixed, fixed, ignore, no-error, warning, rolling;
+
+@include make-icons($icons);

@@ -1,0 +1,92 @@
+%cv-i {
+  display: inline-block;
+  fill: currentColor;
+  width: 1em;
+  height: 1em;
+  // margin-right: var(--cv-space-width);
+  margin-right: 0.5em;
+
+  &-arrow-back {
+    @extend %cv-i;
+  }
+
+  &-arrow-left {
+    @extend %cv-i;
+  }
+
+  &-download {
+    @extend %cv-i;
+  }
+
+  &-rolling {
+    @extend %cv-i;
+
+    stroke: #4a5f72;
+    opacity: 0.5;
+    stroke-width: 17;
+    stroke-dasharray: 188.4955 64.8318;
+    animation: spinner 1000ms linear infinite;
+
+    @at-root {
+      @keyframes spinner {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    }
+  }
+
+  &-to-be-fixed {
+    @extend %cv-i;
+
+    fill: var(--cv-red);
+  }
+
+  &-fixed {
+    @extend %cv-i;
+
+    fill: var(--cv-green);
+  }
+
+  &-ignore {
+    @extend %cv-i;
+
+    fill: var(--cv-green);
+  }
+
+  &-no-error {
+    @extend %cv-i;
+
+    fill: var(--cv-green);
+  }
+
+  &-warning {
+    @extend %cv-i;
+
+    fill: var(--cv-yellow);
+  }
+
+  &-spinner {
+    @extend %cv-i;
+  }
+
+  &-check {
+    @extend %cv-i;
+  }
+}
+
+@mixin make-icons($icons) {
+  [class*=" cv-i-"],
+  [class|="cv-i"] {
+    flex-shrink: 0;
+  }
+
+  @each $icon in $icons {
+    .cv-i-#{$icon} {
+      @extend %cv-i-#{$icon};
+    }
+  }
+}

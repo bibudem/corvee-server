@@ -1,0 +1,58 @@
+:host {
+  --cv-report-body-margin-left: 3.75em;
+
+  display: block;
+}
+
+select {
+  @extend %widget-state;
+}
+
+.cv-report-body-list {
+  padding: 0;
+  padding-left: var(--cv-report-body-margin-left);
+  margin: 0;
+  list-style-type: none;
+
+  &-item {
+    display: flex;
+    margin-bottom: 0.5em;
+
+    display: flex;
+    margin: 0;
+    margin-top: 1em;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &-label {
+      color: #666;
+      font-weight: 400;
+      margin-right: var(--cv-space-width);
+      white-space: nowrap;
+    }
+  }
+}
+
+.cv-report-messages {
+  flex-direction: column;
+
+  ul {
+    padding-left: 0;
+    margin-top: 1em;
+    list-style-type: none;
+  }
+
+  li {
+    padding-left: 1.2em;
+
+    &::before {
+      float: left;
+      width: 1em;
+      margin-left: -1.2em;
+      content: "❯";
+      color: inherit;
+    }
+  }
+}

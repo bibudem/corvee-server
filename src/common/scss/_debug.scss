@@ -4,7 +4,7 @@ $env: env();
   body::before {
     color: red;
     font-size: 0.9rem;
-    position: absolute;
+    position: fixed;
     right: 0.5em;
     top: 0.5em;
     opacity: 0.6;
@@ -23,14 +23,3 @@ $env: env();
 $isTrue: $env == "production";
 
 @debug "Working in #{$env} mode.";
-
-// body::after {
-//   color: rgb(34, 106, 213);
-//   font-size: 0.9rem;
-//   position: absolute;
-//   left: 0.5em;
-//   top: 0.5em;
-//   opacity: 0.6;
-//   z-index: 1000000;
-//   content: "#{env()}";
-// }

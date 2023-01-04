@@ -1,0 +1,23 @@
+cv-report {
+  @extend .card-body;
+
+  border: var(--cv-card-border-width) solid var(--cv-card-border-color);
+  border-top: 0;
+
+  &:last-of-type {
+    border-radius: var(--cv-card-border-radius);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  h3 {
+    display: flex;
+    font-size: inherit;
+    font-weight: normal;
+    margin: 0;
+  }
+}
+
+cv-report-body {
+  margin-top: 2em;
+}

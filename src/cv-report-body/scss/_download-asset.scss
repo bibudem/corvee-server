@@ -1,0 +1,17 @@
+.cv-download-asset--container {
+  text-align: var(--cv-i-download--container-text-align, center);
+}
+
+.cv-download-asset {
+  --cv-btn-font-size: 1em;
+
+  @extend .btn;
+  @extend .btn-primary;
+  @extend %widget-state;
+
+  margin-block-start: 1.5em;
+}
+
+$icons: download;
+
+@include make-icons($icons);

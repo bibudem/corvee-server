@@ -1,0 +1,17 @@
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.open {
+  animation: fade var(--cv-report-widget-open-animation-duration) cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+}
+
+.close {
+  animation: fade var(--cv-report-widget-close-animation-duration) cubic-bezier(0.165, 0.84, 0.44, 1) backwards;
+  animation-direction: reverse;
+}

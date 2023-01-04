@@ -1,0 +1,7 @@
+.cv-page-header {
+  @extend .text-center;
+
+  & h1 {
+    @extend .mb-4;
+  }
+}
