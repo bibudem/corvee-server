@@ -1,4 +1,4 @@
-// @import "../../common/scss/config";
+@import "../../common/scss/config";
 
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
 @import "../../../node_modules/bootstrap/scss/functions";
@@ -15,5 +15,7 @@
 @import "../../common/scss/utilities";
 @import "../../common/scss/states";
 @import "../../common/scss/close";
+@import "../../common/scss/debug";
 
+@import "./debug";
 @import "./console";

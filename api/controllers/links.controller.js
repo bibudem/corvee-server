@@ -4,7 +4,7 @@ import { getByParent, update } from '../models/links.model.js'
 export const linksController = {
   getLinksByParent: async (request, response, next) => {
     const parent = request.query.parent
-    const job = request.query.job
+    const job = request.job
 
     try {
       const reports = await getByParent({ parent, job })

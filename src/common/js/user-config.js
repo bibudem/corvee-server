@@ -13,7 +13,7 @@ class UserConfig extends EventTarget {
       value: this.#master ? 'slave' : 'master',
       enumerable: true,
     })
-
+    console.log('[%s] USERCONFIG', this.host)
     this._cookieName = cookie.name
     this._cookieAttributes = cookie.options
 
@@ -25,9 +25,9 @@ class UserConfig extends EventTarget {
 
     this._cookie = Cookies.withAttributes(this._cookieAttributes)
 
-    if (this._cookie.get(this._cookieName) === undefined) {
-      this._cookie.set(this._cookieName, JSON.stringify({ currentJob: config.job.currentJob }))
-    }
+    // if (!this._cookie.get(this._cookieName)) {
+    //   this._cookie.set(this._cookieName, JSON.stringify({ currentJob: config.job.currentJob }))
+    // }
 
     if (this.host === 'slave') {
       window.addEventListener('message', event => {
@@ -70,6 +70,12 @@ class UserConfig extends EventTarget {
   }
 
   get(key) {
+    const searchParams = new URLSearchParams(location.search)
+    const keyParam = key === 'currentJob' ? 'job' : key
+    if (searchParams.has(keyParam)) {
+      return searchParams.get(keyParam)
+    }
+
     try {
       return JSON.parse(this._cookie.get(this._cookieName))[key]
     } catch {

@@ -1,4 +1,4 @@
-import _stylesheet from '../scss/cv-last-harvested.scss'
+import _stylesheet from '../scss/cv-job-list.scss'
 
 const stylesheet = _stylesheet.replaceAll(':root', ':host')
 

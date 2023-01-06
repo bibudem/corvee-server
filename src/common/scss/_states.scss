@@ -6,6 +6,7 @@ $cv-widget-state-box-shadow-width: math.div(3, 16) * hem(1);
 
 %widget-state {
   box-shadow: #ffffff00 0px 0px 0px $cv-widget-state-box-shadow-width !important;
+  transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
 
   &:hover {
     transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
@@ -34,5 +35,17 @@ $cv-widget-state-box-shadow-width: math.div(3, 16) * hem(1);
       transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
       box-shadow: #ffffff 0px 0px 0px $padding, $cv-widget-state-active-box-shadow-color 0px 0px 0px calc($padding + $cv-widget-state-box-shadow-width) !important;
     }
+  }
+}
+
+%widget-state-none {
+  box-shadow: none !important;
+
+  &:hover {
+    box-shadow: none !important;
+  }
+
+  &:active {
+    box-shadow: none !important;
   }
 }

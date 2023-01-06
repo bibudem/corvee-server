@@ -1,6 +1,6 @@
 import { LitElement, css, html, unsafeCSS } from 'lit'
 import { unsafeHTML } from 'lit/directives/unsafe-html.js'
-import '../cv-last-harvested/cv-last-harvested.js'
+import '../cv-job-list/cv-job-list.js'
 import reportManager from '../common/js/report-manager.js'
 import { attachClickHandler, detachClickHandler } from '../common/js/iframe-utils.js'
 import { baseUrl } from 'client-config/app'
@@ -58,13 +58,6 @@ dans cette page`
 
     this.role = 'complementary'
     this.open = false
-
-    if (process.env.NODE_ENV !== 'production') {
-      const debugCss = (await import('./scss/debug.scss')).default
-      const debugStylesheet = new CSSStyleSheet()
-      debugStylesheet.replaceSync(debugCss)
-      document.adoptedStyleSheets = [...document.adoptedStyleSheets, debugStylesheet]
-    }
   }
 
   deconnectedCallback() {
@@ -88,7 +81,7 @@ dans cette page`
     </div>
     <div class="console-total-errors"><span>${this.totalErrors}</span></div>
     <div class="console-content-right">
-      <span class="console-date">Liens vérifiés le <cv-last-harvested>38 octembre 3017</cv-last-harvested></span>
+      <span class="console-date">Liens vérifiés le <cv-job-list>38 octembre 3017</cv-job-list></span>
       <span class="console-nav"><a class="btn-label" href="${baseUrl}" target="_blank">Liste de tous les liens
           brisés</a></span>
       <button aria-label="fermer" class="console-btn-close" @click="${this.close}">${unsafeHTML(closeIcon)}</button>

@@ -1,16 +1,17 @@
 import { getPagesForSection } from '../../api/models/sections.model.js'
 
 export async function sectionRoute(req, res, next) {
-  const sectionConfig = req.section
-  const currentJob = req.userConfig.getCurrentJob()
-  const hideFixed = req.userConfig.hideFixed
+  const section = req.section
+  const { hideFixed } = req.userConfig
+  const currentJob = req.job
+  const deadline = currentJob === req.userConfig.currentJob ? req.userConfig.deadline : null
+
   try {
-    const { pages } = await getPagesForSection({ sectionKey: sectionConfig.key, job: currentJob.job })
+    const { pages } = await getPagesForSection({ sectionKey: section.key, job: currentJob })
 
     res.render('section', {
       route: 'section',
-      ...sectionConfig,
-      currentJob,
+      ...section,
       errorsFound: pages.map(page => page.links).flat().length,
       errorsToFix: pages
         .map(page => page.links)
@@ -19,6 +20,8 @@ export async function sectionRoute(req, res, next) {
       pages,
       jobs: req.jobs,
       hideFixed,
+      currentJob,
+      deadline,
     })
   } catch (error) {
     next(error)

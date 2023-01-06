@@ -4,23 +4,26 @@ import express from 'express'
 import http2Express from 'http2-express-bridge'
 import autopush from 'http2-express-autopush'
 import cookieParser from 'cookie-parser'
+import cors from 'cors'
 import sirv from 'sirv'
 import moment from 'moment'
 import { create } from 'express-handlebars'
 import handlebarHelpers from 'handlebars-helpers'
 import 'express-async-errors'
-import cors from 'cors'
 
 import appRoutes from './app/routes/app.routes.js'
 import establishDbConnection from './api/database/connection.js'
 import apiRoutes from './api/routes/api.js'
+import { headersMiddleware } from './middlewares/headers.middleware.js'
+import { staticMiddleware } from './middlewares/static.middleware.js'
 import { userConfigMiddleware } from './middlewares/user-config.middleware.js'
-import { compression } from './middlewares/compression.middleware.js'
 import pkg from './package.json' assert {type: 'json'}
 import config from 'config'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const staticDir = process.env.NODE_ENV.endsWith('production') ? 'build' : 'dev'
+const staticDir = resolve(__dirname, process.env.NODE_ENV.endsWith('production') ? 'build' : 'dev')
+const publicDir = resolve(__dirname, 'app', 'public')
+const staticAssetsOptions = Object.assign({}, config.get('server.staticAssetsOptions'))
 
 // Default date lang
 moment.locale('fr-CA')
@@ -34,31 +37,31 @@ const hbs = create({
 handlebarHelpers({ handlebars: hbs.handlebars })
 
 await establishDbConnection()
-
-app.locals.version = pkg.version
 app.engine('hbs', hbs.engine)
 app.set('view engine', 'hbs')
 app.set('views', 'app/views')
-app.use(cors({ origin: true, credentials: true }))
+app.disable('x-powered-by')
+// app.disable('etag')
+
+app.locals.version = pkg.version
+app.locals.description = config.get('app.description')
+app.locals.baseUrl = (new URL(config.get('app.baseUrl'), 'http://a')).pathname
+
 app.use(cookieParser())
 app.use(express.json())
 
-app.disable('x-powered-by')
+app.use(headersMiddleware())
+app.use(cors({ origin: true, credentials: true }))
 
-if (process.env.NODE_ENV.endsWith('production')) {
-  app.use(compression(resolve(__dirname, staticDir)))
-}
-
-app.use(autopush(resolve(__dirname, staticDir), Object.assign({}, config.get('server.staticAssetsOptions'))))
-
-// app.use(express.static(resolve(__dirname, staticDir)))
-console.log(`Serving static files from ${resolve(__dirname, staticDir, pkg.version)}`)
+app.use(staticMiddleware(staticDir, { staticAssetsOptions, compression: { exts: ['js', 'css', 'map'] }, methods: ['br', 'gzip', 'deflate'] }))
+app.use(staticMiddleware(publicDir, { staticAssetsOptions }))
 
 app.use(userConfigMiddleware)
 
 app.use('/api', apiRoutes)
 
 app.use(appRoutes)
+
 
 // app.use(
 //   sirv(resolve(__dirname, 'build'), {

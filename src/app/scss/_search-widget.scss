@@ -1,3 +1,39 @@
+@keyframes fade-in {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes cv-search-input-width {
+  0% {
+    max-width: var(--cv-search-input-default-width);
+  }
+
+  100% {
+    max-width: var(--_cv-search-input-computed-max-width);
+  }
+}
+
+.show {
+  animation: fade-in var(--cv-search-widget-open-animation-duration, var(--cv-speed-duration-short)) cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+}
+
+.hide {
+  animation: fade-out var(--cv-search-widget-close-animation-duration, var(--cv-speed-duration-short)) cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
 .cv-i-search {
   display: inline-block;
   flex-shrink: 0;
@@ -45,6 +81,7 @@
     border-radius: 50%;
     padding: 0;
     background-size: calc(var(--cv-chip-base-size) * 0.65);
+    flex-shrink: 0;
 
     &:hover {
       background-color: #e7e6e6;
@@ -60,48 +97,71 @@
   overflow: hidden;
 }
 
-.cv-search-input {
+.cv-search-input-container {
   --cv-search-input-default-width: calc(10.9375 * 1rem); // 175px @ 1rem === 16px
-
-  background-color: #f1f3f4;
-  border-radius: 50vh;
-  display: flex;
-  padding: 0.3125em 0.3125em 0.3125em 0.75em;
-  align-items: center;
-  width: var(--cv-search-input-default-width);
-  transition: all 0.2s !important;
-  max-width: var(--cv-search-input-default-width);
+  --cv-search-input-max-width: 40vw;
+  --_cv-search-input-computed-max-width: var(--cv-search-input-max-width);
 
   &.filled {
-    width: 100%;
-    max-width: 40vw;
-    transition: all 0.2s !important;
+    max-width: var(--cv-search-input-max-width);
   }
 
-  &.empty {
-    transition: all 0.2s !important;
-    width: var(--cv-search-input-default-width);
+  &.expanding {
+    animation: cv-search-input-width var(--cv-search-input-transition-duration-in, var(--cv-speed-duration-short)) ease-in;
+  }
 
-    @extend %widget-state;
+  &.contracting {
+    animation: cv-search-input-width var(--cv-search-input-transition-duration-out, var(--cv-speed-duration-short)) ease-out;
+    animation-direction: reverse;
 
-    &:hover,
-    &:active {
-      background-color: transparent;
+    .cv-chip {
+      transition: opacity var(--cv-search-input-transition-duration-out, var(--cv-speed-duration-short)) ease-out;
+      opacity: 0;
+    }
+  }
+
+  &:not(.filled) {
+    .cv-search-input {
+      @extend %widget-state;
+
+      transition-property: box-shadow, background-color;
       cursor: text;
+
+      &:hover,
+      &:active {
+        background-color: transparent;
+        transition-property: box-shadow, background-color;
+      }
+
+      &.loading {
+        @extend %widget-state-none;
+
+        opacity: 0.5;
+        cursor: wait;
+
+        &:hover,
+        &:active {
+          background-color: var(--cv-search-input-bg-color);
+        }
+      }
 
       .cv-search-input-btn {
         cursor: inherit;
       }
-
-      // .cv-placeholder {
-      //   --cv-muted-color: #474a4e;
-      // }
     }
   }
+}
+
+.cv-search-input {
+  --cv-search-input-bg-color: #f1f3f4;
+
+  background-color: var(--cv-search-input-bg-color);
+  border-radius: 50vh;
+  display: flex;
+  padding: 0.3125em 0.3125em 0.3125em 0.75em;
+  align-items: center;
 
   .cv-placeholder {
-    // --cv-muted-color: #4f5257;
-    // color: var(--cv-muted-color);
     white-space: nowrap;
   }
 }
@@ -111,20 +171,32 @@
   line-height: 1.75;
   padding: 0;
   margin: 0 0.5em 0 0.35em;
-  transition: all 3s;
   min-width: 120px;
   cursor: pointer;
   background: transparent;
 }
 
-:root,
-::backdrop {
-  --search-dialog-animation-duration: 0.2s;
-}
+// :root,
+// ::backdrop {
+//   --search-dialog-animation-duration: 5s;
+// }
+
+// .cv-search-dialog,
+// .cv-search-dialog::backdrop {
+//   --search-dialog-animation-duration: var(undefined, var(--cv-speed-duration-large-in));
+// }
 
 .cv-search-dialog {
   --search-dialog-padding: 1rem;
   --color-light-gray: #f4f4f4;
+
+  @at-root {
+    &,
+    &::backdrop {
+      --_search-dialog-animation-duration-in: var(--search-dialog-animation-duration-in, var(--cv-speed-duration-large-in));
+      --_search-dialog-animation-duration-out: var(--search-dialog-animation-duration-out, var(--cv-speed-duration-large-out));
+    }
+  }
 
   --_cancel-button-width: 70px;
   --_input-height: 3.125rem; // 50px @ 1rem = 16px
@@ -149,11 +221,11 @@
   }
 
   &.open {
-    animation: dialog-fade var(--search-dialog-animation-duration) ease forwards;
+    animation: dialog-fade var(--_search-dialog-animation-duration-in) ease forwards;
   }
 
   &.close {
-    animation: dialog-fade var(--search-dialog-animation-duration) ease backwards;
+    animation: dialog-fade var(--_search-dialog-animation-duration-out) ease backwards;
     animation-direction: reverse;
   }
 
@@ -162,11 +234,11 @@
   }
 
   &.open::backdrop {
-    animation: dialog-fade var(--search-dialog-animation-duration) ease forwards;
+    animation: dialog-fade var(--_search-dialog-animation-duration-in) ease forwards;
   }
 
   &.close::backdrop {
-    animation: dialog-fade var(--search-dialog-animation-duration) ease backwards;
+    animation: dialog-fade var(--_search-dialog-animation-duration-out) ease backwards;
     animation-direction: reverse;
   }
 

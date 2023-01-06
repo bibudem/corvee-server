@@ -1,2 +1,2 @@
-import '../../cv-last-harvested/cv-last-harvested.js'
+import '../../cv-job-list/cv-job-list.js'
 import './current-job-change-handler.js'

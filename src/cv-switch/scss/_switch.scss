@@ -13,7 +13,7 @@
   --cv-switch-border-color-selected: var(--cv-primary);
   --cv-switch-background-color-selected: var(--cv-primary);
   --cv-switch-padding-x: 1px;
-  --cv-switch-transform-duration: var(--cv-speed-duration-short, 0.1s);
+  // --cv-switch-transform-duration: var(--cv-speed-duration-short, 0.1s);
   --cv-switch-thumb-border-width: 0;
   --cv-switch-thumb-border-color: var(--cv-color-outline);
   --cv-switch-thumb-border-color-selected: var(--cv-color-outline);
@@ -57,6 +57,8 @@
   }
 
   .switch {
+    @extend %widget-state;
+
     color: var(--cv-color-on-primary);
     flex-shrink: 0;
     position: relative;
@@ -66,9 +68,6 @@
     border: var(--cv-switch-border-width) solid var(--cv-switch-border-color);
     border-radius: var(--cv-switch-border-radius);
     background: var(--cv-surface) 0 0;
-    transition-duration: var(--cv-switch-transform-duration);
-
-    @extend %widget-state;
 
     .thumb {
       position: absolute;
@@ -83,7 +82,7 @@
       pointer-events: all;
       height: var(--_thumb-size);
       width: var(--_thumb-size);
-      transition-duration: var(--cv-switch-transform-duration);
+      transition-duration: var(--cv-switch-transform-duration, var(--cv-speed-duration-short));
 
       &:before {
         background-color: var(--smart-primary);
@@ -92,7 +91,7 @@
         height: 200%;
         left: 50%;
         top: 50%;
-        transition-duration: var(--cv-switch-transform-duration);
+        transition-duration: var(--cv-switch-transform-duration, var(--cv-speed-duration-short));
         display: block;
         border-radius: 100%;
         content: "";
@@ -188,5 +187,5 @@
 }
 
 :host([hidden]) {
-  display: none;
+  display: none !important;
 }

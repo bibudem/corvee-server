@@ -2,7 +2,7 @@
 
   {{> page-header title=title currentJob=currentJob jobs=jobs}}
 
-  {{#each job.sections}}
+  {{#each sections}}
   <section class="cv-sections">
     {{#if title}}
     <h2>{{{title}}}</h2>
@@ -13,7 +13,7 @@
         <svg class="cv-i-rolling">
           <use xlink:href="#icon-rolling"></use>
         </svg>
-        <a href="sections/{{key}}">{{{title}}}</a>
+        <a href="sections/{{ key }}{{ @root.searchParams }}">{{{title}}}</a>
         <span class="cv-section-errors">... erreurs</span>
       </li>
       {{/each}}

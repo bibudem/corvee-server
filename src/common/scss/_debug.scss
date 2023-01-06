@@ -1,5 +1,3 @@
-$env: env();
-
 @if $env != "production" {
   body::before {
     color: red;
@@ -19,7 +17,5 @@ $env: env();
     }
   }
 }
-
-$isTrue: $env == "production";
 
 @debug "Working in #{$env} mode.";

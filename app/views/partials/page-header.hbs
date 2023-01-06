@@ -2,7 +2,7 @@
   <h1>{{{title}}}</h1>
   <p>Tapez <code>ALT-L</code> (comme dans «&nbsp;Lien&nbsp;») pour afficher/masquer les liens brisés sur une page du site.</p>
 </header>
-<p class="small">Liens vérifiés le <cv-last-harvested>38 octembre 3017</cv-last-harvested>
-  {{#if currentJob.deadline}}<br />
-  Échéance le {{currentJob.deadline}}{{/if}}
+<p><small>Liens vérifiés le <cv-job-list{{#if currentJob}} current-job="{{currentJob}}" {{/if}}>38 octembre 3017</cv-job-list>
+      {{#if deadline }}<br />
+      Échéance le {{ deadline }}{{/if}}</small>
 </p>

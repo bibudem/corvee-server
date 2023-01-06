@@ -1,7 +1,5 @@
 import { exec } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
-import { writeFile } from 'node:fs/promises'
-import config from 'config'
 import pkg from '../package.json' assert {type: 'json'}
 
 const buildMode = process.argv.includes('dev') ? 'dev' : 'build'
@@ -26,8 +24,6 @@ const postcssArgs = [
   '--replace',
   '--map'
 ]
-
-await writeFile(new URL('../src/common/scss/_config.scss', import.meta.url), `$baseUrl: "${config.get('app.baseUrl')}";`)
 
 console.log(`Running sass in ${buildMode} mode...`)
 

@@ -1,9 +1,11 @@
+import { userConfig } from '../common/js/user-config.js'
 import './js/app-base.js'
 import { baseUrl } from 'client-config/app'
 
 document.addEventListener('DOMContentLoaded', async () => {
   const serviceUrl = new URL(`${baseUrl}/api/sections/count`, location)
   serviceUrl.searchParams.set('action', 'to-be-fixed')
+  serviceUrl.searchParams.set('job', userConfig.get('currentJob'))
   const data = await fetch(serviceUrl).then(response => response.json())
   Object.keys(data).forEach(key => {
     const totalErrors = data[key]

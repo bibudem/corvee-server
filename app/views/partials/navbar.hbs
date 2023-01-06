@@ -1,7 +1,7 @@
 <nav class="cv-navbar sticky-top navbar navbar-expand-md">
   <div class="cv-navbar-container container-fluid">
     <div class="cv-navbar-brand">
-      <a class="navbar-brand" href="/">
+      <a class="navbar-brand" href="{{ baseUrl }}{{ @root.searchParams }}">
         <svg class="cv-i-arrow-left cv-navbar-brand-icon">
           <use xlink:href="#arrow-left"></use>
         </svg>
@@ -11,18 +11,10 @@
     <div class="cv-navbar-center">
       {{> search-widget}}
     </div>
-    {{!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <div class="cv-navbar-right">
-        <cv-switch id="cv-hide-fixed" {{#if hideFixed}} checked aria-checked="true" {{else}} aria-checked="false" {{/if}}>Masquer les liens corrigés</cv-switch>
-      </div>
-    </div> --}}
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#cv-navbar-offcanvas" aria-controls="cv-navbar-offcanvas" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="cv-navbar-right offcanvas-md offcanvas-end flex-grow-1" tabindex="1" id="cv-navbar-offcanvas" data-bs-scroll="true">
+    <div class="cv-navbar-right offcanvas-md offcanvas-end flex-grow-1" tabindex="0" id="cv-navbar-offcanvas" data-bs-scroll="true">
       <div class="offcanvas-header px-4 pb-0">
         <h5 class="offcanvas-title" id="bdNavbarOffcanvasLabel">Corvée</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer" data-bs-target="#cv-navbar-offcanvas"></button>
@@ -30,7 +22,7 @@
       <div class="offcanvas-body p-4 pt-0 p-md-0">
         <hr class="d-md-none text-muted">
         <div class="">
-          <cv-switch id="cv-hide-fixed" {{#if hideFixed}} checked aria-checked="true" {{else}} aria-checked="false" {{/if}}>Masquer les liens corrigés</cv-switch>
+          <cv-switch id="cv-hide-fixed" {{#if hideFixed}}checked aria-checked="true" {{else}}aria-checked="false" {{/if}}>Masquer les liens corrigés</cv-switch>
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ import { userConfig } from '../common/js/user-config.js'
 import { baseUrl } from 'client-config/app'
 import stylesheet from './js/stylesheet.js'
 import svgSprite from './assets/sprite.svg'
+// import stylesheet2 from './scss/cv-job-list.scss'
 
 // Default date lang
 moment.locale('fr')
@@ -19,7 +20,7 @@ moment.locale('fr')
  * @slot - This element has a slot
  * @csspart button - The button
  */
-export class CvLastHarvested extends LitElement {
+export class CvJobList extends LitElement {
   static styles = css`
     ${unsafeCSS(stylesheet)}
   `
@@ -31,6 +32,7 @@ export class CvLastHarvested extends LitElement {
       },
       currentJob: {
         type: String,
+        attribute: 'current-job',
       },
       defaultJob: {
         type: String,
@@ -41,12 +43,13 @@ export class CvLastHarvested extends LitElement {
   constructor() {
     super()
 
-    this.jobs = []
-    this.currentJob = userConfig.get('currentJob')
-    this.defaultJob = ''
+    // this.jobs = []
+    this.currentJob = this.currentJob || userConfig.get('currentJob')
 
     this.show = this.show.bind(this)
     this._select = this._select.bind(this)
+
+    this.getJobs()
 
     this.updateComplete.then(() => {
       this.menu = new MDCMenuSurface(this.renderRoot.querySelector('.mdc-menu-surface'))
@@ -56,7 +59,6 @@ export class CvLastHarvested extends LitElement {
 
   connectedCallback() {
     super.connectedCallback()
-    this.getJobs()
 
     this.renderRoot.addEventListener('click', this._select)
     this.renderRoot.addEventListener('keyup', this._select)
@@ -78,21 +80,26 @@ export class CvLastHarvested extends LitElement {
   }
 
   _select(event) {
-    const srcElem = event.path[0]
+    console.log(event)
+    console.log(event.originalTarget)
+    const srcElem = /* Firefox MouseEvent event */ event.originalTarget || /* Chrome PointerEvent event */ event.path[0]
 
-    if (srcElem.ariaCurrent === 'true') {
+    if (srcElem.getAttribute('role') !== 'menuitem') {
       return
     }
 
-    if (srcElem.role === 'menuitem') {
-      const keyboardSelectItemEvent = event.key === SPACE_KEY || event.key === ENTER_KEY
+    if (srcElem.getAttribute('aria-current') === 'true') {
+      return
+    }
 
-      if (event.type === 'click' || keyboardSelectItemEvent) {
-        event.stopPropagation()
-        this.setJob(srcElem.dataset.value)
-        keyboardSelectItemEvent && this.hide()
-        return
-      }
+    const keyboardSelectItemEvent = event.key === SPACE_KEY || event.key === ENTER_KEY
+
+    if (event.type === 'click' || keyboardSelectItemEvent) {
+      console.log('YES')
+      event.stopPropagation()
+      this.setJob(srcElem.dataset.value)
+      keyboardSelectItemEvent && this.hide()
+      return
     }
   }
 
@@ -134,7 +141,7 @@ export class CvLastHarvested extends LitElement {
   }
 
   _getCurrentJob() {
-    return moment(this.currentJob).format('LL')
+    return moment(this.currentJob ?? this.defaultJob).format('LL')
   }
 
   render() {
@@ -145,7 +152,7 @@ export class CvLastHarvested extends LitElement {
         <div class="mdc-menu-surface--anchor">
           <div class="mdc-menu-surface">
             <ul class="mdc-deprecated-list" role="menu">
-              ${this.jobs.map(job => {
+              ${this.jobs?.map(job => {
                 const isActive = { active: job === this.currentJob }
                 return html` <li class="mdc-deprecated-list-item ${classMap(isActive)}" role="menuitem" data-value="${job}" tabindex="0" aria-current="${job === this.currentJob}">
                   <span class="mdc-deprecated-list-item__ripple"></span>
@@ -164,4 +171,4 @@ export class CvLastHarvested extends LitElement {
   }
 }
 
-window.customElements.define('cv-last-harvested', CvLastHarvested)
+window.customElements.define('cv-job-list', CvJobList)

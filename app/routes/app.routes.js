@@ -5,6 +5,8 @@ import autopush from 'http2-express-autopush'
 import config from 'config'
 import { homeRoute } from './home.route.js'
 import { sectionRoute } from './section.route.js'
+import { searchParamsMiddleware } from '../../middlewares/searchParams.middleware.js'
+import { jobParamMiddleware } from '../../middlewares/jobParam.middleware.js'
 import { jobsMiddleware } from '../../middlewares/jobs.middleware.js'
 import pkg from '../../package.json' assert {type: 'json'}
 
@@ -25,14 +27,12 @@ const sections = config
 
 const router = Router()
 
-router.use(autopush(resolve(__dirname, '..', 'public'), Object.assign({}, config.get('server.staticAssetsOptions'))))
-
-router.use(autopush(resolve(__dirname, '..', '..', buildMode, pkg.version, 'app'), Object.assign({}, config.get('server.staticAssetsOptions'))))
-
 //
 // Middlewares
 //
 
+router.use(searchParamsMiddleware(['job']))
+router.use(jobParamMiddleware)
 router.use(jobsMiddleware)
 
 //

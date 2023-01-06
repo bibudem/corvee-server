@@ -4,6 +4,7 @@ module.exports = {
   version: version,
   baseUrl: 'https://corvee.bib.umontreal.ca',
   // baseUrl: '',
+  description: 'Corvée: le site où trouver vos liens brisés.',
   aligoliasearch: {
     applicationID: 'AT9I76OQTC',
     apiKey: '1feac540f9fa7ed6b180dfbae4a11d82',
@@ -13,6 +14,7 @@ module.exports = {
     name: 'cv',
     options: {
       domain: 'bib.umontreal.ca',
+      // domain: 'localhost',
       sameSite: 'strict',
     },
   },

@@ -8,6 +8,8 @@ module.exports = {
       https: 443,
     },
     staticAssetsOptions: {
+      etag: false,
+      lastModified: false,
       immutable: true,
       maxAge: '1y',
     },

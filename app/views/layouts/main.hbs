@@ -5,16 +5,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{sanitize title}} - Corvée</title>
+  {{#if description}}
+  <meta name="description" content="{{ description }}">{{/if}}
   {{!-- <link rel="preload" href="/fonts/roboto-mono-v22-latin-500.woff2" as="font" type="font/woff2" crossorigin> --}}
   {{!-- <link rel="preload" href="/fonts/roboto-mono-v22-latin-500italic.woff2" as="font" type="font/woff2" crossorigin> --}}
-  <link rel="preload" href="/fonts/roboto-mono-v22-latin-italic.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/fonts/roboto-mono-v22-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  {{!-- <link rel="preload" href="/fonts/roboto-mono-v22-latin-italic.woff2" as="font" type="font/woff2" crossorigin> --}}
+  <link rel="preload" href="{{ baseUrl }}fonts/roboto-v30-latin-italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ baseUrl }}fonts/roboto-v30-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ baseUrl }}fonts/roboto-mono-v22-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  {{#if (eq @exphbs.view 'home') }}
+  <link rel="preload" href="{{ baseUrl }}api/sections/count?action=to-be-fixed&job={{ currentJob }}" as="fetch" type="application/json" crossorigin>{{/if}}
+  {{#if (eq @exphbs.view 'section') }}
+  <link rel="preload" href="{{ baseUrl }}{{ version }}/app/search-widget.js" as="script" type="application/javascript">{{/if}}
+  <link rel="stylesheet" href="{{ baseUrl }}{{ version }}/app/css/app.css">
   {{!-- <link rel="preload" href="/fonts/roboto-v30-latin-500.woff2" as="font" type="font/woff2" crossorigin> --}}
   {{!-- <link rel="preload" href="/fonts/roboto-v30-latin-500italic.woff2" as="font" type="font/woff2" crossorigin> --}}
-  <link rel="preload" href="/fonts/roboto-v30-latin-italic.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/fonts/roboto-v30-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/{{ version }}/app/css/app.css">
-  <script src="/{{ version }}/app/{{ @exphbs.view }}.js"></script>
+  <script src="{{ baseUrl }}{{ version }}/app/{{ @exphbs.view }}.js"></script>
 </head>
 
 <body>

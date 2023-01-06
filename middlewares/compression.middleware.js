@@ -31,9 +31,10 @@ function shouldTransform(req, res) {
   return !cacheControl || !cacheControlNoTransformRegExp.test(cacheControl)
 }
 
-export function compression(root, options = {}) {
+export function staticCompressionMiddleware(root, options = {}) {
   const rootDir = resolve(root)
   const exts = options.exts || ['js', 'css', 'map']
+  const methods = options.methods || ['br', 'gzip', 'deflate']
 
   const assets = glob.sync(`**/*.{${exts.join(',')}}`, { cwd: rootDir }).map(file => `/${file}`)
 
@@ -68,7 +69,7 @@ export function compression(root, options = {}) {
       return next()
     }
 
-    const method = Accepts.encoding(req.get('Accept-Encoding'), ['br', 'gzip', 'deflate', 'identity'])
+    const method = Accepts.encoding(req.get('Accept-Encoding'), [...methods, 'identity'])
 
     // negotiation failed
     if (method === 'identity') {

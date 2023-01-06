@@ -29,56 +29,26 @@ async function _doInitSearchWidget() {
       const { facetHits } = await index.searchForFacetValues('job', job)
       const searchInput = document.querySelector('.cv-search-input')
 
+      function onSearchInputAnimation(event) {
+        const target = event.target
+        if (target === searchInput && event.animationName === 'fade-out') {
+          if (target.classList.contains('hide')) {
+            target.hidden = true
+          }
+          target.classList.remove('show', 'hide')
+          target.removeEventListener('animationend', onSearchInputAnimation)
+        }
+      }
+
+      searchInput.addEventListener('animationend', onSearchInputAnimation)
+      searchInput.classList.remove('loading')
+
       if (facetHits && facetHits.length !== 1) {
-        searchInput.hidden = true
+        searchInput.classList.add('hide')
         return
       }
 
-      // function middleware({ instantSearchInstance }) {
-      //   return {
-      //     onStateChange({ uiState }) {
-      //       // Do something with `uiState` whenever the state changes.
-      //     },
-      //     subscribe() {
-      //       // Do something when the InstantSearch instance starts.
-      //       // console.log('subscribe!!!')
-      //       // console.log(dialog.querySelector('.cv-search-hits-list-group'))
-      //     },
-      //     unsubscribe() {
-      //       // Do something when the InstantSearch instance is disposed of.
-      //     },
-      //   }
-      // }
-
-      // const { connectHits } = instantsearch.connectors;
-
-      // const renderHits = (renderOptions, isFirstRender) => {
-      //   const { hits, widgetParams } = renderOptions;
-
-      //   widgetParams.container.innerHTML = `
-      //     <ul class="cv-search-hits-list-group">
-      //       ${hits
-      //       .map(
-      //         item => {
-      //           const pages = item.pages ? `<p class="mb-1 pages"> ${item.pages.join(' | ')}</p>` : ''
-      //           return `<li>
-      //             <div tabindex = "0" class="cv-search-hits-item-action list-group-item list-group-item-action" data-cv-link-key-ref="${item.key}">
-      //             <p class="mb-1 title">${item.title}</p>
-      //              ${pages}
-      //              <p class="mb-1"><small><code>${item.url}</code></small></p>
-      //              <p class="mb-1"><small class="text">${item.text}</small></p>
-      //            </div >
-      //             </li>`
-      //         }
-      //       )
-      //       .join('')}
-      //     </ul >
-      //   `;
-      //   console.log(bootstrap)
-      // };
-
-      // // Create the custom widget
-      // const customHits = connectHits(renderHits);
+      searchInput.classList.add('show')
 
       const instantsearchParams = {
         indexName,
@@ -171,7 +141,8 @@ async function _doInitSearchWidget() {
 
       search.start()
 
-      const searchBarWidgetInput = document.querySelector('.cv-search-input-btn')
+      const searchInputContainer = document.querySelector('.cv-search-input-container')
+      const searchInputBtn = document.querySelector('.cv-search-input-btn')
       const searchDialogForm = dialog.querySelector('.cv-search-dialog-form')
       const searchDialogInput = dialog.querySelector('.cv-search-dialog-input')
       const searchDialogSubmitBtn = dialog.querySelector('.cv-search-dialog-submit-btn')
@@ -230,15 +201,39 @@ async function _doInitSearchWidget() {
         dialog.querySelectorAll('.cv-search-hits-item-action.active').forEach(elem => elem.classList.remove('active'))
       }
 
+      function onSearchInputContainerAnimation(event) {
+        const target = event.target
+        if (target === searchInputContainer) {
+          if (event.animationName === 'cv-search-input-width') {
+            if (target.classList.contains('expanding')) {
+              //expanded
+              target.classList.remove('expanding')
+              target.style.setProperty('--_cv-search-input-computed-max-width', getComputedStyle(target).width)
+            } else {
+              // contracted
+              target.classList.remove('contracting')
+              searchInputBtn.innerHTML = `<span class="cv-placeholder">${searchInputBtn.dataset.placeholder}</span>`
+              searchInputBtn.removeAttribute('tabindex')
+              target.classList.add('empty')
+              target.classList.remove('filled')
+              target.style.setProperty('--_cv-search-input-computed-max-width', getComputedStyle(target).getPropertyValue('--cv-search-input-max-width'))
+            }
+          }
+          target.removeEventListener('animationend', onSearchInputContainerAnimation)
+        }
+      }
+
       function updateSearchWidget(hitElement) {
         const selectedPageTitle = hitElement.querySelector('.cv-search-hits-item-title').innerText
         const key = hitElement.dataset.cvLinkKeyRef
 
-        searchInput.classList.remove('empty')
-        searchInput.classList.add('filled')
-        searchBarWidgetInput.innerHTML = `<span class="cv-chip"><button type="button" class="btn-close" aria-label="Supprimer"></button><span  tabindex="0" class="cv-chip-text">${selectedPageTitle}</span></span>`
+        searchInputContainer.addEventListener('animationend', onSearchInputContainerAnimation)
+
+        searchInputContainer.classList.remove('empty')
+        searchInputContainer.classList.add('filled', 'expanding')
+        searchInputBtn.innerHTML = `<span class="cv-chip"><button type="button" class="btn-close" aria-label="Supprimer"></button><span  tabindex="0" class="cv-chip-text">${selectedPageTitle}</span></span>`
         searchDialogInput.value = selectedPageTitle
-        searchBarWidgetInput.tabIndex = -1
+        searchInputBtn.tabIndex = -1
         searchDialogInput.dispatchEvent(new InputEvent('input'))
         clearSearchHitsList()
         hitElement.classList.add('active')
@@ -247,14 +242,13 @@ async function _doInitSearchWidget() {
       }
 
       function clearSearchWidget() {
-        searchInput.classList.remove('filled')
-        searchInput.classList.add('empty')
-        searchBarWidgetInput.innerHTML = `<span class="cv-placeholder">${searchBarWidgetInput.dataset.placeholder}</span>`
-        searchBarWidgetInput.removeAttribute('tabindex')
+        searchInputContainer.addEventListener('animationend', onSearchInputContainerAnimation)
+
+        searchInputContainer.classList.add('contracting')
         searchDialogForm.reset()
         clearSearchHitsList()
         clearFilterPages()
-        searchBarWidgetInput.focus()
+        searchInputBtn.focus()
       }
 
       const filterPagesSheet = new CSSStyleSheet()
@@ -307,7 +301,7 @@ async function _doInitSearchWidget() {
         rapport.dataset.cvLinkKey = pageKey
       })
 
-      searchBarWidgetInput.addEventListener('click', function (event) {
+      searchInputBtn.addEventListener('click', function (event) {
         const self = event.target
         if (self.classList.contains('btn-close')) {
           event.stopPropagation()
@@ -344,7 +338,7 @@ async function _doInitSearchWidget() {
         if (event.key === 'Enter' && self.classList.contains('cv-search-hits-item-action')) {
           updateSearchWidget(self)
           closeDialog(true, () => {
-            searchBarWidgetInput.querySelector('.btn-close').focus({ focusVisible: true })
+            searchInputBtn.querySelector('.btn-close').focus({ focusVisible: true })
           })
         }
       })

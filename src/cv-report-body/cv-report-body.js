@@ -106,34 +106,42 @@ export class CvReportBody extends LitElement {
     }
     const doc = document.createElement('div')
     doc.innerHTML = this.messages
-    return unsafeHTML(`<li class="cv-report-body-list-item cv-report-messages"><strong class="cv-report-body-list-item-label">Détails</strong><ul>${[...doc.children].map(msg => `<li data-error-code="${msg.getAttribute('error-code')}">${msg.innerHTML}</li>`).join('')}</ul></li>`)
+    return unsafeHTML(`<div class="cv-report-body-list-item cv-report-messages"><dt class="cv-report-body-list-item-label">Détails</dt><dd><ul>${[...doc.children].map(msg => `<li data-error-code="${msg.getAttribute('error-code')}">${msg.innerHTML}</li>`).join('')}</ul></dd></div>`)
   }
 
   _getSuggestedLink() {
     if (this.errorCodes && this.errorCodes.some(errorCode => errorCode.startsWith('http-3')) && !this.errorCodes.includes('http-30x-permanent-redirect-failure')) {
-      return unsafeHTML(`<li class="cv-report-body-list-item"><strong class="cv-report-body-list-item-label">Lien
-      suggéré :</strong> <a href="${this.finalUrl}" target="visualisation" class="cv-url">${this.finalUrl}</a></li>`)
+      return unsafeHTML(`<div class="cv-report-body-list-item"><dt class="cv-report-body-list-item-label">Lien
+      suggéré :</dt> <dd><a href="${this.finalUrl}" target="visualisation" class="cv-url">${this.finalUrl}</a></dd></div>`)
     }
     return nothing
   }
 
   render() {
     return html`
-      <ul class="cv-report-body-list">
-        ${this.linkType ? html`<li class="cv-report-body-list-item"><strong class="cv-report-body-list-item-label">Type de
-            lien :</strong> ${reportManager.linkTypes[this.linkType]}</li>` : nothing} ${this.text ? html`<li
-          class="cv-report-body-list-item"><strong class="cv-report-body-list-item-label">Texte :</strong>
-          <em>${this.text}</em></li>` : nothing}
-        <li class="cv-report-body-list-item">
-          <strong class="cv-report-body-list-item-label">Statut :</strong>
-          <span class="cv-lien-action-modifier cv-lien-action-modifier-menu">
+      <dl class="cv-report-body-list">
+        ${this.linkType
+          ? html`<div class="cv-report-body-list-item">
+              <dt class="cv-report-body-list-item-label">Type de lien :</dt>
+              <dd>${reportManager.linkTypes[this.linkType]}</dd>
+            </div>`
+          : nothing}
+        ${this.text
+          ? html`<div class="cv-report-body-list-item">
+              <dt class="cv-report-body-list-item-label">Texte :</dt>
+              <dd><i>${this.text}</i></dd>
+            </div>`
+          : nothing}
+        <div class="cv-report-body-list-item">
+          <dt class="cv-report-body-list-item-label">Statut :</dt>
+          <dd class="cv-lien-action-modifier cv-lien-action-modifier-menu">
             <select @change=${this.onChange} class="cv-action">
               ${this._getActions()}
             </select>
-          </span>
-        </li>
+          </dd>
+        </div>
         ${this._getSuggestedLink()} ${this._getMessages()}
-      </ul>
+      </dl>
     `
   }
 }
