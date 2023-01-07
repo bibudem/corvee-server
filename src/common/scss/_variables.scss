@@ -30,6 +30,15 @@ $spacer: hem(1);
 
 // Theme colors
 $primary: #006599;
+$accent: #cc3241;
+$error: #cc3241;
+$warning: #fad209;
+$success: #6fa738;
+
+$custom-colors: (
+  "accent": $accent,
+  "error": $error,
+);
 
 $font-family-base: "Roboto", sans-serif;
 $body-bg: #fff;

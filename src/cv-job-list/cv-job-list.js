@@ -80,9 +80,7 @@ export class CvJobList extends LitElement {
   }
 
   _select(event) {
-    console.log(event)
-    console.log(event.originalTarget)
-    const srcElem = /* Firefox MouseEvent event */ event.originalTarget || /* Chrome PointerEvent event */ event.path[0]
+    const srcElem = event.composedPath()[0]
 
     if (srcElem.getAttribute('role') !== 'menuitem') {
       return
@@ -95,7 +93,6 @@ export class CvJobList extends LitElement {
     const keyboardSelectItemEvent = event.key === SPACE_KEY || event.key === ENTER_KEY
 
     if (event.type === 'click' || keyboardSelectItemEvent) {
-      console.log('YES')
       event.stopPropagation()
       this.setJob(srcElem.dataset.value)
       keyboardSelectItemEvent && this.hide()

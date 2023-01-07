@@ -1,39 +1,46 @@
 @use "sass:math";
 
-$cv-widget-state-box-shadow-color: rgb(232 237 235);
-$cv-widget-state-active-box-shadow-color: shade-color($cv-widget-state-box-shadow-color, 15%);
-$cv-widget-state-box-shadow-width: math.div(3, 16) * hem(1);
+$cv-widget-state-color: rgb(232 237 235);
+$cv-widget-state-active-color: shade-color($cv-widget-state-color, 15%);
+$cv-widget-state-border-width: math.div(3, 16) * hem(1);
+
+@function border-width($width: 3px) {
+  // @debug "math.div($width, 16): #{math.div($width, 16)}";
+  // @debug "hem(1): #{hem(1)}";
+  // @debug "math.div($width, 16px) * hem(1): #{math.div($width, 16px) * hem(1)}";
+  @return math.div($width, 16px) * hem(1);
+}
 
 %widget-state {
-  box-shadow: #ffffff00 0px 0px 0px $cv-widget-state-box-shadow-width !important;
+  box-shadow: #ffffff00 0px 0px 0px $cv-widget-state-border-width !important;
   transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
 
   &:hover {
     transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
-    box-shadow: $cv-widget-state-box-shadow-color 0px 0px 0px $cv-widget-state-box-shadow-width !important;
+    box-shadow: var(--cv-widget-state-color, $cv-widget-state-color) 0px 0px 0px $cv-widget-state-border-width !important;
   }
 
   &:active {
     transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
-    box-shadow: $cv-widget-state-active-box-shadow-color 0px 0px 0px $cv-widget-state-box-shadow-width !important;
+    box-shadow: var(--cv-widget-state-active-color, $cv-widget-state-active-color) 0px 0px 0px $cv-widget-state-border-width !important;
   }
 }
 
-@mixin widget-state($padding: 0) {
+@mixin widget-state($padding: 0, $border-width: $cv-widget-state-border-width) {
   @if $padding == 0 {
     @extend %widget-state;
   } @else {
     transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
-    box-shadow: #ffffff00 0px 0px 0px $padding, #ffffff00 0px 0px 0px calc($padding + $cv-widget-state-box-shadow-width) !important;
+    box-shadow: #ffffffff 0px 0px 0px $padding, #ffffff00 0px 0px 0px calc($padding + border-width($border-width)) !important;
 
     &:hover {
       transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
-      box-shadow: #ffffff 0px 0px 0px $padding, $cv-widget-state-box-shadow-color 0px 0px 0px calc($padding + $cv-widget-state-box-shadow-width) !important;
+      box-shadow: #ffffff 0px 0px 0px $padding, var(--cv-widget-state-color, $cv-widget-state-color) 0px 0px 0px calc($padding + border-width($border-width)) !important;
     }
 
     &:active {
       transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
-      box-shadow: #ffffff 0px 0px 0px $padding, $cv-widget-state-active-box-shadow-color 0px 0px 0px calc($padding + $cv-widget-state-box-shadow-width) !important;
+      box-shadow: #ffffff 0px 0px 0px $padding, var(--cv-widget-state-active-color, $cv-widget-state-active-color) 0px 0px 0px calc($padding + border-width($border-width)) !important;
     }
   }
 }

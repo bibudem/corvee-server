@@ -58,6 +58,13 @@ dans cette page`
 
     this.role = 'complementary'
     this.open = false
+
+    if (process.env.NODE_ENV !== 'production') {
+      const debugCss = (await import('./scss/debug.scss')).default
+      const debugStylesheet = new CSSStyleSheet()
+      debugStylesheet.replaceSync(debugCss)
+      document.adoptedStyleSheets = [...document.adoptedStyleSheets, debugStylesheet]
+    }
   }
 
   deconnectedCallback() {

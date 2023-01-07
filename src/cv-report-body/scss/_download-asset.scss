@@ -10,6 +10,10 @@
   @extend %widget-state;
 
   margin-block-start: 1.5em;
+
+  &:focus-visible {
+    box-shadow: var(--cv-btn-box-shadow), var(--cv-btn-focus-box-shadow) !important;
+  }
 }
 
 $icons: download;

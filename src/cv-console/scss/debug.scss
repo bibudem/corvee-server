@@ -1,17 +1,16 @@
+@import "../../common/scss/config";
+
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
 @import "../../../node_modules/bootstrap/scss/functions";
 
 // 2. Include any default variable overrides here
-@import "../../common/scss/host";
 @import "../../common/scss/variables";
 
 // 3. Include remainder of required Bootstrap stylesheets
 @import "../../../node_modules/bootstrap/scss/variables";
 
-@import "../../common/scss/root";
-@import "../../common/scss/reboot";
-@import "../../common/scss/utilities";
-@import "../../common/scss/states";
-@import "../../common/scss/close";
+@import "../../common/scss/debug";
 
-@import "./console";
+body::before {
+  font-size: 1em;
+}

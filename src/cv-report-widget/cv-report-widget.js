@@ -102,7 +102,7 @@ export class CvReportWidget extends CvReportBase {
         if (event.key === TAB_KEY) {
           event.preventDefault()
           const len = this.focusables.length - 1
-          let index = this.focusables.indexOf(event.path[0])
+          let index = this.focusables.indexOf(event.composedPath()[0])
           index = event.shiftKey ? index - 1 : index + 1
           if (index < 0) {
             index = len

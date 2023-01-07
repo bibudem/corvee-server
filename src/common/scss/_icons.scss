@@ -42,31 +42,31 @@
   &-to-be-fixed {
     @extend %cv-i;
 
-    fill: var(--cv-red);
+    fill: var(--cv-error);
   }
 
   &-fixed {
     @extend %cv-i;
 
-    fill: var(--cv-green);
+    fill: var(--cv-success);
   }
 
   &-ignore {
     @extend %cv-i;
 
-    fill: var(--cv-green);
+    fill: var(--cv-success);
   }
 
   &-no-error {
     @extend %cv-i;
 
-    fill: var(--cv-green);
+    fill: var(--cv-success);
   }
 
   &-warning {
     @extend %cv-i;
 
-    fill: var(--cv-yellow);
+    fill: var(--cv-warning);
   }
 
   &-spinner {
