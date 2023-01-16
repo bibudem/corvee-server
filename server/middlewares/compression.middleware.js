@@ -34,7 +34,7 @@ function shouldTransform(req, res) {
 export function staticCompressionMiddleware(root, options = {}) {
   const rootDir = resolve(root)
   const exts = options.exts || ['js', 'css', 'map']
-  const methods = options.methods || ['br', 'gzip', 'deflate']
+  const encodings = options.encodings || ['br', 'gzip', 'deflate']
 
   const assets = glob.sync(`**/*.{${exts.join(',')}}`, { cwd: rootDir }).map(file => `/${file}`)
 
@@ -69,7 +69,7 @@ export function staticCompressionMiddleware(root, options = {}) {
       return next()
     }
 
-    const method = Accepts.encoding(req.get('Accept-Encoding'), [...methods, 'identity'])
+    const method = Accepts.encoding(req.get('Accept-Encoding'), [...encodings, 'identity'])
 
     // negotiation failed
     if (method === 'identity') {

@@ -1,7 +1,7 @@
 // import extractUrls from 'extract-urls'
 import { ReportWidget } from '../../cv-report-widget/report-widget.js'
 import '../../cv-console/cv-console.js'
-import reportManager from '../../common/js/report-manager.js'
+// import reportManager from '../../common/js/report-manager.js'
 import { normalizeUrl } from '../../common/js/normalize-url.js'
 import { userConfig } from '../../common/js/user-config.js'
 import { baseUrl, version } from 'client-config/app'
@@ -132,13 +132,13 @@ export class CorveeClientApp {
 
   async _loadData() {
     console.log('[%s] Loading data for job %s', this.role, userConfig.get('currentJob'))
+    console.log(userConfig)
     return new Promise(async (resolve, reject) => {
       const api = new URL(`${baseUrl}/api/links`)
       api.searchParams.set('parent', normalizeUrl(window.location))
+      api.searchParams.set('job', userConfig.get('currentJob'))
 
-      fetch(api, {
-        credentials: 'include',
-      })
+      fetch(api)
         .then(response => {
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`)
@@ -178,10 +178,10 @@ export class CorveeClientApp {
               })()
             )
           } else if (elem.nodeName === 'IMG') {
-            if (!elem.hasAttribute('alt')) {
+            if (!elem.alt) {
               return true
             }
-            return elem.getAttribute('alt').replace(/\n/, '').trim() === report.text.replace(/\n/g, '').trim()
+            return elem.alt.replace(/\n/, '').trim() === report.text.replace(/\n/g, '').trim()
           }
           return false
         })[0]

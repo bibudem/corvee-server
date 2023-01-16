@@ -1,23 +1,23 @@
 @use "sass:math";
 
-$cv-widget-state-color: rgb(232 237 235);
-$cv-widget-state-active-color: shade-color($cv-widget-state-color, 15%);
+$cv-widget-state-color: rgba(255, 255, 255, 0);
+$cv-widget-state-hover-bg: #ffffffff;
+$cv-widget-state-hover-color: rgb(232 237 235);
+$cv-widget-state-active-bg: #fff;
+$cv-widget-state-active-color: shade-color($cv-widget-state-hover-color, 15%);
 $cv-widget-state-border-width: math.div(3, 16) * hem(1);
 
 @function border-width($width: 3px) {
-  // @debug "math.div($width, 16): #{math.div($width, 16)}";
-  // @debug "hem(1): #{hem(1)}";
-  // @debug "math.div($width, 16px) * hem(1): #{math.div($width, 16px) * hem(1)}";
   @return math.div($width, 16px) * hem(1);
 }
 
 %widget-state {
-  box-shadow: #ffffff00 0px 0px 0px $cv-widget-state-border-width !important;
+  box-shadow: var(--cv-widget-state-color, #ffffff00) 0px 0px 0px var(--cv-widget-state-border-width, $cv-widget-state-border-width) !important;
   transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
 
   &:hover {
     transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
-    box-shadow: var(--cv-widget-state-color, $cv-widget-state-color) 0px 0px 0px $cv-widget-state-border-width !important;
+    box-shadow: var(--cv-widget-state-hover-color, $cv-widget-state-hover-color) 0px 0px 0px $cv-widget-state-border-width !important;
   }
 
   &:active {
@@ -26,21 +26,23 @@ $cv-widget-state-border-width: math.div(3, 16) * hem(1);
   }
 }
 
-@mixin widget-state($padding: 0, $border-width: $cv-widget-state-border-width) {
+@mixin widget-state($padding: 0, $border-width: $cv-widget-state-border-width, $hover-border-width: $cv-widget-state-border-width, $active-border-width: $cv-widget-state-border-width, $hover-bg: $cv-widget-state-hover-bg, $active-bg: $cv-widget-state-active-bg, $hover-class: false) {
   @if $padding == 0 {
     @extend %widget-state;
   } @else {
     transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
-    box-shadow: #ffffffff 0px 0px 0px $padding, #ffffff00 0px 0px 0px calc($padding + border-width($border-width)) !important;
+    box-shadow: #ffffffff 0px 0px 0px $padding, var(--cv-widget-state-color, #ffffff00) 0px 0px 0px var(--cv-widget-state-border-width, calc($padding + border-width($border-width))) !important;
 
-    &:hover {
+    $hover-selector: if($hover-class, "&:hover, &.#{$hover-class}", "&:hover");
+
+    #{$hover-selector} {
       transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
-      box-shadow: #ffffff 0px 0px 0px $padding, var(--cv-widget-state-color, $cv-widget-state-color) 0px 0px 0px calc($padding + border-width($border-width)) !important;
+      box-shadow: $hover-bg 0px 0px 0px $padding, var(--cv-widget-state-hover-color, $cv-widget-state-hover-color) 0px 0px 0px var(--cv-widget-state-hover-border-width, calc($padding + border-width($hover-border-width))) !important;
     }
 
     &:active {
       transition: box-shadow var(--cv-speed-duration-short) ease-in-out;
-      box-shadow: #ffffff 0px 0px 0px $padding, var(--cv-widget-state-active-color, $cv-widget-state-active-color) 0px 0px 0px calc($padding + border-width($border-width)) !important;
+      box-shadow: $active-bg 0px 0px 0px $padding, var(--cv-widget-state-active-color, $cv-widget-state-active-color) 0px 0px 0px var(--cv-widget-state-active-border-width, calc($padding + border-width($active-border-width))) !important;
     }
   }
 }

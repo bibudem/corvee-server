@@ -1,5 +1,7 @@
+@use "../../common/scss/a11y-color" as ally;
+
 .cv-page-report {
-  --cv-card-cap-bg: var(--cv-gray-200);
+  --cv-card-cap-bg: #{$gray-200};
 
   @extend .card;
   margin-bottom: 2em;
@@ -75,7 +77,7 @@
     }
 
     &-link-count {
-      color: var(--cv-gray);
+      color: ally.a11y-color($gray, $gray-200, $level: "AA", $size: 5);
       white-space: nowrap;
     }
   }

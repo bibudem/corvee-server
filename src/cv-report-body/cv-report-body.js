@@ -106,42 +106,49 @@ export class CvReportBody extends LitElement {
     }
     const doc = document.createElement('div')
     doc.innerHTML = this.messages
-    return unsafeHTML(`<div class="cv-report-body-list-item cv-report-messages"><dt class="cv-report-body-list-item-label">Détails</dt><dd><ul>${[...doc.children].map(msg => `<li data-error-code="${msg.getAttribute('error-code')}">${msg.innerHTML}</li>`).join('')}</ul></dd></div>`)
+    return unsafeHTML(`<div class="cv-report-messages"><span class="cv-report-body-item-label visually-hidden">Détails</span><ul>${[...doc.children].map(msg => `<li data-error-code="${msg.getAttribute('error-code')}">${msg.innerHTML}</li>`).join('')}</ul></div>`)
   }
 
   _getSuggestedLink() {
     if (this.errorCodes && this.errorCodes.some(errorCode => errorCode.startsWith('http-3')) && !this.errorCodes.includes('http-30x-permanent-redirect-failure')) {
-      return unsafeHTML(`<div class="cv-report-body-list-item"><dt class="cv-report-body-list-item-label">Lien
-      suggéré :</dt> <dd><a href="${this.finalUrl}" target="visualisation" class="cv-url">${this.finalUrl}</a></dd></div>`)
+      return unsafeHTML(`<div class="cv-report-body-item"><dt class="cv-report-body-item-label">Lien
+      suggéré :</dt> <dd class="cv-report-body-item-content"><a href="${this.finalUrl}" target="visualisation" class="cv-url">${this.finalUrl}</a></dd></div>`)
     }
     return nothing
   }
 
   render() {
     return html`
-      <dl class="cv-report-body-list">
+      <dl class="cv-report-body">
         ${this.linkType
-          ? html`<div class="cv-report-body-list-item">
-              <dt class="cv-report-body-list-item-label">Type de lien :</dt>
-              <dd>${reportManager.linkTypes[this.linkType]}</dd>
+          ? html`<div class="cv-report-body-item">
+              <dt class="cv-report-body-item-label">Type de lien :</dt>
+              <dd class="cv-report-body-item-content">${reportManager.linkTypes[this.linkType]}</dd>
             </div>`
           : nothing}
         ${this.text
-          ? html`<div class="cv-report-body-list-item">
-              <dt class="cv-report-body-list-item-label">Texte :</dt>
-              <dd><i>${this.text}</i></dd>
+          ? html`<div class="cv-report-body-item">
+              <dt class="cv-report-body-item-label">Texte :</dt>
+              <dd class="cv-report-body-item-content"><i>${this.text}</i></dd>
             </div>`
           : nothing}
-        <div class="cv-report-body-list-item">
-          <dt class="cv-report-body-list-item-label">Statut :</dt>
-          <dd class="cv-lien-action-modifier cv-lien-action-modifier-menu">
-            <select @change=${this.onChange} class="cv-action">
+        <div class="cv-report-body-item">
+          <dt class="cv-report-body-item-label">Statut :</dt>
+          <dd class="cv-report-body-item-content">
+            <select @change=${this.onChange}>
               ${this._getActions()}
             </select>
           </dd>
         </div>
-        ${this._getSuggestedLink()} ${this._getMessages()}
+        ${this.url
+          ? html`<div class="cv-report-body-item">
+              <dt class="cv-report-body-item-label">Cible :</dt>
+              <dd class="cv-report-body-item-content"><a href="${this.url}" target="visualisation" class="cv-url">${this.url}</a></dd>
+            </div>`
+          : nothing}
+        ${this._getSuggestedLink()}
       </dl>
+      ${this._getMessages()}
     `
   }
 }

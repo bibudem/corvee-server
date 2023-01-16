@@ -5,7 +5,7 @@ import http from 'node:http'
 import chalk from 'chalk'
 import config from 'config'
 
-import { app } from './app.js'
+import { app } from './server/app.js'
 
 const privateKey = await readFile('config/server.key', 'utf8')
 const certificate = await readFile('config/server.crt', 'utf8')

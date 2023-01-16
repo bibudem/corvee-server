@@ -4,9 +4,7 @@
     "package.json",
     "index.js",
     "server.js",
-    "app.js",
-    "config/",
-    "api/",
-    "app/"
+    "server/",
+    "config/"
   ]
 }

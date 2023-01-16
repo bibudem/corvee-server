@@ -3,6 +3,9 @@ import instantsearch from 'instantsearch.js'
 import { configure, searchBox, hits, pagination } from 'instantsearch.js/es/widgets'
 import ScrollBarHelper from '../../common/js/scrollbar.js'
 import { userConfig } from '../../common/js/user-config.js'
+import iconClose from '../../common/svg/icon-close.svg'
+import iconSearch from '../../common/svg/icon-search.svg'
+import iconLoading from '../../common/svg/icon-spinner.svg'
 import { aligoliasearch } from 'client-config/app'
 
 export function initSearchWidget() {
@@ -32,10 +35,10 @@ async function _doInitSearchWidget() {
       function onSearchInputAnimation(event) {
         const target = event.target
         if (target === searchInput && event.animationName === 'fade-out') {
-          if (target.classList.contains('hide')) {
+          if (target.classList.contains('hide-search-widget')) {
             target.hidden = true
           }
-          target.classList.remove('show', 'hide')
+          target.classList.remove('show-search-widget', 'hide-search-widget')
           target.removeEventListener('animationend', onSearchInputAnimation)
         }
       }
@@ -44,11 +47,11 @@ async function _doInitSearchWidget() {
       searchInput.classList.remove('loading')
 
       if (facetHits && facetHits.length !== 1) {
-        searchInput.classList.add('hide')
+        searchInput.classList.add('hide-search-widget')
         return
       }
 
-      searchInput.classList.add('show')
+      searchInput.classList.add('show-search-widget')
 
       const instantsearchParams = {
         indexName,
@@ -95,6 +98,18 @@ async function _doInitSearchWidget() {
             submitIcon: 'cv-search-dialog-submit-icon',
             reset: 'cv-search-dialog-reset-btn',
             resetIcon: 'cv-search-dialog-reset-icon',
+            loadingIndicator: 'cv-search-dialog-loading-btn',
+          },
+          templates: {
+            submit({ cssClasses }, { html }) {
+              return html`${iconSearch.replace('viewBox', 'class="cv-search-dialog-submit-icon" viewBox')}`
+            },
+            reset({ cssClasses }, { html }) {
+              return html`${iconClose.replace('viewBox', 'class="cv-search-dialog-reset-icon" viewbox')}`
+            },
+            loadingIndicator({ cssClasses }, { html }) {
+              return html`${iconLoading.replace('viewBox', 'class="cv-search-dialog-loading-icon" viewbox')}`
+            },
           },
         }),
 
@@ -103,15 +118,14 @@ async function _doInitSearchWidget() {
           // scrollTo: '#cv-search-hits',
           cssClasses: {
             root: ['cv-search-hits-root'],
-            list: ['cv-search-hits-list-group', 'list-group'],
+            list: ['cv-search-hits-list-group'],
             item: ['cv-search-hits-item'],
           },
           templates: {
             item(hit, { html, components }) {
               const pages = hit.pages ? html`<p class="cv-search-hits-item-pages">${hit.pages.join(' | ')}</p>` : ''
               const text = hit.text ? html`<p class="cv-search-hits-item-text"><small>${hit.text}</small></p>` : ''
-              return html`<div tabindex="0" class="cv-search-hits-item-action list-group-item list-group-item-action"
-  data-cv-link-key-ref="${hit.key}">
+              return html`<div tabindex="0" class="" data-cv-link-key-ref="${hit.key}">
   <p class="cv-search-hits-item-title">${components.Highlight({ hit, attribute: 'title' })}</p>
   ${pages}
   <p class="cv-search-hits-item-url">
@@ -121,7 +135,7 @@ async function _doInitSearchWidget() {
 </div>`
             },
             empty(result, { html }) {
-              return html`Aucun résultat pour <q> ${result.query} </q>`
+              return html`<div class="cv-search-hits-no-result">Aucun résultat pour <q> ${result.query} </q></div>`
             },
           },
         }),
@@ -147,9 +161,21 @@ async function _doInitSearchWidget() {
       const searchDialogInput = dialog.querySelector('.cv-search-dialog-input')
       const searchDialogSubmitBtn = dialog.querySelector('.cv-search-dialog-submit-btn')
       const searchDialogResetBtn = dialog.querySelector('.cv-search-dialog-reset-btn')
+      const searchDialogBackBtn = document.createElement('button')
+      const searchHits = dialog.querySelector('.cv-search-hits')
       const searchPagination = dialog.querySelector('.cv-search-pagination')
 
       searchDialogSubmitBtn.tabIndex = -1
+
+      searchDialogBackBtn.setAttribute('aria-label', 'Fermer')
+      searchDialogBackBtn.classList.add('cv-search-dialog-back-btn')
+      searchDialogBackBtn.innerHTML = '<svg class="cv-search-dialog-back-icon"><use xlink:href="#arrow-left"></use></svg>'
+      searchDialogBackBtn.addEventListener('click', closeDialog)
+      searchDialogForm.prepend(searchDialogBackBtn)
+
+      // Translations
+      searchDialogSubmitBtn.setAttribute('title', 'Chercher')
+      searchDialogResetBtn.setAttribute('title', 'Effacer')
 
       function showDialog() {
         scrollbar.hide()
@@ -162,9 +188,9 @@ async function _doInitSearchWidget() {
           { once: true }
         )
         dialog.classList.add('open')
-        // setTimeout(() => {
         dialog.showModal()
-        // })
+        searchDialogInput.focus()
+        updateScrollbarVisility()
       }
 
       function closeDialog(delayed = false, callback = () => { }) {
@@ -198,7 +224,7 @@ async function _doInitSearchWidget() {
       })
 
       function clearSearchHitsList() {
-        dialog.querySelectorAll('.cv-search-hits-item-action.active').forEach(elem => elem.classList.remove('active'))
+        dialog.querySelectorAll('.cv-search-hits-item.active').forEach(elem => elem.classList.remove('active'))
       }
 
       function onSearchInputContainerAnimation(event) {
@@ -231,7 +257,7 @@ async function _doInitSearchWidget() {
 
         searchInputContainer.classList.remove('empty')
         searchInputContainer.classList.add('filled', 'expanding')
-        searchInputBtn.innerHTML = `<span class="cv-chip"><button type="button" class="btn-close" aria-label="Supprimer"></button><span  tabindex="0" class="cv-chip-text">${selectedPageTitle}</span></span>`
+        searchInputBtn.innerHTML = `<span class="cv-chip"><button type="button" class="btn-close" aria-label="Supprimer" title="Supprimer"></button><span  tabindex="0" class="cv-chip-text" title="${selectedPageTitle}">${selectedPageTitle}</span></span>`
         searchDialogInput.value = selectedPageTitle
         searchInputBtn.tabIndex = -1
         searchDialogInput.dispatchEvent(new InputEvent('input'))
@@ -293,6 +319,19 @@ async function _doInitSearchWidget() {
         }
       }
 
+      function updateScrollbarVisility() {
+        if (!searchHits.checkVisibility()) {
+          return
+        }
+
+        const scrollbarWidth = searchHits.offsetWidth - searchHits.scrollWidth
+        searchHits.style.setProperty('--_actual-scrollbar-width', `${scrollbarWidth}px`)
+      }
+
+      //
+      // Initialisation
+      //
+
       document.querySelectorAll('.rapport').forEach(async rapport => {
         const pageUrl = new URL(rapport.querySelector('.rapport--heading-content a').href)
         pageUrl.hash = ''
@@ -314,7 +353,7 @@ async function _doInitSearchWidget() {
 
       dialog.addEventListener('click', function (event) {
         const self = event.target
-        if (self.classList.contains('cv-search-hits-item-action')) {
+        if (self.classList.contains('cv-search-hits-item')) {
           updateSearchWidget(self)
           closeDialog(true)
         }
@@ -335,7 +374,7 @@ async function _doInitSearchWidget() {
         }
 
         const self = event.target
-        if (event.key === 'Enter' && self.classList.contains('cv-search-hits-item-action')) {
+        if (event.key === 'Enter' && self.classList.contains('cv-search-hits-item')) {
           updateSearchWidget(self)
           closeDialog(true, () => {
             searchInputBtn.querySelector('.btn-close').focus({ focusVisible: true })
@@ -347,6 +386,8 @@ async function _doInitSearchWidget() {
 
       searchDialogResetBtn.addEventListener('click', function () {
         clearSearchWidget()
+        console.log('ici')
+        updateSearchDialogSubmitBtn()
       })
 
       searchDialogInput.addEventListener('keyup', updateSearchDialogSubmitBtn)
@@ -361,7 +402,7 @@ async function _doInitSearchWidget() {
 
       dialog.addEventListener('click', function (event) {
         if (event.target.classList.contains('cv-search-pagination-link')) {
-          dialog.querySelector('.cv-search-hits').scrollTo(0, 0)
+          searchHits.scrollTo(0, 0)
         }
       })
 
@@ -369,7 +410,12 @@ async function _doInitSearchWidget() {
 
       paginationObserver.observe(searchPagination, { attributes: false, childList: true, subtree: true })
 
-      // updatePaginationVisibility()
+      const scrollbarObserver = new MutationObserver(updateScrollbarVisility)
+
+      scrollbarObserver.observe(searchHits, { attributes: false, childList: true, subtree: true })
+
+      const navBarHeight = getComputedStyle(document.querySelector('.cv-navbar')).height
+      document.documentElement.style.setProperty('--cv-navbar-height', navBarHeight)
 
       if (/q=./.test(location.search)) {
         searchDialogSubmitBtn.hidden = true

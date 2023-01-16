@@ -37,22 +37,5 @@
 @import "../../common/scss/root";
 @import "../../common/scss/reboot";
 @import "../../common/scss/utilities";
-// @import "../../common/scss/states";
+@import "report";
 // @import "icons";
-
-:host {
-  display: block;
-}
-
-h3 {
-  display: flex;
-  font-size: inherit;
-  font-weight: normal;
-  margin-bottom: 0.5em;
-}
-
-.cv-report {
-  padding-left: 1.5em;
-  padding-top: 1em;
-  margin-bottom: 0;
-}

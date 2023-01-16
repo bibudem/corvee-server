@@ -12,6 +12,7 @@ $rfs-unit: px;
 //
 $enable-shadows: true;
 $enable-transitions: true;
+$enable-rounded: true;
 // $enable-cssgrid: true;
 
 //
@@ -30,10 +31,13 @@ $spacer: hem(1);
 
 // Theme colors
 $primary: #006599;
+$secondary: #bc520b;
 $accent: #cc3241;
 $error: #cc3241;
 $warning: #fad209;
 $success: #6fa738;
+
+$gray-200: #ecedee;
 
 $custom-colors: (
   "accent": $accent,

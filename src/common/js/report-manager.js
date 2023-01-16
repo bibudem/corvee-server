@@ -3,7 +3,7 @@ import { unsafeCSS } from 'lit'
 import cvReportStyles from '../../cv-report/scss/cv-report.scss'
 import cvReportHeaderStyles from '../../cv-report-header/scss/cv-report-header.scss'
 import cvReportBodyStyles from '../../cv-report-body/scss/cv-report-body.scss'
-import cvReportWidgetStyles from '../../cv-report-widget/scss/cv-report-widget.scss'
+import reportWidgetStyles from '../../cv-report-widget/scss/cv-report-widget.scss'
 import { actions, baseUrl, linkTypes, defaultLinkType } from 'client-config/app'
 
 class ReportManager {
@@ -32,7 +32,7 @@ class ReportManager {
       cvReportStyles: unsafeCSS(cvReportStyles),
       cvReportHeaderStyles: unsafeCSS(cvReportHeaderStyles),
       cvReportBodyStyles: unsafeCSS(cvReportBodyStyles),
-      cvReportWidgetStyles: unsafeCSS(cvReportWidgetStyles),
+      reportWidgetStyles: unsafeCSS(reportWidgetStyles),
     }
 
     this.actions = new Map()
@@ -122,7 +122,6 @@ class ReportManager {
   async updateReport(reportId, data) {
     return fetch(`${baseUrl}/api/links/${reportId}`, {
       method: 'PATCH',
-      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },

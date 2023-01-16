@@ -11,17 +11,17 @@ import { create } from 'express-handlebars'
 import handlebarHelpers from 'handlebars-helpers'
 import 'express-async-errors'
 
-import appRoutes from './app/routes/app.routes.js'
 import establishDbConnection from './api/database/connection.js'
+import appRoutes from './app/routes/app.routes.js'
 import apiRoutes from './api/routes/api.js'
 import { headersMiddleware } from './middlewares/headers.middleware.js'
 import { staticMiddleware } from './middlewares/static.middleware.js'
 import { userConfigMiddleware } from './middlewares/user-config.middleware.js'
-import pkg from './package.json' assert {type: 'json'}
+import pkg from '../package.json' assert {type: 'json'}
 import config from 'config'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const staticDir = resolve(__dirname, process.env.NODE_ENV.endsWith('production') ? 'build' : 'dev')
+const staticDir = resolve(__dirname, '..', process.env.NODE_ENV.endsWith('production') ? 'build' : 'dev')
 const publicDir = resolve(__dirname, 'app', 'public')
 const staticAssetsOptions = Object.assign({}, config.get('server.staticAssetsOptions'))
 
@@ -36,10 +36,15 @@ const hbs = create({
 
 handlebarHelpers({ handlebars: hbs.handlebars })
 
-await establishDbConnection()
+try {
+  await establishDbConnection()
+} catch (error) {
+  console.error(error)
+}
+
 app.engine('hbs', hbs.engine)
 app.set('view engine', 'hbs')
-app.set('views', 'app/views')
+app.set('views', resolve(__dirname, 'app', 'views'))
 app.disable('x-powered-by')
 // app.disable('etag')
 
@@ -51,9 +56,9 @@ app.use(cookieParser())
 app.use(express.json())
 
 app.use(headersMiddleware())
-app.use(cors({ origin: true, credentials: true }))
+app.use(cors())
 
-app.use(staticMiddleware(staticDir, { staticAssetsOptions, compression: { exts: ['js', 'css', 'map'] }, methods: ['br', 'gzip', 'deflate'] }))
+app.use(staticMiddleware(staticDir, { staticAssetsOptions, compression: { exts: ['js', 'css', 'map'] }, encodings: ['br', 'gzip', 'deflate'] }))
 app.use(staticMiddleware(publicDir, { staticAssetsOptions }))
 
 app.use(userConfigMiddleware)

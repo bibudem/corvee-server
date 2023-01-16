@@ -56,6 +56,7 @@
 
 @import "icons";
 @import "animation";
+@import "progress-bar";
 @import "navbar";
 @import "page-header";
 @import "page-main";
@@ -63,22 +64,4 @@
 @import "report";
 @import "home-page-content";
 @import "search-widget";
-
-cv-report,
-.cv-page-report {
-  --cv-animate-duration: 0.3s;
-}
-
-.cv-animate-zoom-out {
-  @extend .animate__animated;
-  @extend .animate__fade-out;
-}
-
-.cv-animate-zoom-in {
-  @extend .animate__animated;
-  @extend .animate__fade-in;
-}
-
-cv-report-body {
-  --cv-i-download--container-text-align: left;
-}
+@import "base";

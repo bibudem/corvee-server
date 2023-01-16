@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import autopush from 'http2-express-autopush'
+import onHeaders from 'on-headers'
 import { staticCompressionMiddleware } from './compression.middleware.js'
 
 export function staticMiddleware(root, options = {}) {
@@ -8,9 +9,12 @@ export function staticMiddleware(root, options = {}) {
   function setHeaders(res, path, stat) {
     if (res.req.originalUrl === `${res.app.locals.baseUrl}loader.js`) {
       res.removeHeader('Expires')
-      res.removeHeader('Date')
       res.setHeader('Cache-Control', 'private, max-age=900') // 15min
       res.setHeader('ETag', `W/"${stat.size}-${stat.mtime.getTime()}"`)
+    } else {
+      onHeaders(res, () => {
+        res.removeHeader('date')
+      })
     }
   }
 

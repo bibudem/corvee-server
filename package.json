@@ -20,19 +20,19 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production npm-run-all clean:build prepare sprite:build build:* compress",
     "build:client": "rollup --config rollup.config.js",
-    "build:app-css": "node scripts/app-css.js",
-    "clean:dev": "node scripts/clean.js dev",
-    "clean:build": "node scripts/clean.js build",
+    "build:app-css": "node utils/app-css.js",
+    "clean:dev": "node utils/clean.js dev",
+    "clean:build": "node utils/clean.js build",
     "compress": "gzipper compress --deflate --brotli --gzip --gzip-level 9 --deflate-level 9 --brotli-quality 11 build",
     "dev": "npm-run-all --print-label --print-name clean:dev prepare -p sprite:watch dev:* serve",
     "dev:client": "rollup --config rollup.config.js --watch",
-    "dev:app-css": "nodemon --watch src/app/scss --watch src/common/scss --ext scss --ignore src/common/scss/_config.scss scripts/app-css.js -- dev",
+    "dev:app-css": "nodemon --watch src/app/scss --watch src/common/scss --ext scss --ignore src/common/scss/_config.scss utils/app-css.js -- dev",
     "prepare": "npm run scss:config",
     "preview": "cross-env NODE_ENV=production npm-run-all --print-label --print-name serve",
-    "scss:config": "node scripts/config-scss.js",
+    "scss:config": "node utils/config-scss.js",
     "serve": "nodemon server.js",
-    "sprite:build": "node scripts/sprite-generator.js",
-    "sprite:watch": "nodemon --config nodemon.sprite.json scripts/sprite-generator.js"
+    "sprite:build": "node utils/sprite-generator.js",
+    "sprite:watch": "nodemon --config nodemon.sprite.json utils/sprite-generator.js"
   },
   "dependencies": {
     "@hapi/accept": "^6.0.0",
@@ -59,6 +59,7 @@
     "vary": "^1.1.2"
   },
   "devDependencies": {
+    "@floating-ui/dom": "^1.1.0",
     "@material/menu": "^14.0.0",
     "@popperjs/core": "^2.11.6",
     "@rollup/plugin-commonjs": "^24.0.0",

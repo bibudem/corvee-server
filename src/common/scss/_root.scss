@@ -1,10 +1,21 @@
+@use "sass:map";
+@use "sass:math";
+
+// @function strip-unit($value)
+// @param {number with unit} $value
+@function strip-unit($value) {
+  @return math.div($value, $value * 0 + 1);
+}
+
 @function hem($multiplier) {
-  @return $font-size-base * $multiplier;
+  @return $font-size-base * strip-unit($multiplier);
 }
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
 $root: root !default;
+
+$gray: map.get($colors, "gray");
 
 :#{$root} {
   --cv-error: #{$accent};
@@ -25,6 +36,11 @@ $root: root !default;
   --cv-space-width: 0.2473958333333333em;
   --cv-color-neutral-muted: #ebedf0;
   --cv-muted-color: #82878f;
+  --cv-backdrop-color: rgba(0, 0, 0, 0.32);
+
+  --cv-radius-inline: 0.25em;
+  --cv-radius-block: #{hem(1)};
+  --cv-radius-round: 50vw;
 
   --cv-speed-duration-short: 100ms;
   --cv-speed-duration-medium-in: 250ms;

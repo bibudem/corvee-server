@@ -4,7 +4,12 @@
 
 .cv-report-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+
+  [class*=" cv-i-"],
+  [class|="cv-i"] {
+    margin-top: 0.25em;
+  }
 }
 
 [class*=" cv-i-"],

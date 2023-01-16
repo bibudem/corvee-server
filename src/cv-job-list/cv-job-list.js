@@ -150,11 +150,11 @@ export class CvJobList extends LitElement {
           <div class="mdc-menu-surface">
             <ul class="mdc-deprecated-list" role="menu">
               ${this.jobs?.map(job => {
-                const isActive = { active: job === this.currentJob }
-                return html` <li class="mdc-deprecated-list-item ${classMap(isActive)}" role="menuitem" data-value="${job}" tabindex="0" aria-current="${job === this.currentJob}">
+                const isActive = { active: this.currentJob ? job === this.currentJob : job === this.defaultJob }
+                return html` <li class="mdc-deprecated-list-item ${classMap(isActive)}" role="menuitem" data-value="${job}" tabindex="0" aria-current="${isActive.active}">
                   <span class="mdc-deprecated-list-item__ripple"></span>
                   <span class="cv-dropdown-item-container mdc-deprecated-list-item__text">
-                    <span class="cv-dropdown-item-icon">${job === this.currentJob ? this._setActiveIcon() : nothing}</span>
+                    <span class="cv-dropdown-item-icon">${isActive.active ? this._setActiveIcon() : nothing}</span>
                     <span>${job}</span>
                     <span class="cv-dropdown-item-marker">${job === this.defaultJob ? '*' : ''}</span>
                   </span>

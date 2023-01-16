@@ -1,0 +1,45 @@
+.indeterminate-progress-bar {
+  /* Color */
+
+  /* Rounded border */
+  border-radius: 9999px;
+
+  /* Size */
+  height: 3px;
+
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000000;
+}
+
+.indeterminate-progress-bar__progress {
+  /* Color */
+  background-color: var(--cv-primary);
+
+  /* Rounded border */
+  border-radius: 9999px;
+
+  /* Absolute position */
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  width: 50%;
+
+  /* Move the bar infinitely */
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-name: indeterminate-progress-bar;
+}
+
+@keyframes indeterminate-progress-bar {
+  from {
+    left: -50%;
+  }
+
+  to {
+    left: 100%;
+  }
+}

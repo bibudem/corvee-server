@@ -20,9 +20,8 @@ import { defaultShouldMinify } from 'minify-html-literals'
 import replace from '@rollup/plugin-replace'
 import terser from '@rollup/plugin-terser'
 import summary from 'rollup-plugin-summary'
-import clientConfig from './lib/client-config.js'
+import clientConfig from './utils/client-config.js'
 import pkg from './package.json' assert {type: 'json'}
-import { css } from 'lit'
 
 const production = process.env.NODE_ENV === 'production'
 const task = process.argv.includes('--watch') ? 'watch' : 'build'
