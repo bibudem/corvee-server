@@ -50,7 +50,7 @@
     "http2-express-autopush": "^1.0.5",
     "http2-express-bridge": "^1.0.7",
     "js-cookie": "^3.0.1",
-    "lit": "^2.5.0",
+    "lit": "^2.6.1",
     "mime-types": "^2.1.35",
     "mongoose": "^6.8.2",
     "on-headers": "^1.0.2",
