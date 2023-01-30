@@ -34,14 +34,6 @@
   animation: fade-out var(--cv-search-widget-close-animation-duration, var(--cv-speed-duration-short)) cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 
-.cv-i-search {
-  display: inline-block;
-  flex-shrink: 0;
-  vertical-align: -0.125em;
-  width: 1em;
-  height: 1em;
-}
-
 .cv-chip {
   --cv-chip-base-size: 0.9rem;
   --cv-chip-color: #49454e;
@@ -353,27 +345,6 @@
 
     &::-webkit-search-cancel-button {
       display: none !important;
-    }
-  }
-
-  &-loading-icon {
-    stroke-width: 17;
-    stroke-dasharray: 188.4955 64.8318;
-    animation: spinner 1000ms linear infinite;
-
-    @at-root {
-      @keyframes spinner {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
-      }
-    }
-
-    path:first-child {
-      fill: var(--cv-blue);
     }
   }
 

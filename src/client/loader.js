@@ -6,7 +6,7 @@
  */
 
 import Cookie from 'js-cookie'
-import { baseUrl, version, cookie } from 'client-config/app'
+import { baseUrl, version, cookie } from '@corvee/client-config/app'
 import { L_KEY } from '../common/js/constants.js'
 
 const role = self === top ? 'master' : 'slave'

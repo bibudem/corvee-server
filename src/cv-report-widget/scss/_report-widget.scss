@@ -4,7 +4,12 @@
 
 :host {
   display: inline-block;
+  position: relative;
   --cv-report-body-item-label-align: end;
+}
+
+:host([open]) {
+  z-index: 1;
 }
 
 $actions: "to-be-fixed" "error", "fixed" "success", "no-error" "success", "ignore" "success";
@@ -73,16 +78,16 @@ $actions: "to-be-fixed" "error", "fixed" "success", "no-error" "success", "ignor
 
     box-shadow: #ffffffff 0 0 0 0.25em, var(--cv-widget-state-color) 0 0 0 calc(0.25em + var(--cv-widget-state-border-width)) !important;
 
-    transition: all var(--cv-report-dialog-close-animation-duration) cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: box-shadow var(--cv-report-dialog-close-animation-duration) cubic-bezier(0.165, 0.84, 0.44, 1);
 
     position: relative;
     border-radius: var(--cv-radius-inline);
-    scale: 0.953;
+    scale: var(--_cv-report-widget-header-scale, 0.975);
     background-color: #fff;
 
     &:hover,
     &.hover {
-      transition: all var(--cv-report-dialog-open-animation-duration) cubic-bezier(0.55, 0.085, 0.68, 0.53);
+      transition: box-shadow var(--cv-report-dialog-open-animation-duration) cubic-bezier(0.55, 0.085, 0.68, 0.53);
     }
 
     &:active {
@@ -92,15 +97,18 @@ $actions: "to-be-fixed" "error", "fixed" "success", "no-error" "success", "ignor
 }
 
 .report-dialog {
+  @include reset-inherit;
+
   display: none;
-  min-width: 450px;
-  max-width: 600px;
+  min-width: 35em;
+  max-width: 80vw;
   padding: 0;
   position: relative;
   cursor: auto;
   border: var(--cv-report-dialog-border);
   box-shadow: var(--cv-report-dialog-box-shadow);
   border-radius: var(--cv-report-dialog-border-radius);
+
   font-size: 15px;
 
   &[open] {

@@ -1,18 +1,14 @@
 import { LitElement, css, html, unsafeCSS, nothing } from 'lit'
-import { unsafeSVG } from 'lit/directives/unsafe-svg.js'
+import { unsafeHTML } from 'lit/directives/unsafe-html.js'
 import { classMap } from 'lit/directives/class-map.js'
 import { MDCMenuSurface } from '@material/menu-surface'
-import moment from 'moment/moment.js'
-import 'moment/locale/fr'
 import { ENTER_KEY, SPACE_KEY } from '../common/js/constants.js'
 import { userConfig } from '../common/js/user-config.js'
-import { baseUrl } from 'client-config/app'
+import { baseUrl } from '@corvee/client-config/app'
+import checkIcon from '../common/icons/check.svg'
 import stylesheet from './js/stylesheet.js'
-import svgSprite from './assets/sprite.svg'
-// import stylesheet2 from './scss/cv-job-list.scss'
 
-// Default date lang
-moment.locale('fr')
+const longDateFormat = new Intl.DateTimeFormat('fr-CA', { dateStyle: 'long', timeZone: 'UTC' })
 
 /**
  * An example element.
@@ -138,12 +134,11 @@ export class CvJobList extends LitElement {
   }
 
   _getCurrentJob() {
-    return moment(this.currentJob ?? this.defaultJob).format('LL')
+    return longDateFormat.format(new Date(this.currentJob ?? this.defaultJob))
   }
 
   render() {
     return html`
-      ${unsafeSVG(svgSprite)}
       <div class="cv-jobs-list">
         <button class="cv-dropdown-toggle mdc-button">${this._getCurrentJob()}</button>
         <div class="mdc-menu-surface--anchor">
@@ -154,7 +149,7 @@ export class CvJobList extends LitElement {
                 return html` <li class="mdc-deprecated-list-item ${classMap(isActive)}" role="menuitem" data-value="${job}" tabindex="0" aria-current="${isActive.active}">
                   <span class="mdc-deprecated-list-item__ripple"></span>
                   <span class="cv-dropdown-item-container mdc-deprecated-list-item__text">
-                    <span class="cv-dropdown-item-icon">${isActive.active ? this._setActiveIcon() : nothing}</span>
+                    <span class="cv-dropdown-item-icon">${isActive.active ? unsafeHTML(checkIcon) : nothing}</span>
                     <span>${job}</span>
                     <span class="cv-dropdown-item-marker">${job === this.defaultJob ? '*' : ''}</span>
                   </span>

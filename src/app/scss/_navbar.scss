@@ -26,9 +26,10 @@
 
   &-brand {
     --cv-navbar-brand-margin-end: 0;
+    display: inline-flex;
+    align-items: center;
 
-    &-icon {
-      vertical-align: sub;
+    .cv-i-arrow-back {
       width: 1.2em;
       height: 1.2em;
     }

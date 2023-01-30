@@ -9,7 +9,7 @@ import '../cv-switch/cv-switch.js'
 import './js/app-base.js'
 import { userConfig } from '../common/js/user-config.js'
 import reportManager from '../common/js/report-manager.js'
-import { baseUrl, version } from 'client-config/app'
+import { baseUrl, version } from '@corvee/client-config/app'
 
 document.addEventListener('DOMContentLoaded', async () => {
   const totalErrors = document.querySelector('#cv-total-errors')
@@ -136,8 +136,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const stickyEvents = new StickyEvents({
     stickySelector: '.cv-page-report-header',
   })
-
-  // stickyEvents.enableEvents()
 
   const { stickyElements, stickySelector } = stickyEvents
 

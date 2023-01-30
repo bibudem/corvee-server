@@ -1,6 +1,5 @@
 import { css, html, adoptStyles } from 'lit'
 import { createPopper } from '@popperjs/core'
-import { shift } from '@floating-ui/dom'
 import { querySelectorAll } from 'kagekiri'
 import { ENTER_KEY, ESCAPE_KEY, SPACE_KEY, TAB_KEY } from '../common/js/constants.js'
 import { CvReportBase } from '../cv-report-base/cv-report-base.js'
@@ -11,6 +10,20 @@ import { getBoxShadowWidths } from '../common/js/box-shadow-widths.js'
 
 function getFocusables(el) {
   return querySelectorAll('button,[href],select,textarea,input:not([type="hidden"]),[tabindex]:not([tabindex="-1"])', el)
+}
+
+function onVisible(element, callback) {
+  const options = {
+    root: document.documentElement,
+  }
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      callback(entry.intersectionRatio > 0, observer)
+    })
+  }, options)
+
+  observer.observe(element)
 }
 
 /**
@@ -98,10 +111,6 @@ export class CvReportWidget extends CvReportBase {
         }
       })
 
-      this.elements.reportDialog.addEventListener('click', event => {
-        event.preventDefault()
-      })
-
       this.elements.reportDialog.addEventListener('keydown', event => {
         const self = this.elements.reportDialog
         // if (event.key === 'Enter') {
@@ -141,6 +150,26 @@ export class CvReportWidget extends CvReportBase {
         console.log('[mouseleave]')
         this.close()
       })
+
+      const reportWidgets = this.querySelectorAll('cv-report-widget')
+      reportWidgets.forEach(reportWidget => {
+        reportWidget.addEventListener('mouseenter', () => {
+          this.close()
+        })
+        reportWidget.addEventListener('mouseleave', () => {
+          this.show()
+        })
+      })
+
+      onVisible(this, (visible, observer) => {
+        if (visible) {
+          const width = this.getBoundingClientRect().width
+          const widthOffset = getBoxShadowWidths(getComputedStyle(this.elements.reportHeader).boxShadow).left
+          const scale = (width - widthOffset) / width
+          this.elements.reportWidgetContainer.style.setProperty('--_cv-report-widget-header-scale', Math.max(scale, 0.95))
+          observer.disconnect()
+        }
+      })
     })
   }
 
@@ -165,10 +194,7 @@ export class CvReportWidget extends CvReportBase {
         return reject(false)
       }
 
-      console.log('[show] start')
-
       if (this.elements.reportDialog.classList.contains('close')) {
-        console.warn('[show] !!! Contains .close')
         // Widget close animation is running. Will cancel it
         this.elements.reportDialog.classList.remove('close')
       }
@@ -192,10 +218,7 @@ export class CvReportWidget extends CvReportBase {
         return reject(false)
       }
 
-      console.log('[close] start')
-
       if (this.elements.reportDialog.classList.contains('open')) {
-        console.warn('[close] !!! Contains .open')
         // Widget open animation is running. Will cancel it
         this.elements.reportDialog.classList.remove('open')
       }

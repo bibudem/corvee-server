@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import minifyHTML from 'express-minify-html'
 import config from 'config'
 import { homeRoute } from './home.route.js'
 import { sectionRoute } from './section.route.js'
@@ -27,6 +28,24 @@ const router = Router()
 router.use(searchParamsMiddleware(['job']))
 router.use(jobParamMiddleware)
 router.use(jobsMiddleware)
+
+if (process.env.NODE_ENV.endsWith('production')) {
+  router.use(
+    minifyHTML({
+      override: true,
+      exception_url: false,
+      htmlMinifier: {
+        removeComments: true,
+        collapseWhitespace: true,
+        conservativeCollapse: true,
+        collapseBooleanAttributes: true,
+        removeAttributeQuotes: false,
+        removeEmptyAttributes: true,
+        minifyJS: true,
+      },
+    })
+  )
+}
 
 //
 // /section/:section route

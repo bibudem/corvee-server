@@ -33,7 +33,5 @@ node_modules/
 /data
 /dev
 /config/local*
-/config/server.key
-/config/openssl.cnf
-/config/server.crt
-/config/server.csr
+/config/certificate/*
+!/config/certificate/ssl.sh

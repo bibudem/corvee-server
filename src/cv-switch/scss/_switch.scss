@@ -74,7 +74,10 @@
       top: 50%;
       transform: translateY(-50%);
       left: var(--cv-switch-padding-x);
-      display: inline-block;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       border: var(--cv-switch-thumb-border-width) solid var(--cv-switch-thumb-border-color);
       border-radius: 100%;
       background-color: var(--cv-switch-thumb-background-color);
@@ -102,12 +105,8 @@
 
       svg {
         opacity: 0;
-        transform: scale(0.7);
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
+        height: calc(var(--_thumb-size) * 0.55);
+        width: calc(var(--_thumb-size) * 0.55);
         display: none;
       }
     }
@@ -130,7 +129,7 @@
       left: calc(var(--_switch-width) - var(--_thumb-size) - calc(var(--cv-switch-border-width) * 2) - var(--cv-switch-padding-x) + 1px);
       background: var(--cv-switch-thumb-background-color-selected);
       border-color: var(--cv-switch-thumb-border-color-selected);
-      color: var(--cv-color-primary);
+      color: var(--cv-primary);
 
       .cv-i-check {
         display: block;
@@ -152,7 +151,7 @@
   .switch {
     .thumb {
       --_thumb-size: calc(var(--cv-switch-size) * 0.55);
-      .cv-i-clear {
+      .cv-i-close {
         display: block;
         display: none;
         opacity: 1;

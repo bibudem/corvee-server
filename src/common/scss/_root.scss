@@ -23,9 +23,9 @@ $gray: map.get($colors, "gray");
   --cv-success: #{$success};
   --cv-accent: #{$accent};
 
-  --cv-body-color: #333;
+  --cv-body-color: #{$body-color};
   --cv-body-font-family: #{$font-family-base};
-  --cv-code-font: "Roboto Mono", monospace;
+  --cv-code-font: #{$font-family-monospace};
   --cv-body-font-size: #{hem(1)};
   --cv-gray-200: #eee;
 
@@ -38,7 +38,7 @@ $gray: map.get($colors, "gray");
   --cv-muted-color: #82878f;
   --cv-backdrop-color: rgba(0, 0, 0, 0.32);
 
-  --cv-radius-inline: 0.25em;
+  --cv-radius-inline: 0.3333em;
   --cv-radius-block: #{hem(1)};
   --cv-radius-round: 50vw;
 

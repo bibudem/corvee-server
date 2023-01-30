@@ -10,9 +10,7 @@
     <ul class="cv-sections-list">
       {{#each sections}}
       <li data-section-key="{{key}}">
-        <svg class="cv-i-rolling">
-          <use xlink:href="#icon-rolling"></use>
-        </svg>
+        {{{read "src/common/icons/spinner-rolling.svg" }}}
         <a href="sections/{{ key }}{{ @root.searchParams }}">{{{title}}}</a>
         <span class="cv-section-errors">... erreurs</span>
       </li>
@@ -20,4 +18,8 @@
     </ul>
   </section>
   {{/each}}
+
+  <h2 class="h2">Rapports statistiques</h2>
+
+  <div id="stats-code-erreur" class="cv-stats-table"></div>
 </main>

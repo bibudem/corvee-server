@@ -7,8 +7,8 @@ import config from 'config'
 
 import { app } from './server/app.js'
 
-const privateKey = await readFile('config/server.key', 'utf8')
-const certificate = await readFile('config/server.crt', 'utf8')
+const privateKey = await readFile(config.get('server.certificate.key'), 'utf8')
+const certificate = await readFile(config.get('server.certificate.cert'), 'utf8')
 
 const http2Options = {
   key: privateKey,

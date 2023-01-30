@@ -1,8 +1,6 @@
-import moment from 'moment'
 import config from 'config'
 
-// Default date lang
-moment.locale('fr-CA')
+const longDateFormat = new Intl.DateTimeFormat('fr-CA', { dateStyle: 'long', timeZone: 'UTC' })
 
 const expires = new Date(config.get('job.deadline'))
 
@@ -32,7 +30,7 @@ class UserConfig {
       enumerable: true,
       configurable: false,
       get() {
-        return this.#harvestDate ? moment(this.#harvestDate).format('LL') : this.#harvestDate
+        return this.#harvestDate ? longDateFormat.format(new Date(this.#harvestDate)) : this.#harvestDate
       },
       set(value) {
         this.#harvestDate = value
@@ -105,5 +103,5 @@ class UserConfig {
 export const userConfig = new UserConfig(config.get('app.cookie'), {
   currentJob: config.get('job.currentJob'),
   harvestDate: config.get('job.harvestDate'),
-  deadline: moment(config.get('job.deadline')).format('LL'),
+  deadline: longDateFormat.format(new Date(config.get('job.deadline'))),
 })

@@ -53,7 +53,7 @@ a:hover {
   position: absolute;
   width: 1198px;
   display: flex;
-  align-items: baseline;
+  align-items: center;
 }
 
 .console-title {
@@ -81,7 +81,7 @@ a:hover {
 
 .console-content-right {
   display: flex;
-  align-items: baseline;
+  align-items: flex-end;
 }
 
 .console-date {
@@ -96,13 +96,14 @@ a:hover {
 .console-btn-close {
   @extend %widget-state;
 
+  position: relative;
+  bottom: -0.5em;
   border: 0;
-  border-radius: 50%;
-  cursor: pointer;
-  width: 2.2em;
-  height: 2.2em;
-  opacity: 0.7;
-  padding: 0.6em;
+  border-radius: var(--cv-radius-round);
+  width: 2em;
+  height: 2em;
+  opacity: 0.6;
+  padding: 0;
   margin-left: 1em;
   background-color: transparent;
   transition: all var(--cv-speed-duration-short) ease-in-out;
@@ -110,4 +111,9 @@ a:hover {
   &:hover {
     opacity: 1;
   }
+}
+
+.cv-i-close-l {
+  width: 2em;
+  height: 2em;
 }

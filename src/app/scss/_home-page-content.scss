@@ -1,19 +1,6 @@
 .cv-sections {
   margin-bottom: 2em;
 
-  h2 {
-    background-color: var(--cv-gray-200);
-    border-top: 1px solid #7a7b7e;
-    border-radius: var(--cv-border-radius);
-    font-size: 1.2em;
-    font-style: normal;
-    font-weight: normal;
-    margin: 2em 0 1em;
-    padding: 1em 0.2em;
-    text-decoration: none;
-    text-indent: 1em;
-  }
-
   &-list {
     list-style-type: none;
     column-count: 1;
@@ -43,6 +30,19 @@
       width: 100%;
     }
   }
+}
+
+.h2 {
+  background-color: var(--cv-gray-200);
+  border-top: 1px solid #7a7b7e;
+  border-radius: var(--cv-border-radius);
+  font-size: 1.2em;
+  font-style: normal;
+  font-weight: normal;
+  margin: 2em 0 1em;
+  padding: 1em 0.2em;
+  text-decoration: none;
+  text-indent: 1em;
 }
 
 .cv-section-errors {

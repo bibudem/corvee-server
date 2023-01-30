@@ -1,3 +1,7 @@
-$icons: arrow-back, arrow-left, rolling, to-be-fixed, fixed;
+$icons: to-be-fixed, fixed, ignore, no-error, warning, spinner-rolling;
 
 @include make-icons($icons);
+
+.cv-i-arrow-left {
+  margin-inline-end: var(--cv-space-width);
+}

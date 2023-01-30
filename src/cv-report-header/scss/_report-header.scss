@@ -6,13 +6,12 @@
   display: flex;
   align-items: flex-start;
 
-  [class*=" cv-i-"],
-  [class|="cv-i"] {
-    margin-top: 0.25em;
+  .cv-i {
+    margin-top: 0.15em;
+    margin-right: 0.5em;
   }
 }
 
-[class*=" cv-i-"],
-[class|="cv-i"] {
+.cv-i {
   background: #0000 radial-gradient(circle, #fff 0%, #fff 70%, #fff0 70%);
 }

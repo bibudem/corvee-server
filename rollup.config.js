@@ -1,5 +1,5 @@
 import { fileURLToPath } from 'node:url'
-import { extname, relative } from 'node:path'
+import { extname, relative, resolve } from 'node:path'
 import glob from 'glob'
 
 // Import rollup plugins
@@ -7,8 +7,9 @@ import { copy } from '@web/rollup-plugin-copy'
 import virtual from '@rollup/plugin-virtual'
 import injectProcessEnv from 'rollup-plugin-inject-process-env'
 import commonjs from '@rollup/plugin-commonjs'
-import resolve from '@rollup/plugin-node-resolve'
+import nodeResolve from '@rollup/plugin-node-resolve'
 import json from '@rollup/plugin-json'
+import strip from '@rollup/plugin-strip'
 import scss from 'rollup-plugin-scss'
 import postcss from 'postcss'
 import cssnano from 'cssnano'
@@ -20,18 +21,20 @@ import { defaultShouldMinify } from 'minify-html-literals'
 import replace from '@rollup/plugin-replace'
 import terser from '@rollup/plugin-terser'
 import summary from 'rollup-plugin-summary'
-import clientConfig from './utils/client-config.js'
+import clientConfigModule from './utils/client-config-virtual-module.js'
 import pkg from './package.json' assert {type: 'json'}
 
 const production = process.env.NODE_ENV === 'production'
 const task = process.argv.includes('--watch') ? 'watch' : 'build'
+
+console.log(`Working in ${process.env.NODE_ENV} mode.`)
+console.log(`Current task: ${task}.`)
 
 const buildDir = task === 'watch' ? 'dev' : 'build'
 
 const scssPlugin = scss({
   output: false,
   sourceMap: !production,
-  // outputStyle: 'compressed',
   watch: 'src',
   processor: () => {
     const postcssPlugins = [
@@ -67,7 +70,7 @@ const summaryPlugin = summary()
 
 const cssPlugins = [
   virtual({
-    ...clientConfig
+    ...clientConfigModule
   }),
   string({
     include: 'src/**/*.svg'
@@ -82,13 +85,22 @@ const plugins = [
     },
   }),
   virtual({
-    ...clientConfig
+    ...clientConfigModule,
+    '@corvee/env': `export default '${process.env.NODE_ENV}'`,
   }),
   string({
     include: 'src/**/*.svg'
   }),
   json()
 ]
+
+if (production) {
+  plugins.push(strip({
+    labels: ['debug']
+  }))
+} else {
+
+}
 
 if (task === 'build') {
   plugins.push(
@@ -111,9 +123,12 @@ plugins.push(
   commonjs(),
   injectProcessEnv({
     NODE_ENV: process.env.NODE_ENV
-  }),
+  })
+)
+
+plugins.push(
   // Resolve bare module specifiers to relative paths
-  resolve({ browser: true })
+  nodeResolve({ browser: true })
 )
 
 cssPlugins.push(scssPlugin)

@@ -15,7 +15,3 @@
     box-shadow: var(--cv-btn-box-shadow), var(--cv-btn-focus-box-shadow) !important;
   }
 }
-
-$icons: download;
-
-@include make-icons($icons);

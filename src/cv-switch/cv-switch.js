@@ -1,6 +1,6 @@
 import cvSwitchStyles from './scss/cv-switch.scss'
-import checkIcon from './assets/icons/check.svg'
-import clearIcon from './assets/icons/clear.svg'
+import checkIcon from '../common/icons/check.svg'
+import closeIcon from '../common/icons/close.svg'
 
 export default class CvSwitch extends HTMLElement {
   static get observedAttributes() {
@@ -105,7 +105,7 @@ export default class CvSwitch extends HTMLElement {
       </style>
       <span class="container">
         <span class="switch">
-          <span class="thumb">${checkIcon}${clearIcon}</span>
+          <span class="thumb">${checkIcon}${closeIcon}</span>
         </span>
         ${onLabel}
         ${offLabel}

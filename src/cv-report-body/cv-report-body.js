@@ -1,5 +1,7 @@
 import { LitElement, css, html, adoptStyles, nothing } from 'lit'
 import { unsafeHTML } from 'lit/directives/unsafe-html.js'
+// import '@github/clipboard-copy-element'
+import '../cv-copy-clipboard/cv-copy-clipboard.js'
 import { initDownloadAssets } from './js/download-assets.js'
 import reportManager from '../common/js/report-manager.js'
 
@@ -111,8 +113,12 @@ export class CvReportBody extends LitElement {
 
   _getSuggestedLink() {
     if (this.errorCodes && this.errorCodes.some(errorCode => errorCode.startsWith('http-3')) && !this.errorCodes.includes('http-30x-permanent-redirect-failure')) {
-      return unsafeHTML(`<div class="cv-report-body-item"><dt class="cv-report-body-item-label">Lien
-      suggéré :</dt> <dd class="cv-report-body-item-content"><a href="${this.finalUrl}" target="visualisation" class="cv-url">${this.finalUrl}</a></dd></div>`)
+      return html`<div class="cv-report-body-item">
+        <dt class="cv-report-body-item-label">Lien suggéré :</dt>
+        <dd class="cv-report-body-item-content">
+          <div class="cv-report-body-final-url"><a href="${this.finalUrl}" target="visualisation" class="cv-url">${this.finalUrl}</a><cv-copy-clipboard value="${this.finalUrl}" aria-label="Copier"></cv-copy-clipboard></div>
+        </dd>
+      </div>`
     }
     return nothing
   }
@@ -122,7 +128,7 @@ export class CvReportBody extends LitElement {
       <dl class="cv-report-body">
         ${this.linkType
           ? html`<div class="cv-report-body-item">
-              <dt class="cv-report-body-item-label">Type de lien :</dt>
+              <dt class="cv-report-body-item-label">Type :</dt>
               <dd class="cv-report-body-item-content">${reportManager.linkTypes[this.linkType]}</dd>
             </div>`
           : nothing}

@@ -1,4 +1,4 @@
-import downloadIconSvg from '../../common/svg/download.svg'
+import downloadIconSvg from '../../common/icons/download.svg'
 
 const downloadIcon = (svg => {
   const root = document.createElement('div')

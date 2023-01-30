@@ -21,18 +21,16 @@
 
     @extend .btn;
     @extend .dropdown-toggle;
-    // @extend %widget-state;
+
     @include widget-state(0.25em);
 
     color: inherit;
-    position: relative;
-    bottom: 1px;
     border-width: 0;
     padding-left: 0;
+    vertical-align: baseline;
 
     &:active {
       --cv-btn-active-border-color: transparent;
-      // box-shadow: #ffffff 0px 0px 0px var(--cv-widget-state-whadow-padding), $cv-widget-state-active-box-shadow-color 0px 0px 0px #{$cv-widget-state-box-shadow-width * 2} !important;
     }
 
     &::after {
@@ -94,24 +92,27 @@
       pointer-events: none;
     }
 
-    .cv-dropdown-item-container {
-      display: inline-flex;
-    }
-
-    .cv-dropdown-item-icon {
-      display: inline-flex;
-      align-items: center;
-      min-width: 1.5em;
-
-      svg {
-        margin: 0;
+    .cv-dropdown-item {
+      &-container {
+        display: inline-flex;
       }
-    }
 
-    .cv-dropdown-item-marker {
-      display: inline-block;
-      text-align: center;
-      min-width: 1.5em;
+      &-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 1.5em;
+
+        .cv-i {
+          padding: 0.125em;
+        }
+      }
+
+      &-marker {
+        display: inline-block;
+        text-align: center;
+        min-width: 1.5em;
+      }
     }
 
     * {

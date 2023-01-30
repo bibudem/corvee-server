@@ -4,7 +4,7 @@ import '../../cv-console/cv-console.js'
 // import reportManager from '../../common/js/report-manager.js'
 import { normalizeUrl } from '../../common/js/normalize-url.js'
 import { userConfig } from '../../common/js/user-config.js'
-import { baseUrl, version } from 'client-config/app'
+import { baseUrl, version } from '@corvee/client-config/app'
 
 // const fontDescriptorsMap = {
 //   'ascent-override': 'ascentOverride',
@@ -106,7 +106,7 @@ export class CorveeClientApp {
 
   async _loadFonts() {
     const { default: css } = await import(`${baseUrl}/${version}/client/fonts.js`)
-    this.fontsStylesheet.replaceSync(css)
+    this.fontsStylesheet.replace(css)
 
     // Preloading fonts
     // if (this.role === 'master') {

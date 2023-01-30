@@ -7,6 +7,10 @@ module.exports = {
       http: 8000,
       https: 443,
     },
+    certificate: {
+      key: '', // /path/to/server.key
+      cert: '', // /path/to/server.crt
+    },
     staticAssetsOptions: {
       etag: false,
       lastModified: false,

@@ -1,0 +1,27 @@
+{
+  "octicon": {
+    "copy-16": "copy",
+    "x-24": "close-l"
+  },
+  "fa6-solid": {
+    "check": "check"
+  },
+  "material-symbols": {
+    "arrow-back-rounded": "arrow-back",
+    "download-rounded": "download"
+  },
+  "bi": {
+    "search": "search"
+  },
+  "ep": {
+    "warning-filled": [
+      "to-be-fixed",
+      "no-error"
+    ],
+    "circle-check-filled": "fixed",
+    "remove-filled": "ignore"
+  },
+  "svg-spinners": {
+    "ring-resize": "spinner-rolling"
+  }
+}

@@ -1,89 +1,41 @@
 %cv-i {
-  display: inline-block;
-  fill: currentColor;
-  width: 1em;
-  height: 1em;
-  // margin-right: var(--cv-space-width);
-  margin-right: 0.5em;
-
-  &-arrow-back {
-    @extend %cv-i;
-  }
-
-  &-arrow-left {
-    @extend %cv-i;
-  }
-
-  &-download {
-    @extend %cv-i;
-  }
-
-  &-rolling {
-    @extend %cv-i;
-
+  &-spinner-rolling {
     stroke: #4a5f72;
     opacity: 0.5;
-    stroke-width: 17;
-    stroke-dasharray: 188.4955 64.8318;
-    animation: spinner 1000ms linear infinite;
-
-    @at-root {
-      @keyframes spinner {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
-      }
-    }
   }
 
   &-to-be-fixed {
-    @extend %cv-i;
-
-    fill: var(--cv-error);
+    color: var(--cv-error);
   }
 
   &-fixed {
-    @extend %cv-i;
-
-    fill: var(--cv-success);
+    color: var(--cv-success);
   }
 
   &-ignore {
-    @extend %cv-i;
-
-    fill: var(--cv-success);
+    color: var(--cv-success);
   }
 
   &-no-error {
-    @extend %cv-i;
-
-    fill: var(--cv-success);
+    color: var(--cv-success);
   }
 
   &-warning {
-    @extend %cv-i;
-
-    fill: var(--cv-warning);
-  }
-
-  &-spinner {
-    @extend %cv-i;
-  }
-
-  &-check {
-    @extend %cv-i;
+    color: var(--cv-warning);
   }
 }
 
-@mixin make-icons($icons) {
-  [class*=" cv-i-"],
-  [class|="cv-i"] {
-    flex-shrink: 0;
-  }
+/////////////////////////////////////////////
 
+.cv-i {
+  display: inline-block;
+  // fill: currentColor;
+  flex-shrink: 0;
+  overflow: visible;
+  vertical-align: -0.125em;
+}
+
+@mixin make-icons($icons) {
   @each $icon in $icons {
     .cv-i-#{$icon} {
       @extend %cv-i-#{$icon};

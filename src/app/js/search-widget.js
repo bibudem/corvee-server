@@ -3,10 +3,11 @@ import instantsearch from 'instantsearch.js'
 import { configure, searchBox, hits, pagination } from 'instantsearch.js/es/widgets'
 import ScrollBarHelper from '../../common/js/scrollbar.js'
 import { userConfig } from '../../common/js/user-config.js'
-import iconClose from '../../common/svg/icon-close.svg'
-import iconSearch from '../../common/svg/icon-search.svg'
-import iconLoading from '../../common/svg/icon-spinner.svg'
-import { aligoliasearch } from 'client-config/app'
+import iconClose from '../../common/icons/close.svg'
+import iconSearch from '../../common/icons/search.svg'
+import iconLoading from '../../common/icons/spinner-rolling.svg'
+import iconArrowLeft from '../../common/icons/arrow-left.svg'
+import { algoliasearch as algoliasearchConfig } from '@corvee/client-config/app'
 
 export function initSearchWidget() {
   // console.log('initSearchWidget')
@@ -20,8 +21,8 @@ async function _doInitSearchWidget() {
   if (document.querySelector('#cv-search-input-btn')) {
     const dialog = document.querySelector('.cv-search-dialog')
 
-    const client = algoliasearch(aligoliasearch.applicationID, aligoliasearch.apiKey)
-    const indexName = aligoliasearch.indexName
+    const client = algoliasearch(algoliasearchConfig.applicationID, algoliasearchConfig.apiKey)
+    const indexName = algoliasearchConfig.indexName
     const index = client.initIndex(indexName)
     const job = userConfig.get('currentJob')
     const section = location.pathname.split('/').pop()
@@ -102,13 +103,13 @@ async function _doInitSearchWidget() {
           },
           templates: {
             submit({ cssClasses }, { html }) {
-              return html`${iconSearch.replace('viewBox', 'class="cv-search-dialog-submit-icon" viewBox')}`
+              return html`${iconSearch}`
             },
             reset({ cssClasses }, { html }) {
-              return html`${iconClose.replace('viewBox', 'class="cv-search-dialog-reset-icon" viewbox')}`
+              return html`${iconClose}`
             },
             loadingIndicator({ cssClasses }, { html }) {
-              return html`${iconLoading.replace('viewBox', 'class="cv-search-dialog-loading-icon" viewbox')}`
+              return html`${iconLoading}`
             },
           },
         }),
@@ -169,7 +170,7 @@ async function _doInitSearchWidget() {
 
       searchDialogBackBtn.setAttribute('aria-label', 'Fermer')
       searchDialogBackBtn.classList.add('cv-search-dialog-back-btn')
-      searchDialogBackBtn.innerHTML = '<svg class="cv-search-dialog-back-icon"><use xlink:href="#arrow-left"></use></svg>'
+      searchDialogBackBtn.innerHTML = iconArrowLeft
       searchDialogBackBtn.addEventListener('click', closeDialog)
       searchDialogForm.prepend(searchDialogBackBtn)
 
@@ -281,7 +282,7 @@ async function _doInitSearchWidget() {
       document.adoptedStyleSheets = [...document.adoptedStyleSheets, filterPagesSheet]
 
       function filterPages(key) {
-        filterPagesSheet.replaceSync(`
+        filterPagesSheet.replace(`
             [data-cv-link-key] {
               display: none;
             }
@@ -292,7 +293,7 @@ async function _doInitSearchWidget() {
       }
 
       function clearFilterPages() {
-        filterPagesSheet.replaceSync('')
+        filterPagesSheet.replace('')
       }
 
       async function hash(str) {

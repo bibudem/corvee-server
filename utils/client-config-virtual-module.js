@@ -1,6 +1,6 @@
 import config from 'config'
 
-const MODULE_NAME = 'client-config'
+const MODULE_NAME = '@corvee/client-config'
 const PUBLIC_FIELDS = ['app', 'job']
 
 function makeExports(obj, fields) {

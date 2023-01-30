@@ -4,7 +4,7 @@ import cvReportStyles from '../../cv-report/scss/cv-report.scss'
 import cvReportHeaderStyles from '../../cv-report-header/scss/cv-report-header.scss'
 import cvReportBodyStyles from '../../cv-report-body/scss/cv-report-body.scss'
 import reportWidgetStyles from '../../cv-report-widget/scss/cv-report-widget.scss'
-import { actions, baseUrl, linkTypes, defaultLinkType } from 'client-config/app'
+import { actions, baseUrl, linkTypes, defaultLinkType } from '@corvee/client-config/app'
 
 class ReportManager {
   #bus

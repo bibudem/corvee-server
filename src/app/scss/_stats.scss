@@ -1,0 +1,38 @@
+@use "../../../node_modules/@graphiteds/core/css/core.css";
+@use "../../../node_modules/gridjs/dist/theme/mermaid.css";
+
+:root {
+  /* Changes the primary color palette to purple */
+  --gr-color-primary: var(--cv-primary);
+  --gr-color-primary-rgb: 0, 101, 153;
+  --gr-color-primary-contrast: #ffffff;
+  --gr-color-primary-contrast-rgb: 255, 255, 255;
+  --gr-color-primary-shade: #005987;
+  --gr-color-primary-tint: #1a74a3;
+
+  /* Changes the font family */
+  --gr-font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif;
+}
+
+.cv-pane {
+  // outline: 1px solid red;
+  margin: 1em calc(24px + 1em);
+}
+
+.selectable {
+  cursor: pointer;
+}
+
+.align-right {
+  text-align: right;
+}
+
+gr-tab-group {
+  --border-track-width: 0;
+  --track-color: var(--cv-primary);
+  --indicator-color: var(--cv-primary);
+}
+
+gr-tab-panel {
+  --padding: 1em 0 0;
+}

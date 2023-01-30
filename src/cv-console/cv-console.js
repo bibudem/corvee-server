@@ -3,9 +3,11 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js'
 import '../cv-job-list/cv-job-list.js'
 import reportManager from '../common/js/report-manager.js'
 import { attachClickHandler, detachClickHandler } from '../common/js/iframe-utils.js'
-import { baseUrl } from 'client-config/app'
+import { baseUrl } from '@corvee/client-config/app'
+import ENV from '@corvee/env'
 import stylesheet from './scss/cv-console.scss'
-import closeIcon from '../common/svg/icon-close.svg'
+// import { closeIconLarge } from '../common/js/icons.js'
+import closeIcon from '../common/icons/close.svg'
 
 /**
  * An example element.
@@ -59,10 +61,12 @@ dans cette page`
     this.role = 'complementary'
     this.open = false
 
-    if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line prettier-vue/prettier
+    debug:
+    if (ENV !== 'production') {
       const debugCss = (await import('./scss/debug.scss')).default
       const debugStylesheet = new CSSStyleSheet()
-      debugStylesheet.replaceSync(debugCss)
+      debugStylesheet.replace(debugCss)
       document.adoptedStyleSheets = [...document.adoptedStyleSheets, debugStylesheet]
     }
   }
@@ -77,7 +81,6 @@ dans cette page`
 
   close() {
     this.open = false
-    // this.dispatchEvent(new Event('close'))
   }
 
   render() {

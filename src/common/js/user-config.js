@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie'
-import config from 'client-config'
+import config from '@corvee/client-config'
 
 class UserConfig extends EventTarget {
   #master
