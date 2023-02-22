@@ -55,7 +55,7 @@
     "mime-types": "^2.1.35",
     "mongoose": "^6.9.2",
     "on-headers": "^1.0.2",
-    "rimraf": "^3.0.2",
+    "rimraf": "^4.1.2",
     "sirv": "^2.0.2",
     "vary": "^1.1.2"
   },
