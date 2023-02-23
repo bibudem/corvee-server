@@ -1,0 +1,25 @@
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "../../../node_modules/bootstrap/scss/functions";
+
+// 2. Include any default variable overrides here
+@import "../../common/scss/variables";
+
+// 3. Include remainder of required Bootstrap stylesheets
+@import "../../../node_modules/bootstrap/scss/variables";
+
+// 5. Include remainder of required parts
+@import "../../../node_modules/bootstrap/scss/maps";
+@import "../../../node_modules/bootstrap/scss/mixins";
+
+// 6. Optionally include any other parts as needed
+
+// Layout & components
+@import "../../../node_modules/bootstrap/scss/close";
+
+// Helpers
+@import "../../../node_modules/bootstrap/scss/helpers/visually-hidden";
+
+@import "../../common/scss/reboot";
+@import "../../common/scss/states";
+@import "../../common/scss/close";
+@import "pane";

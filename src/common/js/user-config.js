@@ -13,7 +13,7 @@ class UserConfig extends EventTarget {
       value: this.#master ? 'slave' : 'master',
       enumerable: true,
     })
-    console.log('[%s] USERCONFIG', this.host)
+
     this._cookieName = cookie.name
     this._cookieAttributes = cookie.options
 

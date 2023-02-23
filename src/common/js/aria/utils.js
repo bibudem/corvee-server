@@ -42,28 +42,6 @@ export const KeyCode = {
   DELETE: 46,
 }
 
-// Polyfill src https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
-export const matches = function (element, selector) {
-  if (!Element.prototype.matches) {
-    Element.prototype.matches =
-      Element.prototype.matchesSelector ||
-      Element.prototype.mozMatchesSelector ||
-      Element.prototype.msMatchesSelector ||
-      Element.prototype.oMatchesSelector ||
-      Element.prototype.webkitMatchesSelector ||
-      function (s) {
-        var matches = element.parentNode.querySelectorAll(s)
-        var i = matches.length
-        while (--i >= 0 && matches.item(i) !== this) {
-          // empty
-        }
-        return i > -1
-      }
-  }
-
-  return element.matches(selector)
-}
-
 export const remove = function (item) {
   if (item.remove && typeof item.remove === 'function') {
     return item.remove()
@@ -98,7 +76,7 @@ export const isFocusable = function (element) {
 }
 
 export const getAncestorBySelector = function (element, selector) {
-  if (!matches(element, selector + ' ' + element.tagName)) {
+  if (!element.matches(selector + ' ' + element.tagName)) {
     // Element is not inside an element that matches selector
     return null
   }
@@ -107,7 +85,7 @@ export const getAncestorBySelector = function (element, selector) {
   var currentNode = element
   var ancestor = null
   while (ancestor === null) {
-    if (matches(currentNode.parentNode, selector)) {
+    if (currentNode.parentNode.matches(selector)) {
       ancestor = currentNode.parentNode
     } else {
       currentNode = currentNode.parentNode

@@ -1,0 +1,12 @@
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "../../../node_modules/bootstrap/scss/functions";
+
+// 2. Include any default variable overrides here
+@import "../../common/scss/variables";
+
+// 3. Include remainder of required Bootstrap stylesheets
+@import "../../../node_modules/bootstrap/scss/variables";
+
+@import "../../common/scss/utilities";
+@import "reset";
+@import "grid";

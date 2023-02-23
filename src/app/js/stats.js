@@ -1,14 +1,13 @@
-// import { TabulatorFull as Tabulator } from 'tabulator-tables'
-import { Grid, html } from 'gridjs'
-import { frFR } from 'gridjs/l10n'
+import { html } from 'gridjs'
+import { nanoid } from 'nanoid'
 import '@graphiteds/core/components/gr-tab-group.js'
 import '@graphiteds/core/components/gr-tab.js'
 import '@graphiteds/core/components/gr-tab-panel.js'
-import { waitFor } from '../../common/js/wait-for.js'
 import { userConfig } from '../../common/js/user-config.js'
+import { TAB_KEY } from '../../common/js/constants.js'
 import { actions, baseUrl } from '@corvee/client-config/app'
-import { SPACE_KEY, ENTER_KEY } from '../../common/js/constants.js'
-import { Grid as AriaGrid } from '../../common/js/aria/grid.js'
+import '../../cv-grid/cv-grid.js'
+import { AriaTabs } from '../../common/js/aria/aria-tabs.js'
 
 const n = new Intl.NumberFormat('fr-CA').format
 
@@ -16,29 +15,15 @@ const errorCodeDetailsCache = new Map()
 
 let statsCodeErreurContainer
 
-// Locale personnalisations
-frFR.pagination.showing = ' '
-frFR.pagination.to = '–'
-frFR.pagination.of = 'de'
-frFR.pagination.results = ' '
-frFR.pagination.firstPage = 'Première page'
-frFR.pagination.lastPage = 'Dernière page'
-
-function camelCaseToKebabCase(str) {
-  return str
-    .split('')
-    .map((letter, idx) => {
-      return letter.toUpperCase() === letter ? `${idx !== 0 ? '-' : ''}${letter.toLowerCase()}` : letter
-    })
-    .join('')
-}
-
 async function getErrorCodeDetails(errorCode) {
   if (errorCodeDetailsCache.has(errorCode)) {
     return errorCodeDetailsCache.get(errorCode)
   }
   const statsDetailsService = new URL(`${baseUrl}/api/stats/error-codes/${errorCode}`, location)
-  statsDetailsService.searchParams.set('job', userConfig.get('currentJob'))
+  const currentJob = userConfig.get('currentJob')
+  if (currentJob) {
+    statsDetailsService.searchParams.set('job', currentJob)
+  }
 
   const data = await fetch(statsDetailsService).then(response => response.json())
 
@@ -49,167 +34,147 @@ async function getErrorCodeDetails(errorCode) {
 
 function cellAttributes(attributes = {}) {
   return function cellAttributes(cell, row, column) {
-    if (cell !== null) {
+    // console.log(arguments)
+    // th
+    if (cell === null && row === null) {
       return {
         ...attributes.all,
-        ...attributes.td,
+        ...attributes.th,
         tabindex: '-1',
       }
     }
+
+    // td
     return {
       ...attributes.all,
-      ...attributes.th,
+      ...attributes.td,
       tabindex: '-1',
     }
   }
 }
 
-function setAriaGrid(table, defaultSortColumn = -1, sortOrder) {
-  console.log('setAriaGrid: %o', table)
-  const options = { attributes: true }
-  const observer = new MutationObserver(mutationList => {
-    mutationList = mutationList.filter(mutation => mutation.attributeName === 'class')
-    for (const mutation of mutationList) {
-      const target = mutation.target
-      const sortOrder = target.classList.contains('gridjs-sort-asc') ? 'ascending' : target.classList.contains('gridjs-sort-desc') ? 'descending' : 'none'
-      if (sortOrder === 'none') {
-        target.parentElement.removeAttribute('aria-sort')
-      } else {
-        target.parentElement.setAttribute('aria-sort', sortOrder)
-      }
-    }
-  })
-  new AriaGrid(table)
-  table.querySelectorAll(':scope > thead > tr > th.gridjs-th-sort').forEach((th, i) => {
-    if (i === defaultSortColumn) {
-      th.setAttribute('aria-sort', sortOrder)
-    }
-    const btn = th.querySelector('button.gridjs-sort')
-    if (btn) {
-      observer.observe(btn, options)
-    }
-  })
-}
-
-function buildPane(errorCode, activeTab, detailsData) {
-  function linkFormatter(url) {
-    return url ? html(`<a class="cv-url" target="visualisation" href="${url}">${url}</a>`) : url
+function conditionalIndexAttribute(cell, row, column) {
+  // th
+  if (cell === null && row === null) {
+    return
   }
 
-  const pane = document.createElement('div')
-  pane.classList.add('cv-pane')
+  // Empty td
+  if (cell === null) {
+    return { tabindex: '-1' }
+  }
+}
 
+function buildDetailsPane(errorCode, activeTab, detailsData) {
+  function linkFormatter(url) {
+    return url ? html(`<a class="cv-url" target="visualisation" href="${url}" tabindex="-1">${url}</a>`) : url
+  }
+
+  let defaultSelectedTabIndex = -1
   const tabs = document.createElement('gr-tab-group')
   tabs.dataset.errorCode = errorCode
 
-  tabs.innerHTML = `${actions.map(action => `<gr-tab slot="nav" panel="${action.key}"${action.key === activeTab ? ` active` : ``}>${action.short}</gr-tab>`).join('\n')}
-    ${actions.map(action => `<gr-tab-panel name="${action.key}"${action.key === activeTab ? ` active` : ``}></gr-tab-panel>`).join('\n')}`
+  tabs.innerHTML = ((actions, activeTab) => {
+    const tabs = []
+    const tabpanels = []
+    for (const [i, action] of actions.entries()) {
+      const tabId = `_${nanoid()}`
+      const tabpanelId = `_${nanoid()}`
+
+      if (action.key === activeTab) {
+        defaultSelectedTabIndex = i
+      }
+      tabs.push(`<gr-tab id="${tabId}" role="tab" slot="nav" panel="${action.key}"${action.key === activeTab ? ` active` : ``} aria-controls="${tabpanelId}">${action.short}</gr-tab>`)
+      tabpanels.push(`<gr-tab-panel id="${tabpanelId}" role="tabpanel" name="${action.key}"${action.key === activeTab ? ` active` : ``} aria-labelledby="${tabId}"></gr-tab-panel>`)
+    }
+
+    return `${tabs.join('')}${tabpanels.join('')}`
+  })(actions, activeTab)
+
+  tabs.aria = new AriaTabs(tabs, defaultSelectedTabIndex)
 
   detailsData.forEach(details => {
     const panel = tabs.querySelector(`gr-tab-panel[name="${details.action}"]`)
-    const tableGrid = new Grid({
+    const grid = document.createElement('cv-grid')
+    const gridOptions = {
       columns: [
         //Define Table Columns
-        { name: 'No.', id: 'no', resizable: true, sort: true },
+        { name: 'No.', id: 'no', resizable: true, sort: true, attributes: cellAttributes() },
         { name: 'Context', id: 'context', resizable: true, sort: true, formatter: linkFormatter },
         { name: 'URL', id: 'url', resizable: true, sort: true, formatter: linkFormatter },
-        { name: 'Final URL', id: 'finalUrl', resizable: true, sort: true, formatter: linkFormatter },
+        { name: 'Final URL', id: 'finalUrl', resizable: true, sort: true, formatter: linkFormatter, attributes: conditionalIndexAttribute },
       ],
-      className: {
-        container: 'cv-details-container',
-        table: 'cv-details-grid',
-        footer: 'cv-details-grid-footer',
-        pagination: 'cv-pagination',
-        paginationButtonPrev: 'cv-pagination-btn-prev',
-        paginationButtonNext: 'cv-pagination-btn-next',
-        paginationSummary: 'cv-pagination-summary',
-      },
-      autoWidth: false,
       data: details.records,
-      language: frFR,
       pagination: details.total >= 10,
-    }).render(panel)
+    }
+    grid.setAttribute('sort-column', 0)
+    grid.setAttribute('sort-order', 'ascending')
+    grid.setAttribute('per-page', 10)
+    grid.options = gridOptions
 
-    waitFor('.cv-details-grid tr', pane).then(() => {
-      setAriaGrid(panel.querySelector('.cv-details-grid'), 0, 'ascending')
+    grid._hasFocus = false
+
+    grid.addEventListener('focus', () => {
+      grid._hasFocus = true
+    })
+
+    grid.addEventListener('blur', () => {
+      grid._hasFocus = false
+    })
+
+    grid.addEventListener('keydown', event => {
+      if (grid._hasFocus && event.key === TAB_KEY && !event.shiftKey) {
+        tabs.dispatchEvent(new Event('blur.keyboard'))
+      }
+    })
+
+    panel.append(grid)
+  })
+
+  return tabs
+}
+
+async function onGridSelect(event) {
+  const errorCode = event.detail.rowId
+  const action = event.detail.column
+  const detailsData = await getErrorCodeDetails(errorCode)
+  const detailsPane = buildDetailsPane(errorCode, action, detailsData)
+  detailsPane.addEventListener('blur.keyboard', event => {
+    const row = this.getRow(errorCode)
+    const nextRowIndex = Array.from(row.parentNode.children).indexOf(row) + this.gridNode.querySelectorAll(':scope > thead > tr').length + 1
+    const colIndex = this.aria.focusedCol
+    // const nextCell = this.aria.getNextVisibleCell(0, 1)
+    // console.log('nextCell: %o', nextCell)
+    setTimeout(() => {
+      console.log('nextRowIndex: %s, colIndex: %s, cell: %o', nextRowIndex, colIndex, this.aria.grid[nextRowIndex][colIndex])
+      this.aria.focusCell(nextRowIndex, colIndex)
     })
   })
 
-  const closeIcon = document.createElement('button')
-  closeIcon.classList.add('cv-btn-close')
-  closeIcon.innerHTML = `<span class="visually-hidden">Fermer</span>`
-  closeIcon.addEventListener('click', onCosePane)
-  closeIcon.addEventListener('keyup', onCosePane)
-
-  tabs.prepend(closeIcon)
-
-  pane.append(tabs)
-
-  return pane
-}
-
-function onCosePane(event) {
-  const keyboardSelectItemEvent = event.key === SPACE_KEY || event.key === ENTER_KEY
-
-  if (event.type === 'click' || keyboardSelectItemEvent) {
-    delete event.target.pane.previousElementSibling.pane
-    event.target.pane.remove()
-
-    if (keyboardSelectItemEvent) {
-      // Set focus on previous item
-    }
-  }
-}
-
-async function onTableDetailsCell(event) {
-  const cell = event.target
-
-  const keyboardSelectItemEvent = event.key === SPACE_KEY || event.key === ENTER_KEY
-
-  if (event.type === 'click' || keyboardSelectItemEvent) {
-    if (cell.classList.contains('selectable')) {
-      event.preventDefault()
-      const errorCode = cell.parentElement.querySelector('[data-column-id="errorCode"]').textContent
-      const action = camelCaseToKebabCase(cell.dataset.columnId)
-      const row = cell.parentElement
-      if (Reflect.has(row, 'pane')) {
-        row.pane.querySelector(`gr-tab[panel="${action}"]`).click()
-        if (keyboardSelectItemEvent) {
-          cell.focus()
-        }
-        return
-      }
-      const detailsData = await getErrorCodeDetails(errorCode)
-      const pane = buildPane(errorCode, action, detailsData)
-      const paneContainer = document.createElement('tr')
-      paneContainer.innerHTML = `<td colspan="${row.querySelectorAll(':scope > td').length}"></td>`
-      paneContainer.querySelector('td').append(pane)
-      row.after(paneContainer)
-      row.pane = paneContainer
-      paneContainer.querySelector('.cv-btn-close').pane = paneContainer
-
-      // waitFor('.cv-details-grid tr', pane).then(() => {
-      //   setAriaGrid(pane.querySelector('.cv-details-grid'), 0, 'ascending')
-      // })
-
-      if (keyboardSelectItemEvent) {
-        cell.focus()
-      }
-    }
-  }
+  event.target.addDetails(errorCode, detailsPane)
 }
 
 export async function initStats() {
-  const statsService = new URL(`${baseUrl}/api/stats/error-codes`, location)
-  statsService.searchParams.set('job', userConfig.get('currentJob'))
+  const serviceUrl = new URL(`${baseUrl}/api/stats/error-codes`, location)
+  const currentJob = userConfig.get('currentJob')
+  if (currentJob) {
+    serviceUrl.searchParams.set('job', currentJob)
+  }
 
   statsCodeErreurContainer = document.querySelector('#stats-error-code')
 
-  const statsData = await fetch(statsService).then(response => response.json())
+  const statsData = await fetch(serviceUrl)
+    .then(response => response.json())
+    .then(data => data.map((row, index) => ({ no: index + 1, ...row })))
 
-  const grid = new Grid({
+  const gridOptions = {
     columns: [
       //Define Table Columns
+      {
+        name: 'No',
+        id: 'no',
+        hidden: true,
+      },
       {
         name: "Code d'erreur",
         id: 'errorCode',
@@ -235,17 +200,12 @@ export async function initStats() {
       { name: 'Total', id: 'total', sort: true, formatter: n, attributes: cellAttributes() },
     ],
     data: statsData,
-    language: frFR,
-  }).render(statsCodeErreurContainer)
+  }
 
-  await waitFor('tr.gridjs-tr', statsCodeErreurContainer)
-
-  const table = statsCodeErreurContainer.querySelector('[role="grid"]')
-
-  table.querySelectorAll(':scope > thead > tr > th').forEach(th => th.setAttribute('tabindex', '-1'))
-
-  setAriaGrid(table, 5, 'descending')
-
-  table.addEventListener('keyup', onTableDetailsCell)
-  table.addEventListener('click', onTableDetailsCell)
+  const grid = document.createElement('cv-grid')
+  grid.setAttribute('sort-column', 5)
+  grid.setAttribute('sort-order', 'descending')
+  grid.options = gridOptions
+  grid.addEventListener('select', onGridSelect)
+  statsCodeErreurContainer.append(grid)
 }

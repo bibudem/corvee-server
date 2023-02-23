@@ -1,5 +1,5 @@
-const currentJob = '2022-10-19'
-const deadline = '2022-08-31'
+const currentJob = '2022-12-20'
+const deadline = '2023-02-17'
 
 module.exports = {
   currentJob,

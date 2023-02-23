@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+.cv-pane {
+  --cv-pane-margin-x: 2em;
+  --cv-pane-margin-y: 1em 2em;
+
+  font-size: 0.875rem;
+  position: relative;
+  margin-block: var(--cv-pane-margin-y);
+  margin-inline: var(--cv-pane-margin-x);
+}
+
+.cv-btn-close {
+  @extend .btn-close;
+  @extend %widget-state;
+
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0.5em;
+  border-radius: var(--cv-radius-round);
+  z-index: 1;
+}
