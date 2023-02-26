@@ -112,21 +112,22 @@ function buildDetailsPane(errorCode, activeTab, detailsData) {
     grid.setAttribute('per-page', 10)
     grid.options = gridOptions
 
-    grid._hasFocus = false
+    // grid._hasFocus = false
 
-    grid.addEventListener('focus', () => {
-      grid._hasFocus = true
-    })
+    // grid.addEventListener('focus', () => {
+    //   grid._hasFocus = true
+    // })
 
-    grid.addEventListener('blur', () => {
-      grid._hasFocus = false
-    })
+    // grid.addEventListener('blur', () => {
+    //   grid._hasFocus = false
+    // })
 
-    grid.addEventListener('keydown', event => {
-      if (grid._hasFocus && event.key === TAB_KEY && !event.shiftKey) {
-        tabs.dispatchEvent(new Event('blur.keyboard'))
-      }
-    })
+    // grid.addEventListener('keydown', event => {
+    //   if (grid._hasFocus && event.key === TAB_KEY && !event.shiftKey) {
+    //     event.preventDefault()
+    //     tabs.dispatchEvent(new CustomEvent('blur.keyboard', { detail: { shiftKey: event.shiftKey } }))
+    //   }
+    // })
 
     panel.append(grid)
   })
@@ -138,20 +139,9 @@ async function onGridSelect(event) {
   const errorCode = event.detail.rowId
   const action = event.detail.column
   const detailsData = await getErrorCodeDetails(errorCode)
-  const detailsPane = buildDetailsPane(errorCode, action, detailsData)
-  detailsPane.addEventListener('blur.keyboard', event => {
-    const row = this.getRow(errorCode)
-    const nextRowIndex = Array.from(row.parentNode.children).indexOf(row) + this.gridNode.querySelectorAll(':scope > thead > tr').length + 1
-    const colIndex = this.aria.focusedCol
-    // const nextCell = this.aria.getNextVisibleCell(0, 1)
-    // console.log('nextCell: %o', nextCell)
-    setTimeout(() => {
-      console.log('nextRowIndex: %s, colIndex: %s, cell: %o', nextRowIndex, colIndex, this.aria.grid[nextRowIndex][colIndex])
-      this.aria.focusCell(nextRowIndex, colIndex)
-    })
-  })
+  const detailsTabs = buildDetailsPane(errorCode, action, detailsData)
 
-  event.target.addDetails(errorCode, detailsPane)
+  event.target.addDetails(errorCode, detailsTabs)
 }
 
 export async function initStats() {

@@ -13,8 +13,6 @@ const role = self === top ? 'master' : 'slave'
 
 let app
 
-globalThis.corvee = app
-
 async function importApp() {
   return new Promise(async (resolve, reject) => {
     if (app) {

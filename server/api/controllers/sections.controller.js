@@ -1,4 +1,5 @@
 import Boom from '@hapi/boom'
+import config from 'config'
 import { countLinksForSection, getPagesForSection } from '../models/sections.model.js'
 
 const filterableProps = ['action', 'extern']
@@ -6,11 +7,12 @@ const filterableProps = ['action', 'extern']
 export const sectionsController = {
   getPagesBySection: async (req, res, next) => {
     const sectionKey = req.query.section
-    const job = req.query.job
+    const job = req.query.job ?? config.get('job.currentJob')
 
     if (sectionKey === undefined) {
       return next(Boom.badData(`Missing section param.`))
     }
+
     try {
       const pages = await getPagesForSection({ sectionKey, job })
 
@@ -21,7 +23,7 @@ export const sectionsController = {
   },
   countLinks: async (req, res, next) => {
     const sectionKey = req.query.section
-    const job = req.query.job
+    const job = req.query.job ?? config.get('job.currentJob')
     const filters = filterableProps.reduce((filters, filterKey) => {
       if (req.query[filterKey]) {
         filters[filterKey] = req.query[filterKey]

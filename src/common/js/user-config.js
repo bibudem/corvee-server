@@ -93,3 +93,6 @@ class UserConfig extends EventTarget {
 }
 
 export const userConfig = new UserConfig(config.app.cookie)
+
+globalThis.corvee = globalThis.corvee || {}
+globalThis.corvee.userConfig = userConfig

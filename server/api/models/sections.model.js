@@ -1,4 +1,5 @@
 import Boom from '@hapi/boom'
+import { assert } from '@sindresorhus/is'
 import 'core-js/actual/array/group.js'
 import { Link } from '../database/models/index.js'
 import { sections } from '../lib/sections.js'
@@ -54,6 +55,8 @@ async function getLinksFromSectionKey({ sectionKey, job, filters = {} }) {
 }
 
 export async function getPagesForSection({ sectionKey, job, filters = {} }) {
+  assert.string(job)
+
   const links = await getLinksFromSectionKey({ sectionKey, job, filters })
   const pages = groupLinksByPage(links)
 
@@ -61,6 +64,9 @@ export async function getPagesForSection({ sectionKey, job, filters = {} }) {
 }
 
 export async function countLinksForSection({ sectionKey, job, filters = {} }) {
+  console.log('sectionKey: ', sectionKey, ', job: ', job)
+  assert.string(job)
+
   if (sectionKey) {
     if (!sections.has(sectionKey)) {
       return Boom.badData(`Unknown section param: ${sectionKey}`)
@@ -75,11 +81,9 @@ export async function countLinksForSection({ sectionKey, job, filters = {} }) {
   }
 
   const count = {}
-  // sections.forEach(async sectionKey => {
   for (const sectionKey of sections.keys()) {
     count[sectionKey] = await countLinksFromSectionKey({ sectionKey, job, filters })
   }
-  // })
 
   return count
 }

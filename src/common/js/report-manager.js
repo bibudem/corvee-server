@@ -131,6 +131,8 @@ class ReportManager {
 }
 
 const reportManager = new ReportManager()
-globalThis.reportManager = reportManager
+
+globalThis.corvee = globalThis.corvee || {}
+globalThis.corvee.reportManager = reportManager
 
 export default reportManager

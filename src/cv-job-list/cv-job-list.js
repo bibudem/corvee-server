@@ -5,6 +5,7 @@ import { MDCMenuSurface } from '@material/menu-surface'
 import { ENTER_KEY, SPACE_KEY } from '../common/js/constants.js'
 import { userConfig } from '../common/js/user-config.js'
 import { baseUrl } from '@corvee/client-config/app'
+import { currentJob as defaultJob } from '@corvee/client-config/job'
 import checkIcon from '../common/icons/check.svg'
 import stylesheet from './js/stylesheet.js'
 
@@ -39,25 +40,22 @@ export class CvJobList extends LitElement {
   constructor() {
     super()
 
-    // this.jobs = []
     this.currentJob = this.currentJob || userConfig.get('currentJob')
+    this.defaultJob = defaultJob
+    this.jobs = []
 
-    this.show = this.show.bind(this)
-    this._select = this._select.bind(this)
-
-    this.getJobs()
-
-    this.updateComplete.then(() => {
+    this.updateComplete.then(async () => {
+      await this.getJobs()
       this.menu = new MDCMenuSurface(this.renderRoot.querySelector('.mdc-menu-surface'))
-      this.renderRoot.querySelector('.cv-dropdown-toggle').addEventListener('click', this.show)
+      this.renderRoot.querySelector('.cv-dropdown-toggle').addEventListener('click', this.show.bind(this))
     })
   }
 
   connectedCallback() {
     super.connectedCallback()
 
-    this.renderRoot.addEventListener('click', this._select)
-    this.renderRoot.addEventListener('keyup', this._select)
+    this.renderRoot.addEventListener('click', this._select.bind(this))
+    this.renderRoot.addEventListener('keyup', this._select.bind(this))
   }
 
   disconnectedCallback() {}
@@ -97,23 +95,27 @@ export class CvJobList extends LitElement {
   }
 
   async getJobs() {
-    return fetch(`${baseUrl}/api/jobs`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    return new Promise((resolve, reject) => {
+      return fetch(`${baseUrl}/api/jobs`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(async response => {
+          if (response.ok) {
+            const data = await response.json()
+            this.jobs = data.jobs
+            this.defaultJob = data.default
+            return resolve()
+          }
+          console.error(response)
+          reject(response)
+        })
+        .catch(error => {
+          console.error(error)
+          reject(error)
+        })
     })
-      .then(async response => {
-        if (response.ok) {
-          const data = await response.json()
-          this.jobs = data.jobs
-          this.defaultJob = data.default
-          return
-        }
-        console.error(response)
-      })
-      .catch(error => {
-        console.error(error)
-      })
   }
 
   setJob(job) {

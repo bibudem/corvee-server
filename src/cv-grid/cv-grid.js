@@ -1,6 +1,8 @@
 import { LitElement, css, html, unsafeCSS } from 'lit'
 import { Grid } from 'gridjs'
 import { frFR } from 'gridjs/l10n'
+import { querySelectorAll } from 'kagekiri'
+import focusableSelectors from 'focusable-selectors'
 import '../cv-pane/cv-pane.js'
 import { waitFor } from '../common/js/wait-for.js'
 import { AriaGrid } from '../common/js/aria/aria-grid.js'
@@ -22,6 +24,10 @@ function camelCaseToKebabCase(str) {
       return letter.toUpperCase() === letter ? `${idx !== 0 ? '-' : ''}${letter.toLowerCase()}` : letter
     })
     .join('')
+}
+
+function isVisible(elem) {
+  return !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length)
 }
 
 function setAriaGrid(grid, defaultSortColumn = -1, defaultSortOrder) {
@@ -140,6 +146,23 @@ export class CvGrid extends LitElement {
     })
   }
 
+  _onBlurKeyboard(event) {
+    if (event.key === TAB_KEY) {
+      const grid = this.host ?? this
+      const tabbables = querySelectorAll(focusableSelectors.join(','), grid).filter(isVisible)
+
+      if (!event.shiftKey) {
+        if (event.target === tabbables[tabbables.length - 1]) {
+          const blurKeyboardEvent = new CustomEvent('blur.keyboard', { detail: { shiftKey: event.shiftKey }, bubbles: true, cancelable: true })
+          const defaultPrevented = !grid.dispatchEvent(blurKeyboardEvent)
+          if (defaultPrevented) {
+            event.preventDefault()
+          }
+        }
+      }
+    }
+  }
+
   get container() {
     return this.renderRoot?.querySelector('div') ?? null
   }
@@ -239,10 +262,6 @@ export class CvGrid extends LitElement {
           return
         }
 
-        // if (keyboardSelectItemEvent) {
-        //   cell.focus()
-        // }
-
         this.dispatchEvent(
           new CustomEvent('select', {
             detail: {
@@ -258,7 +277,7 @@ export class CvGrid extends LitElement {
 
   addDetails(rowId, details) {
     if (this.panes.has(rowId)) {
-      return
+      return false
     }
 
     const row = this.getRow(rowId)
@@ -284,11 +303,16 @@ export class CvGrid extends LitElement {
         paneContainer.hidden = false
       })
 
-      // details.addEventListener('keydown', event => {
-      //   if (event.code === TAB_KEY) {
-      //     console.log('keydown: %o', event)
-      //   }
-      // })
+      pane.addEventListener('blur.keyboard', event => {
+        event.stopPropagation()
+        event.preventDefault()
+        const direction = event.detail.shiftKey ? 0 : 1
+        const nextRowIndex = Array.from(row.parentNode.querySelectorAll(':scope > .gridjs-tr')).indexOf(row) + this.gridNode.querySelectorAll(':scope > thead > tr').length + direction
+        const colIndex = this.aria.focusedCol
+        this.aria.focusCell(nextRowIndex, colIndex)
+      })
+
+      return pane
     }
   }
 
@@ -302,6 +326,7 @@ export class CvGrid extends LitElement {
     root.addEventListener('keydown', this._onSelect.bind(this))
     root.addEventListener('click', this._onSort.bind(this), true)
     root.addEventListener('keydown', this._onSort.bind(this), true)
+    root.addEventListener('keydown', this._onBlurKeyboard.bind(this))
 
     return root
   }

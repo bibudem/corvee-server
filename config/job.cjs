@@ -1,10 +1,16 @@
 const currentJob = '2022-12-20'
 const deadline = '2023-02-17'
 
+// ----------------------------
+
+const longDateFormat = new Intl.DateTimeFormat('fr-CA', { dateStyle: 'long', timeZone: 'UTC' })
+
 module.exports = {
   currentJob,
   harvestDate: currentJob,
+  harvestDateFormated: longDateFormat.format(new Date(currentJob)),
   deadline,
+  deadlineFormated: longDateFormat.format(new Date(deadline)),
   sections: [
     {
       sections: [

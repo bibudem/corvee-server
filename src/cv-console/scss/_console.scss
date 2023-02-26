@@ -1,15 +1,13 @@
 :host {
-  // --cv-body-font-size: 14px;
+  --cv-body-font-size: 15px;
   --cv-console-height: var(--cv-navbar-height);
-  --cv-console-box-shadow: 0 -1px 15px rgba(80, 80, 50, 0.5);
+  // --cv-console-box-shadow: 0 -1px 15px rgba(80, 80, 50, 0.5);
+  --cv-console-box-shadow: var(--cv-shadow-2);
   --cv-console-bg-color: #fff;
 
   --_console-open: -1;
   --_console-box-shadow: 0;
 
-  //   color: var(--cv-body-color);
-  //   font-size: var(--cv-body-font-size);
-  //   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   left: 0;
   line-height: normal;
   width: 100%;

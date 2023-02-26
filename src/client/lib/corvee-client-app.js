@@ -1,23 +1,8 @@
-// import extractUrls from 'extract-urls'
 import { ReportWidget } from '../../cv-report-widget/report-widget.js'
 import '../../cv-console/cv-console.js'
-// import reportManager from '../../common/js/report-manager.js'
 import { normalizeUrl } from '../../common/js/normalize-url.js'
 import { userConfig } from '../../common/js/user-config.js'
 import { baseUrl, version } from '@corvee/client-config/app'
-
-// const fontDescriptorsMap = {
-//   'ascent-override': 'ascentOverride',
-//   'descent-override': 'descentOverride',
-//   'font-display': 'display',
-//   'font-feature-settings': 'featureSettings',
-//   'line-gap-override': 'lineGapOverride',
-//   'font-stretch': 'stretch',
-//   'font-style': 'style',
-//   'unicode-range': 'unicodeRange',
-//   'font-variation-settings': 'variationSettings',
-//   'font-weight': 'weight',
-// }
 
 export class CorveeClientApp {
   constructor() {
@@ -131,12 +116,16 @@ export class CorveeClientApp {
   }
 
   async _loadData() {
-    console.log('[%s] Loading data for job %s', this.role, userConfig.get('currentJob'))
+    const currentJob = userConfig.get('currentJob')
+    console.log('[%s] Loading data for job %s', this.role, currentJob ?? 'default')
     console.log(userConfig)
     return new Promise(async (resolve, reject) => {
       const api = new URL(`${baseUrl}/api/links`)
       api.searchParams.set('parent', normalizeUrl(window.location))
-      api.searchParams.set('job', userConfig.get('currentJob'))
+
+      if (currentJob) {
+        api.searchParams.set('job', currentJob)
+      }
 
       fetch(api)
         .then(response => {

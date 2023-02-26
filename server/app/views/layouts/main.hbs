@@ -13,9 +13,8 @@
   {{!-- <link rel="preload" href="{{ baseUrl }}fonts/roboto-v30-latin-italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{ baseUrl }}fonts/roboto-v30-latin-regular.woff2" as="font" type="font/woff2" crossorigin> --}}
   <link rel="preload" href="{{ baseUrl }}fonts/roboto-flex-v9-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="{{ baseUrl }}fonts/roboto-mono-v22-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
-  {{#if (eq @exphbs.view 'home') }}
-  <link rel="preload" href="{{ baseUrl }}api/sections/count?action=to-be-fixed&job={{ currentJob }}" as="fetch" type="application/json" crossorigin>{{/if}}
+  <link rel="preload" href="{{ baseUrl }}fonts/roboto-mono-v22-latin-regular.woff2" as="font" type="font/woff2" crossorigin>{{#each preloads}}
+  <link rel="preload" href="{{ href }}" as="{{ as }}" type="{{  type }}" crossorigin>{{/each}}
   <link rel="stylesheet" href="{{ baseUrl }}{{ version }}/app/css/app.css">
   {{!-- <link rel="preload" href="/fonts/roboto-v30-latin-500.woff2" as="font" type="font/woff2" crossorigin> --}}
   {{!-- <link rel="preload" href="/fonts/roboto-v30-latin-500italic.woff2" as="font" type="font/woff2" crossorigin> --}}
