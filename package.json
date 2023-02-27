@@ -81,7 +81,7 @@
     "bootstrap": "^5.2.3",
     "cross-env": "^7.0.3",
     "cssnano": "^5.1.14",
-    "cssnano-preset-advanced": "^5.3.9",
+    "cssnano-preset-advanced": "^5.3.10",
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier-vue": "^4.2.0",
