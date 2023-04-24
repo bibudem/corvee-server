@@ -82,7 +82,7 @@
     "cross-env": "^7.0.3",
     "cssnano": "^5.1.14",
     "cssnano-preset-advanced": "^6.0.0",
-    "eslint": "^8.34.0",
+    "eslint": "^8.39.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier-vue": "^4.2.0",
     "eslint-plugin-vue": "^9.8.0",
