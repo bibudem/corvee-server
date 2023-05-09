@@ -99,7 +99,7 @@ export class CvCopyClipboard extends LitElement {
 
   render() {
     return html`<div class="cv-copy-clipboard-container">
-  <button>${unsafeHTML(this._activeIcon)}</button>
+  <button aria-label="Copier dans le presse-papier">${unsafeHTML(this._activeIcon)}</button>
   <cv-tooltip role="tooltip" hidden>${this._tooltipText}<cv-arrow data-popper-arrow></cv-arrow>
   </cv-tooltip>
 </div>`
