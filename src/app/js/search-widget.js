@@ -8,6 +8,7 @@ import iconSearch from '../../common/icons/search.svg'
 import iconLoading from '../../common/icons/spinner-rolling.svg'
 import iconArrowLeft from '../../common/icons/arrow-left.svg'
 import { algoliasearch as algoliasearchConfig } from '@corvee/client-config/app'
+import { currentJob as defaultJob } from '@corvee/client-config/job'
 
 export function initSearchWidget() {
   // console.log('initSearchWidget')
@@ -24,7 +25,7 @@ async function _doInitSearchWidget() {
     const client = algoliasearch(algoliasearchConfig.applicationID, algoliasearchConfig.apiKey)
     const indexName = algoliasearchConfig.indexName
     const index = client.initIndex(indexName)
-    const job = userConfig.get('currentJob')
+    const job = userConfig.get('currentJob') ?? defaultJob
     const section = location.pathname.split('/').pop()
 
     const scrollbar = new ScrollBarHelper()
