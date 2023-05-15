@@ -58,7 +58,7 @@
     "mongoose": "^7.0.3",
     "on-headers": "^1.0.2",
     "rimraf": "^4.1.2",
-    "sirv": "^2.0.2",
+    "sirv": "^2.0.3",
     "vary": "^1.1.2"
   },
   "devDependencies": {
