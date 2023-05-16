@@ -1,5 +1,5 @@
 import { userConfig } from '../common/js/user-config.js'
-import './js/app-base.js'
+import './js/app.js'
 import { initStats } from './js/stats.js'
 import { baseUrl } from '@corvee/client-config/app'
 import toBeFixedIcon from '../common/icons/to-be-fixed.svg'
