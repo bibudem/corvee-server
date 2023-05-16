@@ -1,4 +1,3 @@
-
 # How to Create Self-Signed Certificates using OpenSSL
 
 Go to a directory named `certificate` under `config` to save all the generated keys & certificates.
@@ -18,7 +17,7 @@ Execute the following `openssl` command to create the `rootCA.key`and `rootCA.cr
                 -nodes \
                 -newkey rsa:2048 \
                 -subj "/CN=Corvée App - DO NOT TRUST/O=Université de Montréal/OU=Direction des bibliothèques/C=CA/L=Montréal" \
-                -keyout rootCA.key -out rootCA.crt 
+                -keyout rootCA.key -out rootCA.crt
 
 We will use the `rootCA.key`and `rootCA.crt` to sign the SSL certificate.
 
@@ -59,7 +58,6 @@ We will create a `csr.conf` file to have all the information to generate the CSR
 
     [ alt_names ]
     DNS.1 = corvee.bib.umontreal.ca
-    DNS.2 = www.corvee.bib.umontreal.ca
     IP.1 = 192.168.1.5
     IP.2 = 192.168.1.6
 
@@ -131,11 +129,11 @@ Installing self-signed CA certificates differs in Operating systems.
 
 1. Double click on the `config/rootCA.crt` file
 2. On the _Certificate_ dialog box, click _Install Certificate_ to start the _Certificate Import Wizard_.
-3. On the _Welcome_ page, select _Local Computer_,  and click _Next_.
+3. On the _Welcome_ page, select _Local Computer_, and click _Next_.
 4. On the _Certificate Store_ page, select _Place all certificates in the following store_ and click _Browse_.
 5. In the _Select Certificate Store_ dialog box, select _Trusted Root Certification Authorities_, and then click OK.
-7. On the _Certificate Store_ page, click _Next_.
-8. On the summary page, review the details and click _Finish_.
+6. On the _Certificate Store_ page, click _Next_.
+7. On the summary page, review the details and click _Finish_.
 
 ## Shell Script To Create Self-Signed Certificate
 
@@ -161,9 +159,9 @@ Save the following shell script as `ssl.sh`
                 -nodes \
                 -newkey rsa:2048 \
                 -subj "/CN=Corvée App - DO NOT TRUST/C=CA/L=Montréal" \
-                -keyout rootCA.key -out rootCA.crt 
+                -keyout rootCA.key -out rootCA.crt
 
-    # Generate Private key 
+    # Generate Private key
 
     openssl genrsa -out server.key 2048
 
