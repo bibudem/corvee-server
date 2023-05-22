@@ -65,7 +65,7 @@
     "@floating-ui/dom": "^1.1.0",
     "@github/clipboard-copy-element": "^1.1.2",
     "@graphiteds/core": "^1.9.7",
-    "@iconify/tools": "^2.2.1",
+    "@iconify/tools": "^2.2.6",
     "@material/menu": "^14.0.0",
     "@popperjs/core": "^2.11.6",
     "@rollup/plugin-commonjs": "^25.0.0",
