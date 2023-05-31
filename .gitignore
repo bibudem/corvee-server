@@ -35,3 +35,4 @@ node_modules/
 /config/local*
 /config/certificate/*
 !/config/certificate/ssl.sh
+src/common/scss/_config.scss
