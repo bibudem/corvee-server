@@ -1,6 +1,6 @@
-@use "sass:map";
-@use "sass:color";
-@use "sass:math";
+@use 'sass:map';
+@use 'sass:color';
+@use 'sass:math';
 
 :host {
   display: inline-block;
@@ -12,14 +12,14 @@
   z-index: 1;
 }
 
-$actions: "to-be-fixed" "error", "fixed" "success", "no-error" "success", "ignore" "success";
+$actions: 'to-be-fixed' 'error', 'fixed' 'success', 'no-error' 'success', 'ignore' 'success';
 
 @each $action, $status in $actions {
-  :host([action="#{$action}"]:focus-visible) {
+  :host([action='#{$action}']:focus-visible) {
     outline-color: var(--cv-#{$status});
   }
 
-  :host([action="#{$action}"]) {
+  :host([action='#{$action}']) {
     --cv-widget-state-color: #{tint-color(map.get($theme-colors, $status), 75%)};
     --cv-widget-state-hover-color: #{map.get($theme-colors, $status)};
     --cv-widget-state-hover-bg: #{color.adjust(map.get($theme-colors, $status), $alpha: -0.975)};
@@ -100,7 +100,7 @@ $actions: "to-be-fixed" "error", "fixed" "success", "no-error" "success", "ignor
   @include reset-inherit;
 
   display: none;
-  min-width: 35em;
+  min-width: 45em;
   max-width: 80vw;
   padding: 0;
   position: relative;
@@ -166,7 +166,7 @@ cv-arrow {
 
   &::before {
     visibility: visible;
-    content: "";
+    content: '';
     transform: rotate(45deg);
     background-color: var(--cv-report-dialog-body-bg);
     // border: var(--cv-report-dialog-border);
@@ -179,31 +179,31 @@ cv-arrow {
   }
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
 
-    [data-popper-placement^="top"] & {
+    [data-popper-placement^='top'] & {
       height: var(--_report-widget-gap-filler);
       width: var(--_report-widget-gap-width);
       bottom: calc((var(--_report-widget-gap-filler) - var(--_report-dialog-arrow-height) - 1px) * -1);
       left: calc(calc(var(--_report-widget-gap-width) * -0.5) + calc(var(--cv-report-dialog-arrow-size) / 2));
     }
 
-    [data-popper-placement^="bottom"] & {
+    [data-popper-placement^='bottom'] & {
       height: var(--_report-widget-gap-filler);
       width: var(--_report-widget-gap-width);
       top: calc((var(--_report-widget-gap-filler) - var(--_report-dialog-arrow-height) - 1px) * -1);
       left: calc(calc(var(--_report-widget-gap-width) * -0.5) + calc(var(--cv-report-dialog-arrow-size) / 2));
     }
 
-    [data-popper-placement^="left"] & {
+    [data-popper-placement^='left'] & {
       width: var(--_report-widget-gap-filler);
       height: var(--_report-widget-gap-height);
       right: calc((var(--_report-widget-gap-filler) - var(--_report-dialog-arrow-height) - 1px) * -1);
       top: calc(calc(var(--_report-widget-gap-height) * -0.5) + calc(var(--cv-report-dialog-arrow-size) / 2));
     }
 
-    [data-popper-placement^="right"] & {
+    [data-popper-placement^='right'] & {
       width: var(--_report-widget-gap-filler);
       height: var(--_report-widget-gap-height);
       left: calc((var(--_report-widget-gap-filler) - var(--_report-dialog-arrow-height) - 1px) * -1);
@@ -211,11 +211,11 @@ cv-arrow {
     }
   }
 
-  [data-popper-placement^="top"] > & {
+  [data-popper-placement^='top'] > & {
     bottom: calc(var(--cv-report-dialog-arrow-size) * -0.5);
   }
 
-  [data-popper-placement^="bottom"] > & {
+  [data-popper-placement^='bottom'] > & {
     top: calc(var(--cv-report-dialog-arrow-size) * -0.5);
 
     &::before {
@@ -223,11 +223,11 @@ cv-arrow {
     }
   }
 
-  [data-popper-placement^="left"] > & {
+  [data-popper-placement^='left'] > & {
     right: calc(var(--cv-report-dialog-arrow-size) * -0.5);
   }
 
-  [data-popper-placement^="right"] > & {
+  [data-popper-placement^='right'] > & {
     left: calc(var(--cv-report-dialog-arrow-size) * -0.5);
   }
 }
