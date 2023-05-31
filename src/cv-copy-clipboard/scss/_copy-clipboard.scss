@@ -1,7 +1,3 @@
-:host {
-  display: flex;
-}
-
 @keyframes tooltip-appear {
   from {
     opacity: 0;
@@ -18,6 +14,11 @@
   to {
     opacity: 0;
   }
+}
+
+:host {
+  display: flex;
+  cursor: default;
 }
 
 .cv-copy-clipboard-container {
@@ -44,7 +45,7 @@ button {
 }
 
 cv-tooltip {
-  --cv-tootip-size: 0.25em;
+  --cv-tip-size: 0.25em;
   background: #333;
   color: white;
   padding: 0.25em 0.5em;
@@ -67,30 +68,30 @@ cv-arrow {
   &,
   &::before {
     position: absolute;
-    width: calc(var(--cv-tootip-size) * 2);
-    height: calc(var(--cv-tootip-size) * 2);
+    width: calc(var(--cv-tip-size) * 2);
+    height: calc(var(--cv-tip-size) * 2);
     background: inherit;
   }
 
   &::before {
     visibility: visible;
-    content: "";
+    content: '';
     transform: rotate(45deg);
   }
 
-  cv-tooltip[data-popper-placement^="top"] > & {
-    bottom: calc(var(--cv-tootip-size) * -1);
+  cv-tooltip[data-popper-placement^='top'] > & {
+    bottom: calc(var(--cv-tip-size) * -1);
   }
 
-  cv-tooltip[data-popper-placement^="bottom"] > & {
-    top: calc(var(--cv-tootip-size) * -1);
+  cv-tooltip[data-popper-placement^='bottom'] > & {
+    top: calc(var(--cv-tip-size) * -1);
   }
 
-  cv-tooltip[data-popper-placement^="left"] > & {
-    right: calc(var(--cv-tootip-size) * -1);
+  cv-tooltip[data-popper-placement^='left'] > & {
+    right: calc(var(--cv-tip-size) * -1);
   }
 
-  cv-tooltip[data-popper-placement^="right"] > & {
-    left: calc(var(--cv-tootip-size) * -1);
+  cv-tooltip[data-popper-placement^='right'] > & {
+    left: calc(var(--cv-tip-size) * -1);
   }
 }

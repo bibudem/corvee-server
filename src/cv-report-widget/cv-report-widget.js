@@ -142,6 +142,9 @@ export class CvReportWidget extends CvReportBase {
 
       // this.elements.reportHeader.addEventListener('mouseenter', () => this.elements.reportDialog.show())
       this.addEventListener('mouseenter', () => {
+        if (this.open) {
+          return
+        }
         console.log('[mouseenter]')
         this.show()
       })
@@ -191,7 +194,7 @@ export class CvReportWidget extends CvReportBase {
   show() {
     return new Promise((resolve, reject) => {
       if (this.open) {
-        return reject(false)
+        return resolve(false)
       }
 
       if (this.elements.reportDialog.classList.contains('close')) {
