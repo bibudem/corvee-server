@@ -22,11 +22,11 @@ export class CorveeClientApp {
     this._loadFonts()
 
     userConfig.addEventListener('change', event => {
-      console.log('[%s] (corveeClientApp) got a `change` event from userConfig: %s = %s', this.role, event.detail.prop, event.detail.value)
+      // console.log('[%s] (corveeClientApp) got a `change` event from userConfig: %s = %s', this.role, event.detail.prop, event.detail.value)
       if (event.detail.prop === 'currentJob') {
         this._loadData()
           .then(() => {
-            console.log('[%s] Done loading data: %o', this.role, this.data)
+            // console.log('[%s] Done loading data: %o', this.role, this.data)
             this._buildReportWidgets()
           })
           .catch(error => console.error('Error loading data: %o', error))
@@ -117,8 +117,8 @@ export class CorveeClientApp {
 
   async _loadData() {
     const currentJob = userConfig.get('currentJob')
-    console.log('[%s] Loading data for job %s', this.role, currentJob ?? 'default')
-    console.log(userConfig)
+    // console.log('[%s] Loading data for job %s', this.role, currentJob ?? 'default')
+    // console.log(userConfig)
     return new Promise(async (resolve, reject) => {
       const api = new URL(`${baseUrl}/api/links`)
       api.searchParams.set('parent', normalizeUrl(window.location))
