@@ -196,26 +196,30 @@ async function _doInitSearchWidget() {
       }
 
       function closeDialog(delayed = false, callback = () => { }) {
-        function doClose() {
-          scrollbar.reset()
-          dialog.addEventListener(
-            'animationend',
-            () => {
-              dialog.close()
-              dialog.classList.remove('close')
-              callback()
-            },
-            { once: true }
-          )
-          dialog.classList.add('close')
-        }
+        return new Promise(function (resolve) {
+          function doClose() {
+            scrollbar.reset()
+            dialog.addEventListener(
+              'animationend',
+              () => {
+                dialog.close()
+                dialog.classList.remove('close')
+                callback()
+                resolve()
+              },
+              { once: true }
+            )
 
-        if (!delayed) {
-          doClose()
-          return
-        }
+            dialog.classList.add('close')
+          }
 
-        setTimeout(doClose, 300)
+          if (!delayed) {
+            doClose()
+            return
+          }
+
+          setTimeout(doClose, 300)
+        })
       }
 
       dialog.addEventListener('click', event => {
@@ -253,7 +257,7 @@ async function _doInitSearchWidget() {
 
       function updateSearchWidget(hitElement) {
         const selectedPageTitle = hitElement.querySelector('.cv-search-hits-item-title').innerText
-        const key = hitElement.dataset.cvLinkKeyRef
+        const key = hitElement.children[0].dataset.cvLinkKeyRef
 
         searchInputContainer.addEventListener('animationend', onSearchInputContainerAnimation)
 
@@ -334,13 +338,17 @@ async function _doInitSearchWidget() {
       // Initialisation
       //
 
-      document.querySelectorAll('.rapport').forEach(async rapport => {
-        const pageUrl = new URL(rapport.querySelector('.rapport--heading-content a').href)
+      // const st = Date.now()
+
+      for (const rapport of document.querySelectorAll('.cv-page-report')) {
+        const pageUrl = new URL(rapport.querySelector('.cv-page-report-header a').href)
         pageUrl.hash = ''
         pageUrl.searchParams.delete('tab')
         const pageKey = await hash(pageUrl.href)
         rapport.dataset.cvLinkKey = pageKey
-      })
+      }
+
+      // console.log('initialisation: %s', Date.now() - st)
 
       searchInputBtn.addEventListener('click', function (event) {
         const self = event.target
@@ -353,11 +361,11 @@ async function _doInitSearchWidget() {
         showDialog()
       })
 
-      dialog.addEventListener('click', function (event) {
+      dialog.addEventListener('click', async function (event) {
         const self = event.target
         if (self.classList.contains('cv-search-hits-item')) {
           updateSearchWidget(self)
-          closeDialog(true)
+          await closeDialog(true)
         }
       })
 
@@ -388,7 +396,6 @@ async function _doInitSearchWidget() {
 
       searchDialogResetBtn.addEventListener('click', function () {
         clearSearchWidget()
-        console.log('ici')
         updateSearchDialogSubmitBtn()
       })
 

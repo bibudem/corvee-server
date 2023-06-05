@@ -240,13 +240,21 @@
     }
   }
 
+  @keyframes dialog-fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
   &.open {
     animation: dialog-fade var(--_search-dialog-animation-duration-in) ease forwards;
   }
 
   &.close {
-    animation: dialog-fade var(--_search-dialog-animation-duration-out) ease backwards;
-    animation-direction: reverse;
+    animation: dialog-fade-out var(--_search-dialog-animation-duration-out) ease forwards;
   }
 
   &::backdrop {
