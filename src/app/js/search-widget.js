@@ -224,7 +224,11 @@ async function _doInitSearchWidget() {
 
       dialog.addEventListener('click', event => {
         event.stopPropagation()
-        if (!event.target.closest('.cv-search-dialog-content')) {
+
+        // Close dialog when click outside
+        const rect = dialog.getBoundingClientRect()
+        const isInDialog = rect.top <= event.clientY && event.clientY <= rect.top + rect.height && rect.left <= event.clientX && event.clientX <= rect.left + rect.width
+        if (!isInDialog) {
           closeDialog()
         }
       })
