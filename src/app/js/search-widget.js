@@ -10,15 +10,7 @@ import iconArrowLeft from '../../common/icons/arrow-left.svg'
 import { algoliasearch as algoliasearchConfig } from '@corvee/client-config/app'
 import { currentJob as defaultJob } from '@corvee/client-config/job'
 
-export function initSearchWidget() {
-  // console.log('initSearchWidget')
-  // document.addEventListener('DOMContentLoaded', async () => {
-  //   console.log('DOMContentLoaded')
-  _doInitSearchWidget()
-  // })
-}
-
-async function _doInitSearchWidget() {
+export async function initSearchWidget() {
   if (document.querySelector('#cv-search-input-btn')) {
     const dialog = document.querySelector('.cv-search-dialog')
 
