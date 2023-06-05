@@ -1,5 +1,7 @@
 :host {
   --cv-report-body-margin-left: 1.5em;
+  --cv-report-body-final-url-border-color: hsl(210deg 15% 87%);
+  --cv-report-body-final-url-background-color: hsl(210deg 15% 97%);
 
   display: block;
 }
@@ -42,15 +44,15 @@ select {
 
   &-final-url {
     padding: 0 0 0 12px;
-    background: hsl(210deg 15% 97%);
-    border: 1px solid hsl(210deg 15% 84%);
+    background: var(--cv-report-body-final-url-background-color);
+    border: 1px solid var(--cv-report-body-final-url-border-color);
     border-radius: var(--cv-radius-inline);
     display: flex;
 
     a {
       padding: 5px 0;
       flex-grow: 1;
-      border-right: 1px solid hsl(210deg 15% 84%);
+      border-right: 1px solid var(--cv-report-body-final-url-border-color);
       padding-right: 12px;
     }
   }
