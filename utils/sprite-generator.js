@@ -1,13 +1,13 @@
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import glob from 'glob'
+import { globSync } from 'glob'
 import SVGSpriter from 'svg-sprite'
 import File from 'vinyl'
 
 const __dirname = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'src')
 
-const components = glob.sync(`**/sprite.json`, { cwd: __dirname })
+const components = globSync(`**/sprite.json`, { cwd: __dirname })
 const commonComponentSvgDirname = resolve(__dirname, 'common', 'svg')
 
 for (const component of components) {
@@ -55,7 +55,7 @@ for (const component of components) {
   })
 
   // Find SVG files recursively via `glob`
-  // const files = glob.sync('**/*.svg', { cwd })
+  // const files = globSync('**/*.svg', { cwd })
   const sprites = JSON.parse(readFileSync(join(componnentPath, 'sprite.json')))
   sprites.forEach(sprite => {
     // Create and add a vinyl file instance for each SVG

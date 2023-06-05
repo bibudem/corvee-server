@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'node:url'
-import { extname, relative, resolve } from 'node:path'
-import glob from 'glob'
+import { extname, relative } from 'node:path'
+import { globSync } from 'glob'
 
 // Import rollup plugins
 import { copy } from '@web/rollup-plugin-copy'
@@ -187,7 +187,7 @@ export default [
     plugins: scssPlugin,
     preserveEntrySignatures: 'strict',
   },
-  ...glob.sync('src/app/*.js').map(file => ({
+  ...globSync('src/app/*.js').map(file => ({
     // This expands the relative paths to absolute paths, so e.g.
     // src/nested/foo becomes /project/src/nested/foo.js
     input: fileURLToPath(new URL(file, import.meta.url)),

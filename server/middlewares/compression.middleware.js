@@ -3,7 +3,7 @@ import Accepts from '@hapi/accept'
 import onHeaders from 'on-headers'
 import vary from 'vary'
 import mime from 'mime-types'
-import glob from 'glob'
+import { globSync } from 'glob'
 
 /**
  * Module variables.
@@ -36,7 +36,7 @@ export function staticCompressionMiddleware(root, options = {}) {
   const exts = options.exts || ['js', 'css', 'map']
   const encodings = options.encodings || ['br', 'gzip', 'deflate']
 
-  const assets = glob.sync(`**/*.{${exts.join(',')}}`, { cwd: rootDir }).map(file => `/${file}`)
+  const assets = globSync(`**/*.{${exts.join(',')}}`, { cwd: rootDir }).map(file => `/${file}`)
 
   const threshold = 1024
 
