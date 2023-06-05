@@ -571,4 +571,8 @@
     --cv-pagination-disabled-color: #6c757d85;
     margin: 0;
   }
+
+  &-item {
+    user-select: none;
+  }
 }
