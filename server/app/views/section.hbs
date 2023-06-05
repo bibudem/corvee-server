@@ -1,32 +1,34 @@
-<div class="indeterminate-progress-bar">
-  <div class="indeterminate-progress-bar__progress"></div>
-</div>
-{{> navbar hideChecked=hideChecked }}
-<main class="cv-page-main">
-  {{> page-header title=title currentJob=currentJob }}
-  <p>
-    Erreurs trouvées&nbsp;: {{ errorsFound }}<br />
-    Erreurs à traiter&nbsp;: <span id="cv-total-errors">{{ errorsToFix }}</span>
-  </p>
-
-  <div class="cv-page-reports-list">
-    {{#each pages}}
-    <section class="cv-page-report">
-      <header class="cv-page-report-header">
-        <h2 class="cv-page-report-header-title">Page <a href="{{{ url }}}" class="cv-url" target="visualisation">{{{ url }}}</a></h2>
-        <small class="cv-page-report-header-link-count">{{length links}} {{#if (eq (length links) 1) }}lien{{else}}liens{{/if}}</small>
-      </header>
-      {{#each links}}
-      <cv-report report-id="{{ _id }}" action="{{ action }}" link-id="{{ linkId }}">
-        <cv-report-header action="{{ action }}">
-          <h3>
-            <a class="cv-url" href="{{ url }}" target="visualisation">{{ url }}</a>
-          </h3>
-        </cv-report-header>
-        <cv-report-body text="{{ text }}" status="{{ status }}" final-url="{{ finalUrl }}" action="{{ action }}" messages="{{ messages }}" error-codes="{{ errorCodes }}"></cv-report-body>
-      </cv-report>
-      {{/each}}
-    </section>
-    {{/each}}
+<body class="loading">
+  <div class="indeterminate-progress-bar">
+    <div class="indeterminate-progress-bar__progress"></div>
   </div>
-</main>
+  {{> navbar hideChecked=hideChecked }}
+  <main class="cv-page-main">
+    {{> page-header title=title currentJob=currentJob }}
+    <p>
+      Erreurs trouvées&nbsp;: {{ errorsFound }}<br />
+      Erreurs à traiter&nbsp;: <span id="cv-total-errors">{{ errorsToFix }}</span>
+    </p>
+
+    <div class="cv-page-reports-list">
+      {{#each pages}}
+      <section class="cv-page-report">
+        <header class="cv-page-report-header">
+          <h2 class="cv-page-report-header-title">Page <a href="{{{ url }}}" class="cv-url" target="visualisation">{{{ url }}}</a></h2>
+          <small class="cv-page-report-header-link-count">{{length links}} {{#if (eq (length links) 1) }}lien{{else}}liens{{/if}}</small>
+        </header>
+        {{#each links}}
+        <cv-report report-id="{{ _id }}" action="{{ action }}" link-id="{{ linkId }}">
+          <cv-report-header action="{{ action }}">
+            <h3>
+              <a class="cv-url" href="{{ url }}" target="visualisation">{{ url }}</a>
+            </h3>
+          </cv-report-header>
+          <cv-report-body text="{{ text }}" status="{{ status }}" final-url="{{ finalUrl }}" action="{{ action }}" messages="{{ messages }}" error-codes="{{ errorCodes }}"></cv-report-body>
+        </cv-report>
+        {{/each}}
+      </section>
+      {{/each}}
+    </div>
+  </main>
+</body>

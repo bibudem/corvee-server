@@ -145,17 +145,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
   })
 
-  const progressBar = document.querySelector('.indeterminate-progress-bar')
-  if (progressBar) {
-    requestIdleCallback(
-      function () {
+  requestIdleCallback(
+    function () {
+      const progressBar = document.querySelector('.indeterminate-progress-bar')
+      if (progressBar) {
         progressBar.remove()
-      },
-      {
-        timeout: 10000,
       }
-    )
-  }
+      document.querySelector('body').classList.remove('loading')
+    },
+    {
+      timeout: 15_000,
+    }
+  )
 
   const searchWidget = await import(`${baseUrl}/${version}/app/search-widget.js`)
   searchWidget.initSearchWidget()

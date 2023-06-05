@@ -1,25 +1,27 @@
-<main class="cv-page-main">
+<body>
+  <main class="cv-page-main">
 
-  {{> page-header title=title currentJob=currentJob jobs=jobs}}
+    {{> page-header title=title currentJob=currentJob jobs=jobs}}
 
-  {{#each sections}}
-  <section class="cv-sections">
-    {{#if title}}
-    <h2 class="h2">{{{title}}}</h2>
-    {{/if}}
-    <ul class="cv-sections-list">
-      {{#each sections}}
-      <li data-section-key="{{key}}">
-        {{{read "src/common/icons/spinner-rolling.svg" }}}
-        <a href="sections/{{ key }}{{ @root.searchParams }}">{{{title}}}</a>
-        <span class="cv-section-errors">... erreurs</span>
-      </li>
-      {{/each}}
-    </ul>
-  </section>
-  {{/each}}
+    {{#each sections}}
+    <section class="cv-sections">
+      {{#if title}}
+      <h2 class="h2">{{{title}}}</h2>
+      {{/if}}
+      <ul class="cv-sections-list">
+        {{#each sections}}
+        <li data-section-key="{{key}}">
+          {{{read "src/common/icons/spinner-rolling.svg" }}}
+          <a href="sections/{{ key }}{{ @root.searchParams }}">{{{title}}}</a>
+          <span class="cv-section-errors">... erreurs</span>
+        </li>
+        {{/each}}
+      </ul>
+    </section>
+    {{/each}}
 
-  <h2 class="h2">Rapports statistiques</h2>
+    <h2 class="h2">Rapports statistiques</h2>
 
-  <div id="stats-error-code" class="cv-stats-error-code"></div>
-</main>
+    <div id="stats-error-code" class="cv-stats-error-code"></div>
+  </main>
+</body>
