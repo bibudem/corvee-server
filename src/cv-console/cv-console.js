@@ -79,8 +79,16 @@ dans cette page`
     this.open = true
   }
 
-  close() {
+  #close(dispatch = true) {
     this.open = false
+    if (dispatch) {
+      this.dispatchEvent(new Event('close'))
+    }
+  }
+
+  close() {
+    console.log('[console] close method called')
+    this.#close(false)
   }
 
   render() {
@@ -94,7 +102,7 @@ dans cette page`
       <span class="console-date">Liens vérifiés le <cv-job-list>38 octembre 3017</cv-job-list></span>
       <span class="console-nav"><a class="btn-label" href="${baseUrl}" target="_blank">Liste de tous les liens
           brisés</a></span>
-      <button aria-label="fermer" class="console-btn-close" @click="${this.close}">${unsafeHTML(closeIcon)}</button>
+      <button aria-label="fermer" class="console-btn-close" @click="${this.#close}">${unsafeHTML(closeIcon)}</button>
     </div>
   </div>
 </div>`

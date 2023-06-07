@@ -30,72 +30,88 @@ async function importApp() {
   })
 }
 
-function postMessage(which, data) {
-  return new Promise((resolve, reject) => {
-    let ports = [window.parent]
-    if (which === 'slaves') {
-      ports = window.frames
-    }
+// function postMessage(which, data) {
+//   return new Promise((resolve, reject) => {
+//     let ports = [window.parent]
+//     if (which === 'slaves') {
+//       ports = window.frames
+//     }
 
-    for (var i = 0; i < ports.length; i++) {
-      ports[i].postMessage(
-        {
-          ...data,
-          cv: true,
-        },
-        '*'
-      )
-    }
-    resolve()
-  })
-}
+//     for (var i = 0; i < ports.length; i++) {
+//       ports[i].postMessage(
+//         {
+//           ...data,
+//           cv: true,
+//         },
+//         '*'
+//       )
+//     }
+//     resolve()
+//   })
+// }
+
+// function start(notify = false) {
+//   function doStart() {
+//     console.log('[%s] Starting corvee...', role)
+//     return importApp()
+//       .then(() => app.start())
+//       .catch(error => {
+//         console.error(`Error loading app: %o`, error)
+//       })
+//   }
+
+//   if (!notify) {
+//     doStart()
+//     return
+//   }
+
+//   console.log('[%s] postMessage: start', role)
+//   if (role === 'master') {
+//     doStart().then(() => {
+//       postMessage('slaves', {
+//         action: 'start',
+//       })
+//     })
+//   } else {
+//     postMessage('master', {
+//       action: 'start',
+//     }).then(() => {
+//       doStart()
+//     })
+//   }
+// }
+
+// function stop(notify = false) {
+//   function doStop() {
+//     console.log('[%s] Stopping app', role)
+//     app.stop()
+//   }
+
+//   if (app) {
+//     doStop()
+
+//     if (notify) {
+//       console.log('[%s] postMessage: stop', role)
+//       postMessage(role === 'master' ? 'slaves' : role, {
+//         action: 'stop',
+//       })
+//     }
+//   }
+// }
 
 function start(notify = false) {
-  function doStart() {
-    console.log('[%s] Starting corvee...', role)
-    return importApp()
-      .then(() => app.start())
-      .catch(error => {
-        console.error(`Error loading app: %o`, error)
-      })
-  }
-
-  if (!notify) {
-    doStart()
-    return
-  }
-
-  console.log('[%s] postMessage: start', role)
-  if (role === 'master') {
-    doStart().then(() => {
-      postMessage('slaves', {
-        action: 'start',
-      })
+  console.log('[%s] Starting app from loader', role)
+  importApp()
+    .then(app => app.start(notify))
+    .catch(error => {
+      console.error(`Error loading app: %o`, error)
     })
-  } else {
-    postMessage('master', {
-      action: 'start',
-    }).then(() => {
-      doStart()
-    })
-  }
 }
 
 function stop(notify = false) {
-  function doStop() {
-    console.log('[%s] Stopping app', role)
-    app.stop()
-  }
-
   if (app) {
-    doStop()
-
-    if (notify) {
-      console.log('[%s] postMessage: stop', role)
-      postMessage(role === 'master' ? 'slaves' : role, {
-        action: 'stop',
-      })
-    }
+    console.log('[%s] Stopping app from loader', role)
+    app.stop(notify)
   }
 }
 

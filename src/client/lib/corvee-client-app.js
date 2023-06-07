@@ -4,6 +4,27 @@ import { normalizeUrl } from '../../common/js/normalize-url.js'
 import { userConfig } from '../../common/js/user-config.js'
 import { baseUrl, version } from '@corvee/client-config/app'
 
+function postMessage(which, data) {
+  console.log('===== postMessage ===== wich: %s, data: %o', which, data)
+  return new Promise((resolve, reject) => {
+    let ports = [window.parent]
+    if (which === 'slaves') {
+      ports = window.frames
+    }
+
+    for (var i = 0; i < ports.length; i++) {
+      ports[i].postMessage(
+        {
+          ...data,
+          cv: true,
+        },
+        '*'
+      )
+    }
+    resolve()
+  })
+}
+
 export class CorveeClientApp {
   constructor() {
     Object.defineProperty(this, 'role', {
@@ -34,8 +55,28 @@ export class CorveeClientApp {
     })
 
     if (this.role === 'master') {
-      this.console.addEventListener('close', () => this.stop())
+      this.console.addEventListener('close', () => {
+        console.log('[%s] close event from console', this.role)
+        this.stop(true)
+      })
     }
+
+    // globalThis.addEventListener('message', event => {
+    //   // console.log('[%s] Got a message: %o', _c.role, event.data)
+    //   if (typeof event.data === 'object' && 'cv' in event.data && event.data.action) {
+    //     var msg = event.data
+    //     console.log('[%s] got a message from %s:  %o', this.role, this.role === 'master' ? 'slave' : 'master', msg)
+
+    //     switch (msg.action) {
+    //       case 'start':
+    //         this.start(false)
+    //         break
+    //       case 'stop':
+    //         this.stop(false)
+    //         break
+    //     }
+    //   }
+    // })
   }
 
   #notify(message) {
@@ -44,28 +85,63 @@ export class CorveeClientApp {
     }
   }
 
-  start() {
-    userConfig.set({ isActive: true })
-    this.fontsStylesheet.disabled = false
-    if (this.role === 'master') {
-      document.body.prepend(this.console)
-      setTimeout(() => {
-        this.console.show()
+  start(notify = false) {
+    const role = this.role
+    const self = this
+
+    function doStart() {
+      console.log('[%s] Starting corvee...', role)
+
+      this.fontsStylesheet.disabled = false
+      if (self.role === 'master') {
+        userConfig.set({ isActive: true })
+        document.body.prepend(self.console)
+        setTimeout(() => {
+          self.console.show()
+        })
+      }
+
+      return self
+        ._loadData()
+        .then(() => self._buildReportWidgets())
+        .catch(error => console.error('[%s] Error loading data: %o', self.role, error))
+    }
+
+    if (!notify) {
+      doStart.call(this)
+      return
+    }
+
+    console.log('[%s] postMessage: start', role)
+    if (role === 'master') {
+      console.log('[%s] postMessage: starting app', role)
+      doStart.call(this).then(() => {
+        console.log('[%s] postMessage: done', role)
+        postMessage('slaves', {
+          action: 'start',
+        })
+      })
+    } else {
+      postMessage('master', {
+        action: 'start',
+      }).then(() => {
+        doStart.call(this)
       })
     }
-    this._loadData()
-      .then(() => this._buildReportWidgets())
-      .catch(error => console.error('[%s] Error loading data: %o', this.role, error))
   }
 
-  async stop() {
+  async stop(notify = false) {
     return new Promise((resolve, reject) => {
+
+      console.log('[%s] Stopping app', this.role)
       userConfig.set({ isActive: false })
 
       this._killWidgets()
 
       if (this.role === 'master') {
-        this.console.close()
+        if (this.console.open) {
+          this.console.close()
+        }
         this.console.addEventListener(
           'transitionend',
           () => {
@@ -77,8 +153,15 @@ export class CorveeClientApp {
       } else {
         resolve()
       }
+
+      if (notify) {
+        console.log('[%s] postMessage: stop', this.role)
+        postMessage(this.role === 'master' ? 'slaves' : this.role, {
+          action: 'stop',
+        })
+      }
+
     }).then(() => {
-      console.log(this)
       this.fontsStylesheet.disabled = true
     })
   }
