@@ -1,5 +1,5 @@
-@use "sass:map";
-@use "sass:math";
+@use 'sass:map';
+@use 'sass:math';
 
 // @function strip-unit($value)
 // @param {number with unit} $value
@@ -15,7 +15,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 
 $root: root !default;
 
-$gray: map.get($colors, "gray");
+$gray: map.get($colors, 'gray');
 
 :#{$root} {
   --cv-error: #{$accent};
@@ -50,7 +50,7 @@ $gray: map.get($colors, "gray");
 
   --cv-shadow-2: 0 0.35rem 0.8rem rgb(0 0 0 / 20%), inset 0 -1px 0 rgb(0 0 0 / 20%);
 
-  --cv-navbar-height: 70px;
+  --cv-navbar-height: 60px;
 
   color: var(--cv-body-color);
   font-size: var(--cv-body-font-size);
