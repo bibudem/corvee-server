@@ -60,23 +60,6 @@ export class CorveeClientApp {
         this.stop(true)
       })
     }
-
-    // globalThis.addEventListener('message', event => {
-    //   // console.log('[%s] Got a message: %o', _c.role, event.data)
-    //   if (typeof event.data === 'object' && 'cv' in event.data && event.data.action) {
-    //     var msg = event.data
-    //     console.log('[%s] got a message from %s:  %o', this.role, this.role === 'master' ? 'slave' : 'master', msg)
-
-    //     switch (msg.action) {
-    //       case 'start':
-    //         this.start(false)
-    //         break
-    //       case 'stop':
-    //         this.stop(false)
-    //         break
-    //     }
-    //   }
-    // })
   }
 
   #notify(message) {
