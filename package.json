@@ -19,6 +19,7 @@
   "browserslist": "last 2 versions",
   "scripts": {
     "build": "cross-env NODE_ENV=production npm-run-all clean:build prepare build:* compress",
+    "build-debug": "cross-env NODE_ENV=production DEBUG_MODE=true npm-run-all clean:build prepare build:* compress",
     "build:client": "rollup --config rollup.config.js",
     "build:app-css": "node utils/app-css.js",
     "clean:dev": "node utils/clean.js dev",

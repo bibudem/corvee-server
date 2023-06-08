@@ -26,8 +26,10 @@ import pkg from './package.json' assert {type: 'json'}
 
 const production = process.env.NODE_ENV === 'production'
 const task = process.argv.includes('--watch') ? 'watch' : 'build'
+const debugMode = process.env.DEBUG_MODE === 'true'
 
 console.log(`Working in ${process.env.NODE_ENV} mode.`)
+console.log(`Debug mode is ${debugMode ? `on` : `off`}`)
 console.log(`Current task: ${task}.`)
 
 const buildDir = task === 'watch' ? 'dev' : 'build'
@@ -94,12 +96,10 @@ const plugins = [
   json()
 ]
 
-if (production) {
+if (production && !debugMode) {
   plugins.push(strip({
     labels: ['debug']
   }))
-} else {
-
 }
 
 if (task === 'build') {
@@ -133,7 +133,7 @@ plugins.push(
 
 cssPlugins.push(scssPlugin)
 
-if (task === 'build') {
+if (task === 'build' && !debugMode) {
   plugins.push(terserPlugin)
   cssPlugins.push(terserPlugin)
 }
