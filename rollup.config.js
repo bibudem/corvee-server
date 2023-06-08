@@ -48,9 +48,7 @@ const scssPlugin = scss({
       autoprefixer()
     ]
     if (task === 'build') {
-      postcssPlugins.push(cssnano({
-        preset: 'advanced',
-      }))
+      postcssPlugins.push(cssnano())
     }
     return postcss(postcssPlugins)
   },
