@@ -65,7 +65,7 @@
   },
   "devDependencies": {
     "@floating-ui/dom": "^1.1.0",
-    "@github/clipboard-copy-element": "^1.1.2",
+    "@github/clipboard-copy-element": "^1.2.1",
     "@graphiteds/core": "^1.9.7",
     "@iconify/tools": "^3.0.1",
     "@material/menu": "^14.0.0",
