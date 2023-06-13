@@ -99,7 +99,7 @@ dans cette page`
     </div>
     <div class="console-total-errors"><span>${this.totalErrors}</span></div>
     <div class="console-content-right">
-      <span class="console-date">Liens vérifiés le <cv-job-list>38 octembre 3017</cv-job-list></span>
+      <span class="console-date">Liens vérifiés le&nbsp;<cv-job-list>38 octembre 3017</cv-job-list></span>
       <span class="console-nav"><a class="btn-label" href="${baseUrl}" target="_blank">Liste de tous les liens
           brisés</a></span>
       <button aria-label="fermer" class="console-btn-close" @click="${this.#close}">${unsafeHTML(closeIcon)}</button>
