@@ -64,7 +64,7 @@ export async function getPagesForSection({ sectionKey, job, filters = {} }) {
 }
 
 export async function countLinksForSection({ sectionKey, job, filters = {} }) {
-  console.log('sectionKey: ', sectionKey, ', job: ', job)
+  // console.log('sectionKey: ', sectionKey, ', job: ', job)
   assert.string(job)
 
   if (sectionKey) {
