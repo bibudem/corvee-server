@@ -1,5 +1,28 @@
 # Changelog
 
+## [2.1.0](https://github.com/bibudem/corvee-server/compare/v2.0.0...v2.1.0) (2023-06-13)
+
+
+### Features
+
+* Added few public apis to the globalThis.corvee object ([1866a98](https://github.com/bibudem/corvee-server/commit/1866a985fa0e61e1e8aa709b53854468b7467ac4))
+* **reporter:** Shorter console in height ([d29d2a8](https://github.com/bibudem/corvee-server/commit/d29d2a80fddc1e830b3e80c864d6f20be491d8e2))
+
+
+### Bug Fixes
+
+* **reporter:** Fix issue with report windows not closing, also copyed tooltip reappearing after click/copy ([9140aa7](https://github.com/bibudem/corvee-server/commit/9140aa7c6799ec1fcd40750a717c14143100ee18))
+* **reporter:** Fix of the vertical alignment of the close btn of the console ([9001757](https://github.com/bibudem/corvee-server/commit/90017576029333888415c5eb49ae19fd6c3b8695))
+* **reporter:** Fix of the vertical alignment of the close btn of the console ([8256171](https://github.com/bibudem/corvee-server/commit/825617176891bbc29e280d08eafd263e2964fd22))
+* **reporter:** Reporter app was not closing on clicking the console close btn ([cdbd521](https://github.com/bibudem/corvee-server/commit/cdbd5218c5dadc871135a6d6531a9d7c53c9bb62))
+* Search bar was not emptyed properly when the chip was cleared ([e3da1bf](https://github.com/bibudem/corvee-server/commit/e3da1bff26f537699a55eb2d056c875f87de506d))
+* **style:** Reporter console: fix "last modified" last letter hidden ([c22bf0c](https://github.com/bibudem/corvee-server/commit/c22bf0c3b977eee98ee0e250fbbd57b82e0cdc8e))
+
+
+### Performance Improvements
+
+* **reporter:** Improved loader size by moving some code outside the file ([cdbd521](https://github.com/bibudem/corvee-server/commit/cdbd5218c5dadc871135a6d6531a9d7c53c9bb62))
+
 ## 2.0.0 (2023-06-05)
 
 ### Features
