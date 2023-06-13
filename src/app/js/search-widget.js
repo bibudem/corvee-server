@@ -230,6 +230,7 @@ export async function initSearchWidget() {
       }
 
       function onSearchInputContainerAnimation(event) {
+        console.log('[onSearchInputContainerAnimation] event: %o', event)
         const target = event.target
         if (target === searchInputContainer) {
           if (event.animationName === 'cv-search-input-width') {
