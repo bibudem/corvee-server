@@ -64,7 +64,7 @@
     "vary": "^1.1.2"
   },
   "devDependencies": {
-    "@floating-ui/dom": "^1.1.0",
+    "@floating-ui/dom": "^1.4.4",
     "@github/clipboard-copy-element": "^1.2.1",
     "@graphiteds/core": "^1.9.7",
     "@iconify/tools": "^3.0.1",
