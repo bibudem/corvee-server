@@ -3,6 +3,7 @@ import '../../cv-console/cv-console.js'
 import { normalizeUrl } from '../../common/js/normalize-url.js'
 import { userConfig } from '../../common/js/user-config.js'
 import { baseUrl, version } from '@corvee/client-config/app'
+import { getNodeText } from '../../common/js/get-node-text.js'
 
 function postMessage(which, data) {
   console.log('===== postMessage ===== wich: %s, data: %o', which, data)
@@ -218,14 +219,11 @@ export class CorveeClientApp {
       this.data.reports.forEach(report => {
         const url = report.url.split('\\').join('\\\\').split('"').join('\\"')
         const elem = Array.from(document.querySelectorAll('a[href="' + url + '"]:not([data-cv-report-widget]), img[src="' + url + '"]:not([data-cv-report-widget])')).filter(elem => {
-          let label = elem.innerText.replace(/\n/g, '').trim()
-          if (elem.nodeName === 'A') {
-            if (label === '' && elem.querySelectorAll(':scope > img[alt]').length > 0) {
-              label = elem.querySelector('img[alt]').getAttribute('alt').trim()
-            }
+          const text = getNodeText(elem)
 
+          if (elem.nodeName === 'A') {
             return (
-              label ===
+              text ===
               (() => {
                 const div = document.createElement('div')
                 div.innerHTML = report.text.replace(/\n/g, '')
@@ -233,10 +231,7 @@ export class CorveeClientApp {
               })()
             )
           } else if (elem.nodeName === 'IMG') {
-            if (!elem.alt) {
-              return true
-            }
-            return elem.alt.replace(/\n/, '').trim() === report.text.replace(/\n/g, '').trim()
+            return text === report.text
           }
           return false
         })[0]
