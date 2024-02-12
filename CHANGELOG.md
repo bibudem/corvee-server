@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/bibudem/corvee-server/compare/v2.1.0...v2.1.1) (2024-02-12)
+
+
+### Bug Fixes
+
+* **reporter:** Changed dates of current job ([47abf17](https://github.com/bibudem/corvee-server/commit/47abf174d04571cc8f4dc8707736bd5a0b91c9c8))
+
 ## [2.1.0](https://github.com/bibudem/corvee-server/compare/v2.0.0...v2.1.0) (2023-06-13)
 
 
