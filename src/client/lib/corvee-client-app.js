@@ -217,7 +217,7 @@ export class CorveeClientApp {
 
     if (this.data.total > 0) {
       this.data.reports.forEach(report => {
-        const url = report.url.split('\\').join('\\\\').split('"').join('\\"')
+        const url = report.urlData.split('\\').join('\\\\').split('"').join('\\"')
         const elem = Array.from(document.querySelectorAll('a[href="' + url + '"]:not([data-cv-report-widget]), img[src="' + url + '"]:not([data-cv-report-widget])')).filter(elem => {
           const text = getNodeText(elem)
 
