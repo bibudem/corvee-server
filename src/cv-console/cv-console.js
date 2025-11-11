@@ -49,8 +49,8 @@ export class CvConsole extends LitElement {
   }
 
   get totalErrors() {
-    return html`<strong>${this.#totalErrors > 0 ? this.#totalErrors : `Aucun`}</strong> signalement${this.#totalErrors > 1 ? `s` : ``}
-dans cette page`
+    const totalErrors = this.#totalErrors > 0 ? html`<strong class="console-total-errors--value">${this.#totalErrors}</strong>` : html`<strong class="console-total-errors--value-zero">Aucun</strong>`
+    return html`${totalErrors} signalement${this.#totalErrors > 1 ? `s` : ``} dans cette page`
   }
 
   async connectedCallback() {
@@ -92,20 +92,21 @@ dans cette page`
   }
 
   render() {
-    return html`<div class="console-outer">
-  <div class="console-container">
-    <div class="console-title">
-      <div class="h1"><a href="${baseUrl}" target="_blank">Corvée</a></div>
-    </div>
-    <div class="console-total-errors"><span>${this.totalErrors}</span></div>
-    <div class="console-content-right">
-      <span class="console-date">Liens vérifiés le&nbsp;<cv-job-list>38 octembre 3017</cv-job-list></span>
-      <span class="console-nav"><a class="btn-label" href="${baseUrl}" target="_blank">Liste de tous les liens
-          brisés</a></span>
-      <button aria-label="fermer" class="console-btn-close" @click="${this.#close}">${unsafeHTML(closeIcon)}</button>
-    </div>
-  </div>
-</div>`
+    return html`
+      <div class="console-outer">
+        <div class="console-container">
+          <div class="console-title">
+            <div class="h1"><a href="${baseUrl}" target="_blank">Corvée</a></div>
+          </div>
+          <div class="console-total-errors"><span>${this.totalErrors}</span></div>
+          <div class="console-content-right">
+            <span class="console-date">Liens vérifiés le&nbsp;<cv-job-list>38 octembre 3017</cv-job-list></span>
+            <span class="console-nav"><a class="btn-label" href="${baseUrl}" target="_blank">Liste de tous les liens brisés</a></span>
+            <button aria-label="fermer" class="console-btn-close" @click="${this.#close}">${unsafeHTML(closeIcon)}</button>
+          </div>
+        </div>
+      </div>
+    `
   }
 }
 
