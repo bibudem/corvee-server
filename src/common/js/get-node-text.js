@@ -10,7 +10,6 @@ export function getNodeText(node) {
     return text
   }
 
-  console.log('[getNodeText] zici:', node)
   if (node.nodeName === 'A') {
     text = node.innerText
     if (normalizeText(text) === '' && node.querySelector('img[alt]')) {
