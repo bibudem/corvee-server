@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.2.0](https://github.com/bibudem/corvee-server/compare/v2.1.0...v2.2.0) (2025-11-18)
+
+
+### Features
+
+* **server:** Updated browserlist ([e250d26](https://github.com/bibudem/corvee-server/commit/e250d26e54a6d56e768c57b43f01d35ca61ec4eb))
+* **server:** Updated browserlist ([2e476fb](https://github.com/bibudem/corvee-server/commit/2e476fbf1ccf2f866d45e2869883cd55c63bfc3f))
+
+
+### Bug Fixes
+
+* **client:** Correction du style de la console. ([a378f54](https://github.com/bibudem/corvee-server/commit/a378f5426be5696ffa0dd9934d4b9d78beaf0361))
+* **parser:** Amélioration de la comparaison des données avec les liens dans la page ([fb93cf0](https://github.com/bibudem/corvee-server/commit/fb93cf0e5d689b029be5ac384b6850718516a761))
+* **parser:** Amélioration de la comparaison des données avec les liens dans la page ([471e34a](https://github.com/bibudem/corvee-server/commit/471e34a60d5e5f8bfc3aed85fc74f3e61f140aaf))
+* **server:** Les dates de la corvée d'hiver n'avaient pas été mises à jour ([19068a3](https://github.com/bibudem/corvee-server/commit/19068a37257ffb6593ab27aadb3ec38dc33478b3))
+
 ## [2.1.0](https://github.com/bibudem/corvee-server/compare/v2.0.0...v2.1.0) (2023-06-13)
 
 
