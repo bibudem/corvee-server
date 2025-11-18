@@ -6,7 +6,6 @@ import { baseUrl, version } from '@corvee/client-config/app'
 import { getNodeText } from '../../common/js/get-node-text.js'
 
 function postMessage(which, data) {
-  console.log('===== postMessage ===== wich: %s, data: %o', which, data)
   return new Promise((resolve, reject) => {
     let ports = [window.parent]
     if (which === 'slaves') {
@@ -220,6 +219,7 @@ export class CorveeClientApp {
         const url = report.urlData.split('\\').join('\\\\').split('"').join('\\"')
         const elem = Array.from(document.querySelectorAll('a[href="' + url + '"]:not([data-cv-report-widget]), img[src="' + url + '"]:not([data-cv-report-widget])')).filter(elem => {
           const text = getNodeText(elem)
+          console.log('[_buildReportWidgets] Comparing text: "%s" to report text: "%s"', text, report.text)
 
           if (elem.nodeName === 'A') {
             return (

@@ -7,6 +7,8 @@ mongoose.connection.on('error', error => {
 
 mongoose.set('strictQuery', false)
 
+console.log('Connecting to MongoDB...')
+
 export default async function establishDbConnection() {
   try {
     return mongoose.connect(config.get('mongodb.url'), {
