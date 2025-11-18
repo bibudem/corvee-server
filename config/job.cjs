@@ -25,9 +25,9 @@ module.exports = {
       title: 'Site central',
       sections: [
         {
-          key: 'site-central/a-propos',
-          title: 'À propos',
-          urls: ['https://bib.umontreal.ca/a-propos'],
+          key: 'site-central/accueil',
+          title: 'Accueil',
+          urls: [/https:\/\/bib\.umontreal\.ca\/$/i],
         },
         {
           key: 'site-central/engagements',
@@ -50,6 +50,16 @@ module.exports = {
           urls: ['https://bib.umontreal.ca/etudes'],
         },
         {
+          key: 'site-central/recherche',
+          title: 'Recherche',
+          urls: ['https://bib.umontreal.ca/recherche'],
+        },
+        {
+          key: 'site-central/a-propos',
+          title: 'À propos',
+          urls: ['https://bib.umontreal.ca/a-propos'],
+        },
+        {
           key: 'site-central/nous-joindre',
           title: 'Nous joindre',
           urls: ['https://bib.umontreal.ca/nous-joindre'],
@@ -63,11 +73,6 @@ module.exports = {
           key: 'site-central/obtenir',
           title: 'Obtenir',
           urls: ['https://bib.umontreal.ca/obtenir'],
-        },
-        {
-          key: 'site-central/recherche',
-          title: 'Recherche',
-          urls: ['https://bib.umontreal.ca/recherche'],
         },
         {
           key: 'site-central/autres',
@@ -150,14 +155,6 @@ module.exports = {
           urls: ['https://boite-outils.bib.umontreal.ca/multidisciplinaire'],
         },
         {
-          key: 'boite-outils/toutes',
-          title: 'Toutes les pages de cette section',
-          urls: ['https://boite-outils.bib.umontreal.ca/'],
-        },
-
-        //
-
-        {
           key: 'boite-outils/recherche',
           title: 'Recherche et cycles supérieurs',
           urls: ['https://boite-outils.bib.umontreal.ca/recherche'],
@@ -171,7 +168,12 @@ module.exports = {
           key: 'boite-outils/citer',
           title: 'Citations et bibliographies',
           urls: ['https://boite-outils.bib.umontreal.ca/citer'],
-        }
+        },
+        {
+          key: 'boite-outils/toutes',
+          title: 'Toutes les pages de cette section',
+          urls: ['https://boite-outils.bib.umontreal.ca/'],
+        },
       ],
     },
     {
