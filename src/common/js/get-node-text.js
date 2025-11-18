@@ -10,6 +10,7 @@ export function getNodeText(node) {
     return text
   }
 
+  console.log('[getNodeText] zici:', node)
   if (node.nodeName === 'A') {
     text = node.innerText
     if (normalizeText(text) === '' && node.querySelector('img[alt]')) {
@@ -22,6 +23,9 @@ export function getNodeText(node) {
     } else if (node.hasAttribute('title')) {
       text = node.getAttribute('title')
     }
-    return normalizeText(text)
+
+    const normalizedText = normalizeText(text)
+    console.log('[getNodeText] normalizedText: "%s"', normalizedText)
+    return normalizeText(normalizedText)
   }
 }

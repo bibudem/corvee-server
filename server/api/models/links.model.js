@@ -3,6 +3,7 @@ import { Link } from '../database/models/index.js'
 
 export async function getByParent({ parent, job }) {
   try {
+    console.log('getByParent - parent: %s, job: %s', parent, job)
     const reports = await Link.find({ parent, job }).lean().exec()
     return { total: reports.length, reports }
   } catch (error) {

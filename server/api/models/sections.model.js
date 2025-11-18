@@ -51,6 +51,8 @@ async function getLinksFromSectionKey({ sectionKey, job, filters = {} }) {
     ...filters,
   }
 
+  console.log('countLinksFromSectionKey - query: ', JSON.stringify(query, null, 2))
+
   return await Link.find(query).lean().exec()
 }
 
