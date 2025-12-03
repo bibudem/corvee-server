@@ -215,21 +215,23 @@ export class CorveeClientApp {
     this._killWidgets()
 
     if (this.data.total > 0) {
+
       this.data.reports.forEach(report => {
         const url = report.urlData.split('\\').join('\\\\').split('"').join('\\"')
+
         const elem = Array.from(document.querySelectorAll('a[href="' + url + '"]:not([data-cv-report-widget]), img[src="' + url + '"]:not([data-cv-report-widget])')).filter(elem => {
+
           const text = getNodeText(elem)
-          console.log('[_buildReportWidgets] Comparing text: "%s" to report text: "%s"', text, report.text)
 
           if (elem.nodeName === 'A') {
-            return (
-              text ===
-              (() => {
-                const div = document.createElement('div')
-                div.innerHTML = report.text.replace(/\n/g, '')
-                return div.innerText.trim()
-              })()
-            )
+            const textFromDOM = (() => {
+              const div = document.createElement('div')
+              div.innerHTML = report.text.replace(/[\n\r\t\s]+/g, ' ')
+              return div.innerText.trim()
+            })()
+
+            console.log('"%s" === "%s"', text, textFromDOM)
+            return text === textFromDOM
           } else if (elem.nodeName === 'IMG') {
             return text === report.text
           }

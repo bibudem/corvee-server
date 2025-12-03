@@ -15,7 +15,7 @@ import { noCache } from './middlewares/cacheControl.middleware.js'
 import { headersMiddleware } from './middlewares/headers.middleware.js'
 import { staticMiddleware } from './middlewares/static.middleware.js'
 import { userConfigMiddleware } from './middlewares/user-config.middleware.js'
-import pkg from '../package.json' assert {type: 'json'}
+import pkg from '../package.json' with {type: 'json'}
 import config from 'config'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))

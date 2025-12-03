@@ -1,14 +1,17 @@
 function normalizeText(str) {
-  return str.replace(/\n/g, '').trim()
+  str = str.replace(/[\n\r\t\s]+/g, ' ')
+  str = str.trim()
+  return str
 }
 
 // @ts-ignore
 export function getNodeText(node) {
   let text = null
 
-  if (!node instanceof HTMLElement) {
+  if (!(node instanceof HTMLElement)) {
     return text
   }
+
 
   if (node.nodeName === 'A') {
     text = node.innerText
@@ -22,9 +25,7 @@ export function getNodeText(node) {
     } else if (node.hasAttribute('title')) {
       text = node.getAttribute('title')
     }
-
-    const normalizedText = normalizeText(text)
-    console.log('[getNodeText] normalizedText: "%s"', normalizedText)
-    return normalizeText(normalizedText)
   }
+
+  return normalizeText(text)
 }

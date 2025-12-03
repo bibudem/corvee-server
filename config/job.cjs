@@ -1,4 +1,4 @@
-const currentJob = '2025-11-09'
+const currentJob = '2025-11-24'
 const deadline = '2026-02-16'
 
 // ----------------------------
@@ -81,7 +81,7 @@ module.exports = {
         },
         {
           key: 'site-central/toutes-les-pages',
-          title: 'Toutes les pages',
+          title: 'Toutes les pages (site central)',
           urls: ['https://bib.umontreal.ca/'],
         },
       ],
@@ -135,9 +135,9 @@ module.exports = {
           urls: ['https://boite-outils.bib.umontreal.ca/etudes-religieuses-histoire-philosophie'],
         },
         {
-          key: 'boite-outils/informatique-mathematique-sciences-nature',
+          key: 'boite-outils/informatique-mathematiques-sciences-nature',
           title: 'Informatique, mathématiques, sciences de la nature',
-          urls: ['https://boite-outils.bib.umontreal.ca/informatique-mathematique-sciences-nature'],
+          urls: ['https://boite-outils.bib.umontreal.ca/informatique-mathematiques-sciences-nature'],
         },
         {
           key: 'boite-outils/langues-litteratures',
