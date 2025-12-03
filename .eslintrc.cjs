@@ -70,6 +70,8 @@ module.exports = {
     },
   },
 
+  sourceType: 'module',
+
   rules: {
     'prettier-vue/prettier': [
       'error',
