@@ -45,13 +45,12 @@ a:hover {
 
 .console-container {
   height: 100%;
-  left: 50%;
-  margin: 0 0 0 -768px;
   padding: 1em 0;
-  position: absolute;
-  width: 1536px;
   display: flex;
   align-items: center;
+  width: 100%;
+  max-width: 1536px;
+  margin: 0 auto;
 }
 
 .console-title {
