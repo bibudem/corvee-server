@@ -1,12 +1,11 @@
 import { Router } from 'express'
-import cors from 'cors'
 import autopush from 'http2-express-autopush'
 import { staticCompressionMiddleware } from './compression.middleware.js'
 
 export function staticMiddleware(root, options = {}) {
   const staticRouter = new Router()
 
-  staticRouter.use(cors())
+  // staticRouter.use(cors())
 
   function setHeaders(res, path, stat) {
     if (res.req.originalUrl === `${res.app.locals.baseUrl}loader.js`) {
