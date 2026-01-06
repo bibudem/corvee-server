@@ -1,7 +1,6 @@
 import { Router } from 'express'
 import cors from 'cors'
 import autopush from 'http2-express-autopush'
-import onHeaders from 'on-headers'
 import { staticCompressionMiddleware } from './compression.middleware.js'
 
 export function staticMiddleware(root, options = {}) {
