@@ -86,7 +86,7 @@
     "cssnano-preset-advanced": "^6.0.0",
     "eslint": "^8.40.0",
     "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier-vue": "^4.2.0",
+    "eslint-plugin-prettier-vue": "^5.0.0",
     "eslint-plugin-vue": "^9.14.1",
     "extract-urls": "^1.3.4",
     "focusable-selectors": "^0.8.0",
