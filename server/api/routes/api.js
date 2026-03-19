@@ -14,11 +14,12 @@ const router = Router()
 // Middlewares
 //
 
-router.use(cors())
+// router.use(cors())
 router.use((req, res, next) => {
   res.header('Cache-Control', 'no-store')
   onHeaders(res, function () {
     res.removeHeader('etag')
+    // res.removeHeader('access-control-allow-origin')
   })
   next()
 })

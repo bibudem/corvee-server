@@ -1,4 +1,4 @@
-const currentJob = '2025-11-24'
+const currentJob = '2025-12-18'
 const deadline = '2026-02-16'
 
 // ----------------------------
