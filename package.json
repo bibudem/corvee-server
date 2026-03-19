@@ -58,6 +58,7 @@
     "lodash-es": "^4.17.21",
     "mime-types": "^2.1.35",
     "mongoose": "^7.2.2",
+    "navigation-polyfill": "^0.0.2",
     "on-headers": "^1.0.2",
     "rimraf": "^4.1.2",
     "sirv": "^2.0.3",
@@ -110,7 +111,7 @@
     "rollup-plugin-scss": "^3.0.0",
     "rollup-plugin-string": "^3.0.0",
     "rollup-plugin-summary": "^2.0.0",
-    "sass": "^1.57.1",
+    "sass": "^1.94.2",
     "sticky-events": "^3.4.12"
   }
 }

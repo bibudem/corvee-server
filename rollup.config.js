@@ -22,7 +22,7 @@ import replace from '@rollup/plugin-replace'
 import terser from '@rollup/plugin-terser'
 import summary from 'rollup-plugin-summary'
 import clientConfigModule from './utils/client-config-virtual-module.js'
-import pkg from './package.json' assert {type: 'json'}
+import pkg from './package.json' with { type: 'json' }
 
 const production = process.env.NODE_ENV === 'production'
 const task = process.argv.includes('--watch') ? 'watch' : 'build'

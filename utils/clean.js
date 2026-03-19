@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'node:url'
 import { rimrafSync } from 'rimraf'
-import pkg from '../package.json' assert {type: 'json'}
+import pkg from '../package.json' with { type: 'json' }
 
 const version = pkg.version
 const task = process.argv[2]

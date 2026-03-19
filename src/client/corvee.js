@@ -1,3 +1,4 @@
+import 'navigation-polyfill'
 import { CorveeClientApp } from './lib/corvee-client-app.js'
 import '../common/js/api/corvee.js'
 

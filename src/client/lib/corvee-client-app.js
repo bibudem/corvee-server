@@ -215,12 +215,13 @@ export class CorveeClientApp {
     this._killWidgets()
 
     if (this.data.total > 0) {
+      console.log('[%s] Building report widgets...', this.role)
 
       this.data.reports.forEach(report => {
         const url = report.urlData.split('\\').join('\\\\').split('"').join('\\"')
 
         const elem = Array.from(document.querySelectorAll('a[href="' + url + '"]:not([data-cv-report-widget]), img[src="' + url + '"]:not([data-cv-report-widget])')).filter(elem => {
-
+          console.log('Checking element for a match with error id %s: %o', report.id, elem)
           const text = getNodeText(elem)
 
           if (elem.nodeName === 'A') {
@@ -242,6 +243,8 @@ export class CorveeClientApp {
           this.reportWidgets.push(new ReportWidget(elem, report))
         }
       })
+    } else {
+      console.log('[%s] No reports found for this page.', this.role)
     }
   }
 }

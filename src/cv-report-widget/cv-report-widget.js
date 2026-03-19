@@ -113,10 +113,6 @@ export class CvReportWidget extends CvReportBase {
 
       this.elements.reportDialog.addEventListener('keydown', event => {
         const self = this.elements.reportDialog
-        // if (event.key === 'Enter') {
-        //   event.preventDefault()
-        //   this.elements.accept.dispatchEvent(new Event('click'))
-        // }
 
         if (event.key === ESCAPE_KEY) {
           this.close().then(() => {
@@ -127,13 +123,13 @@ export class CvReportWidget extends CvReportBase {
 
         if (event.key === TAB_KEY) {
           event.preventDefault()
-          const len = self.focusables.length - 1
+          const length = self.focusables.length - 1
           let index = self.focusables.indexOf(event.composedPath()[0])
           index = event.shiftKey ? index - 1 : index + 1
           if (index < 0) {
-            index = len
+            index = length
           }
-          if (index > len) {
+          if (index > length) {
             index = 0
           }
           self.focusables[index].focus()
@@ -150,7 +146,7 @@ export class CvReportWidget extends CvReportBase {
       })
 
       this.addEventListener('mouseleave', event => {
-        console.log('[mouseleave]')
+        // console.log('[mouseleave]')
         this.close()
       })
 

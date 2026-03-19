@@ -1,6 +1,6 @@
 import { exec } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
-import pkg from '../package.json' assert {type: 'json'}
+import pkg from '../package.json' with { type: 'json' }
 
 const buildMode = process.argv.includes('dev') ? 'dev' : 'build'
 
@@ -15,6 +15,7 @@ const outFile = fileURLToPath(new URL(`../${buildMode}/${pkg.version}/app/css/ap
 
 const sassArgs = [
   '--no-charset',
+  '--quiet-deps',
   srcFile,
   outFile
 ]
