@@ -4,6 +4,7 @@ module.exports = {
   extends: ['plugin:vue/recommended', 'plugin:prettier-vue/recommended'],
   parserOptions: {
     ecmaVersion: 'latest',
+    sourceType: 'module',
   },
   settings: {
     'prettier-vue': {
@@ -69,8 +70,6 @@ module.exports = {
       },
     },
   },
-
-  sourceType: 'module',
 
   rules: {
     'prettier-vue/prettier': [
