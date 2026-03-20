@@ -17,6 +17,7 @@ module.exports = {
       immutable: true,
       maxAge: '1y',
     },
+    allowedOrigins: ['https://bib.umontreal.ca', 'https://boite-outils.bib.umontreal.ca', 'https://studio.bib.umontreal.ca', 'https://localhost'],
   },
   app,
   job,
