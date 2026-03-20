@@ -85,8 +85,8 @@ window.addEventListener('message', function (event) {
 
 document.addEventListener('keydown', async function (event) {
   const altKey = event.altKey
-  if (altKey && (event.key === c_KEY || event.key === l_KEY) {
-    // alt-l
+  if (altKey && (event.key === c_KEY || event.key === l_KEY)) {
+    // alt-c (or alt-l) to toggle the app
     if (isActive()) {
       stop(true)
     } else {
