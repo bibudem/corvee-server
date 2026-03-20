@@ -7,7 +7,7 @@
 
 import Cookie from 'js-cookie'
 import { baseUrl, version, cookie } from '@corvee/client-config/app'
-import { L_KEY } from '../common/js/constants.js'
+import { c_KEY, l_KEY } from '../common/js/constants.js'
 
 const role = self === top ? 'master' : 'slave'
 
@@ -85,7 +85,7 @@ window.addEventListener('message', function (event) {
 
 document.addEventListener('keydown', async function (event) {
   const altKey = event.altKey
-  if (altKey && event.key === L_KEY) {
+  if (altKey && (event.key === c_KEY || event.key === l_KEY) {
     // alt-l
     if (isActive()) {
       stop(true)
