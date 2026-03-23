@@ -3,7 +3,7 @@ module.exports = {
   root: true,
   extends: ['plugin:vue/recommended', 'plugin:prettier-vue/recommended'],
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: '2024',
     sourceType: 'module',
   },
   settings: {
