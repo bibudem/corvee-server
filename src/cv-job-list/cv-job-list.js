@@ -58,7 +58,7 @@ export class CvJobList extends LitElement {
     this.renderRoot.addEventListener('keyup', this._select.bind(this))
   }
 
-  disconnectedCallback() {}
+  disconnectedCallback() { }
 
   hide() {
     if (this.menu.isOpen()) {
@@ -84,12 +84,12 @@ export class CvJobList extends LitElement {
       return
     }
 
-    const keyboardSelectItemEvent = event.key === SPACE_KEY || event.key === ENTER_KEY
+    const isKeyboardSelectItemEvent = event.key === SPACE_KEY || event.key === ENTER_KEY
 
-    if (event.type === 'click' || keyboardSelectItemEvent) {
+    if (event.type === 'click' || isKeyboardSelectItemEvent) {
       event.stopPropagation()
       this.setJob(srcElem.dataset.value)
-      keyboardSelectItemEvent && this.hide()
+      isKeyboardSelectItemEvent && this.hide()
       return
     }
   }
@@ -147,8 +147,8 @@ export class CvJobList extends LitElement {
           <div class="mdc-menu-surface">
             <ul class="mdc-deprecated-list" role="menu">
               ${this.jobs?.map(job => {
-                const isActive = { active: this.currentJob ? job === this.currentJob : job === this.defaultJob }
-                return html` <li class="mdc-deprecated-list-item ${classMap(isActive)}" role="menuitem" data-value="${job}" tabindex="0" aria-current="${isActive.active}">
+      const isActive = { active: this.currentJob ? job === this.currentJob : job === this.defaultJob }
+      return html` <li class="mdc-deprecated-list-item ${classMap(isActive)}" role="menuitem" data-value="${job}" tabindex="0" aria-current="${isActive.active}">
                   <span class="mdc-deprecated-list-item__ripple"></span>
                   <span class="cv-dropdown-item-container mdc-deprecated-list-item__text">
                     <span class="cv-dropdown-item-icon">${isActive.active ? unsafeHTML(checkIcon) : nothing}</span>
@@ -156,7 +156,7 @@ export class CvJobList extends LitElement {
                     <span class="cv-dropdown-item-marker">${job === this.defaultJob ? '*' : ''}</span>
                   </span>
                 </li>`
-              })}
+    })}
             </ul>
           </div>
         </div>
