@@ -48,7 +48,7 @@ if (process.env.NODE_ENV.endsWith('production')) {
 }
 
 //
-// /section/:section route
+// route: /section/:section
 //
 
 router.use(
@@ -61,7 +61,7 @@ router.use(
 )
 
 //
-// / route
+// route: /
 //
 
 router.use(/^\/$/, homeRoute)
