@@ -127,17 +127,17 @@ export class CvReportBody extends LitElement {
     return html`
       <dl class="cv-report-body">
         ${this.linkType
-          ? html`<div class="cv-report-body-item">
+        ? html`<div class="cv-report-body-item">
               <dt class="cv-report-body-item-label">Type :</dt>
               <dd class="cv-report-body-item-content">${reportManager.linkTypes[this.linkType]}</dd>
             </div>`
-          : nothing}
+        : nothing}
         ${this.text
-          ? html`<div class="cv-report-body-item">
+        ? html`<div class="cv-report-body-item">
               <dt class="cv-report-body-item-label">Texte :</dt>
               <dd class="cv-report-body-item-content"><i>${this.text}</i></dd>
             </div>`
-          : nothing}
+        : nothing}
         <div class="cv-report-body-item">
           <dt class="cv-report-body-item-label">Statut :</dt>
           <dd class="cv-report-body-item-content">
@@ -147,11 +147,11 @@ export class CvReportBody extends LitElement {
           </dd>
         </div>
         ${this.url
-          ? html`<div class="cv-report-body-item">
+        ? html`<div class="cv-report-body-item">
               <dt class="cv-report-body-item-label">Cible :</dt>
-              <dd class="cv-report-body-item-content"><a href="${this.url}" target="visualisation" class="cv-url">${this.url}</a></dd>
+                <dd class="cv-report-body-item-content"><a href="${this.url}" target="_blank" class="cv-url">${this.url}</a></dd>
             </div>`
-          : nothing}
+        : nothing}
         ${this._getSuggestedLink()}
       </dl>
       ${this._getMessages()}

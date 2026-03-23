@@ -95,11 +95,11 @@ export class CorveeClientApp {
       return
     }
 
-    console.log('[%s] postMessage: start', role)
+    // console.log('[%s] postMessage: start', role)
     if (role === 'master') {
-      console.log('[%s] postMessage: starting app', role)
+      // console.log('[%s] postMessage: starting app', role)
       doStart.call(this).then(() => {
-        console.log('[%s] postMessage: done', role)
+        // console.log('[%s] postMessage: done', role)
         postMessage('slaves', {
           action: 'start',
         })
@@ -115,7 +115,6 @@ export class CorveeClientApp {
 
   async stop(notify = false) {
     return new Promise((resolve, reject) => {
-
       console.log('[%s] Stopping app', this.role)
       userConfig.set({ isActive: false })
 
@@ -143,7 +142,6 @@ export class CorveeClientApp {
           action: 'stop',
         })
       }
-
     }).then(() => {
       this.fontsStylesheet.disabled = true
     })
@@ -215,13 +213,13 @@ export class CorveeClientApp {
     this._killWidgets()
 
     if (this.data.total > 0) {
-      console.log('[%s] Building report widgets...', this.role)
+      // console.log('[%s] Building report widgets...', this.role)
 
       this.data.reports.forEach(report => {
         const url = report.urlData.split('\\').join('\\\\').split('"').join('\\"')
 
         const elem = Array.from(document.querySelectorAll('a[href="' + url + '"]:not([data-cv-report-widget]), img[src="' + url + '"]:not([data-cv-report-widget])')).filter(elem => {
-          console.log('Checking element for a match with error id %s: %o', report.id, elem)
+          // console.log('Checking element for a match with error id %s: %o', report.id, elem)
           const text = getNodeText(elem)
 
           if (elem.nodeName === 'A') {
@@ -231,7 +229,6 @@ export class CorveeClientApp {
               return div.innerText.trim()
             })()
 
-            console.log('"%s" === "%s"', text, textFromDOM)
             return text === textFromDOM
           } else if (elem.nodeName === 'IMG') {
             return text === report.text
