@@ -7,16 +7,17 @@ mongoose.connection.on('error', error => {
 
 mongoose.set('strictQuery', false)
 
-console.log('Connecting to MongoDB...')
-
 export default async function establishDbConnection() {
+  console.log('Connecting to MongoDB...')
   try {
-    return mongoose.connect(config.get('mongodb.url'), {
-      dbName: config.get('mongodb.dbName'),
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
+    return mongoose
+      .connect(config.get('mongodb.url'), {
+        dbName: config.get('mongodb.dbName'),
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      })
+      .then(() => console.log('MongoDB connected'))
   } catch (error) {
-    console.error('Mongo Connection Error: %o', error)
+    console.error('Mongo Connection error: %o', error)
   }
 }
