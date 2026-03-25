@@ -1,5 +1,3 @@
-const { join } = require('path')
-
 const MONGODB_USER_NAME = '<read/write user>'
 const MONGODB_USER_PASSWORD = '<some strong password>'
 
