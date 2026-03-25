@@ -1,5 +1,4 @@
 import { Router } from 'express'
-import autopush from 'http2-express-autopush'
 import { staticCompressionMiddleware } from './compression.middleware.js'
 import { setAllowedOrigin } from '../lib/headers.js'
 
