@@ -59,6 +59,7 @@
     "navigation-polyfill": "^0.0.2",
     "on-headers": "^1.0.2",
     "rimraf": "^4.1.2",
+    "serve-static": "^2.2.1",
     "sirv": "^2.0.3",
     "vary": "^1.1.2"
   },
