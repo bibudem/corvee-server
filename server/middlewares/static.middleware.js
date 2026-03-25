@@ -13,7 +13,6 @@ export function staticMiddleware(root, options = {}) {
       res.removeHeader('Expires')
       res.removeHeader('Cache-Control')
       res.setHeader('Cache-Control', 'private, max-age=900') // 15min
-      setAllowedOrigin(res.req, res)
     }
     setAllowedOrigin(res.req, res)
   }
