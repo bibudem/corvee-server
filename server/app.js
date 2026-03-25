@@ -1,7 +1,6 @@
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import express from 'express'
-import http2Express from 'http2-express-bridge'
 import cookieParser from 'cookie-parser'
 import { create } from 'express-handlebars'
 import handlebarHelpers from 'handlebars-helpers'
@@ -22,7 +21,7 @@ const staticDir = resolve(__dirname, '..', process.env.NODE_ENV.endsWith('produc
 const publicDir = resolve(__dirname, 'app', 'public')
 const staticAssetsOptions = Object.assign({}, config.get('server.staticAssetsOptions'))
 
-export const app = http2Express(express)
+export const app = express()
 
 const hbs = create({
   extname: '.hbs',
@@ -59,10 +58,3 @@ app.use(userConfigMiddleware)
 app.use('/api', apiRoutes)
 
 app.use(noCache, appRoutes)
-
-
-// app.use(
-//   sirv(resolve(__dirname, 'build'), {
-//     maxAge: 1_200, // 20 min
-//   })
-// )

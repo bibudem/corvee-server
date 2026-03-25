@@ -33,7 +33,7 @@
     "prepare": "npm run scss:config",
     "preview": "cross-env NODE_ENV=production npm-run-all --print-label --print-name serve",
     "scss:config": "node utils/config-scss.js",
-    "serve": "nodemon server.js"
+    "serve": "nodemon index.js"
   },
   "dependencies": {
     "@hapi/accept": "^6.0.1",
@@ -45,14 +45,13 @@
     "core-js": "^3.31.0",
     "cors": "^2.8.5",
     "csv-parse": "^5.3.5",
-    "express": "^4.18.2",
+    "express": "^4.16.2",
     "express-async-errors": "^3.1.1",
     "express-handlebars": "^7.0.7",
     "express-minify-html": "^0.12.0",
     "front-matter": "^4.0.2",
     "handlebars-helpers": "^0.10.0",
     "http2-express-autopush": "^1.0.5",
-    "http2-express-bridge": "^1.0.7",
     "js-cookie": "^3.0.1",
     "lit": "^2.5.0",
     "lodash-es": "^4.17.21",
