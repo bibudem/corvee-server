@@ -1,22 +1,16 @@
 const { join } = require('path')
 
-const MONGODB_USER_NAME = '<read/wright user name>'
-const MONGODB_USER_PASSWORD = '<a strong password>'
+const MONGODB_USER_NAME = '<read/write user>'
+const MONGODB_USER_PASSWORD = '<some strong password>'
 
 module.exports = {
   app: {
-    baseUrl: 'https://localhost',
+    baseUrl: 'https://corvee.bib.umontreal.ca',
     cookie: {
       name: 'cv-dev',
       options: {
         domain: 'bib.umontreal.ca',
       },
-    },
-  },
-  server: {
-    certificate: {
-      key: join(__dirname, 'certificate', 'server.key'), // /path/to/server.key
-      cert: join(__dirname, 'certificate', 'server.crt'), // /path/to/server.crt
     },
   },
   mongodb: {
