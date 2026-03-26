@@ -18,10 +18,10 @@ npm run dev
 
 ## Pour créer un `release`
 
-Exécuter la commande suivante, en adaptant le niveau de version en fonction des commits faits depuis le dernier `release`:
+Exécuter la commande suivante, en adaptant le niveau de version (`major`, `minor` ou `patch`) en fonction des commits faits depuis le dernier `release`:
 
 ```
-npm version minor -m "Bump v%s" && npm run build
+npm version major|minor|patch -m "Bump v%s" && npm run build
 ```
 
 Effectuer un commit des fichiers build, avec un message du genre:
