@@ -1,5 +1,38 @@
 # Changelog
 
+## [3.0.2](https://github.com/bibudem/corvee-server/compare/v3.0.0...v3.0.2) (2026-03-26)
+
+
+### Features
+
+* Ajout d'un fichier exemple de configuration. ([ead0da3](https://github.com/bibudem/corvee-server/commit/ead0da3cc450b7065462425669ac07958da7a7bc))
+* Ajout d'un message dans la console qui confirme la connection avec le serveur MongoDB ([77ebbab](https://github.com/bibudem/corvee-server/commit/77ebbab72f9cd31850b34598a129dc495869b346))
+* Ajout d'une nouvelle clé ALT-L pour démarrrer/terminer Corvée ([8c1da1c](https://github.com/bibudem/corvee-server/commit/8c1da1cba09b908cdff1a5f0fcb8d9138b947e7a))
+* Ajout d'une nouvelle clé ALT-L pour démarrrer/terminer Corvée ([74464e0](https://github.com/bibudem/corvee-server/commit/74464e094740f6765009fdd95100961c18472df6))
+* Changement du raccourci ALT-L pour ALT-C ([46410c7](https://github.com/bibudem/corvee-server/commit/46410c73dd9208eca2c8c669644029e4bd78c00f))
+* Correctifs afin de passer à NodeJS v20.x.x ([c4ba9b0](https://github.com/bibudem/corvee-server/commit/c4ba9b0627438c06845d47d0a474772480c6a6e1))
+* Mise à jour de la librairie Bootstrap ([26f7e4b](https://github.com/bibudem/corvee-server/commit/26f7e4bf3166da92a197fc8806cc31ec2fd3e34e))
+* Mise à jour de la librairie Bootstrap ([1a71568](https://github.com/bibudem/corvee-server/commit/1a7156892b70ac7e9fd4d407ef9bfd4fe4bae518))
+* **npm:** Mise à jour des librairies liées à Eslint ([1de4c49](https://github.com/bibudem/corvee-server/commit/1de4c495718d59410b5edb7b7c13b2ffdf2cd5ae))
+
+
+### Bug Fixes
+
+* Correctifs du champs 'engines' du fichier package.json afin de valider la version 24.14.0 de NodeJS ([3be0a90](https://github.com/bibudem/corvee-server/commit/3be0a90ce722718bf7c56080fbee6e9cf69d974b))
+* Correction de la position d'un champs dans le fichier .eslintrc.cjs ([77f6bbb](https://github.com/bibudem/corvee-server/commit/77f6bbb68f755446a69f0e6813e3c880e0f2aedf))
+* Correction mineure ([85b4312](https://github.com/bibudem/corvee-server/commit/85b4312bded0af353c0cb4eb653223a5f44e35e3))
+* Corrections mineures ([15ffa23](https://github.com/bibudem/corvee-server/commit/15ffa23097740beb47eb13d4abd9183c95dd5160))
+* Fix pour assurer des données toujours fraîches pour browserlist ([0df6b12](https://github.com/bibudem/corvee-server/commit/0df6b12ed65a82e3156b924c5c4632c525ad7267))
+* **reporter:** Corvée ne s'affichait pas 'en contexte' (dans les pages du site) ([c68a20a](https://github.com/bibudem/corvee-server/commit/c68a20ab8a62b305caa6e7210eba2c1ecb2a2a10))
+* Suppression d'anciens fichiers build ([d5d30ac](https://github.com/bibudem/corvee-server/commit/d5d30ac06d945e782cd7018bf7d49eb99147ba92))
+* Suppression du fichier pour serveur standalone ([b285595](https://github.com/bibudem/corvee-server/commit/b285595b21ea97b1556c0fda2d35889e5cdaacb5))
+* Suppression du volet https/http2 du projet ([9c72e4f](https://github.com/bibudem/corvee-server/commit/9c72e4fc54ebf47be07dbe4172e99c54c6bd987e))
+
+
+### Miscellaneous Chores
+
+* Build pour v3.0.2 ([b836f47](https://github.com/bibudem/corvee-server/commit/b836f47537de5afe3bc23f1eeab6f4db1ec18dc8))
+
 ## [3.0.0](https://github.com/bibudem/corvee-server/compare/v2.1.0...v3.0.0) (2026-03-19)
 
 
