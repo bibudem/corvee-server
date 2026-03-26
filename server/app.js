@@ -1,7 +1,6 @@
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import express from 'express'
-import http2Express from 'http2-express-bridge'
 import cookieParser from 'cookie-parser'
 import { create } from 'express-handlebars'
 import handlebarHelpers from 'handlebars-helpers'
@@ -14,15 +13,15 @@ import { noCache } from './middlewares/cacheControl.middleware.js'
 import { headersMiddleware } from './middlewares/headers.middleware.js'
 import { staticMiddleware } from './middlewares/static.middleware.js'
 import { userConfigMiddleware } from './middlewares/user-config.middleware.js'
+import { corsMiddleware } from './middlewares/cors.middleware.js'
 import pkg from '../package.json' with { type: 'json' }
 import config from 'config'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const staticDir = resolve(__dirname, '..', process.env.NODE_ENV.endsWith('production') ? 'build' : 'dev')
 const publicDir = resolve(__dirname, 'app', 'public')
-const staticAssetsOptions = Object.assign({}, config.get('server.staticAssetsOptions'))
 
-export const app = http2Express(express)
+export const app = express()
 
 const hbs = create({
   extname: '.hbs',
@@ -51,18 +50,11 @@ app.use(express.json())
 
 app.use(headersMiddleware())
 
-app.use(staticMiddleware(staticDir, { staticAssetsOptions, compression: { exts: ['js', 'css', 'map'] }, encodings: ['br', 'gzip', 'deflate'] }))
-app.use(staticMiddleware(publicDir, { staticAssetsOptions }))
+app.use(corsMiddleware(), staticMiddleware(staticDir))
+app.use(corsMiddleware(), staticMiddleware(publicDir))
 
 app.use(userConfigMiddleware)
 
-app.use('/api', apiRoutes)
+app.use('/api', corsMiddleware(), apiRoutes)
 
 app.use(noCache, appRoutes)
-
-
-// app.use(
-//   sirv(resolve(__dirname, 'build'), {
-//     maxAge: 1_200, // 20 min
-//   })
-// )

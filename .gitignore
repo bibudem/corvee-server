@@ -32,7 +32,5 @@ node_modules/
 * - Copie.*
 /data
 /dev
-/config/local.*
-/config/certificate/*
-!/config/certificate/ssl.sh
+/config/local.cjs
 src/common/scss/_config.scss

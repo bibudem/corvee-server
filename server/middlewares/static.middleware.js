@@ -1,28 +1,15 @@
-import { Router } from 'express'
-import autopush from 'http2-express-autopush'
-import { staticCompressionMiddleware } from './compression.middleware.js'
-import { setAllowedOrigin } from '../lib/headers.js'
+import serveStatic from 'serve-static'
 
-export function staticMiddleware(root, options = {}) {
-  const staticRouter = new Router()
+export function staticMiddleware(root) {
 
-  // staticRouter.use(cors())
-
-  function setHeaders(res, path, stat) {
-    if (res.req.originalUrl === `${res.app.locals.baseUrl}loader.js`) {
-      res.removeHeader('Expires')
-      res.removeHeader('Cache-Control')
-      res.setHeader('Cache-Control', 'private, max-age=900') // 15min
+  function setCustomCacheControl(res, file) {
+    console.log('Serving static file:', file)
+    if (file.endsWith('loader.js')) {
+      // Custom Cache-Control for the loader file
+      res.setHeader('Cache-Control', 'public, max-age=0')
     }
-    setAllowedOrigin(res.req, res)
   }
 
-  if (process.env.NODE_ENV.endsWith('production') && Reflect.has(options, 'compression')) {
-    staticRouter.use(staticCompressionMiddleware(root, options.compression))
-  }
+  return serveStatic(root, { setHeaders: setCustomCacheControl })
 
-  staticRouter.use(autopush(root, { ...options.staticAssetsOptions, setHeaders }))
-  console.log(`Serving static files from ${root}`)
-
-  return staticRouter
 }
