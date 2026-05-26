@@ -18,7 +18,8 @@ export async function initSearchWidget() {
     const indexName = algoliasearchConfig.indexName
     const index = client.initIndex(indexName)
     const job = userConfig.get('currentJob') ?? defaultJob
-    const section = location.pathname.split('/').pop()
+    console.log('current job: %s', job)
+    const section = location.pathname.split('/sections/').pop()
 
     const scrollbar = new ScrollBarHelper()
 
@@ -62,6 +63,9 @@ export async function initSearchWidget() {
           history.replaceState(null, '', newStateUrl.href)
           setUiState(uiState)
         },
+        future: {
+          preserveSharedStateOnUnmount: false,
+        }
       }
 
       if (/q=./.test(location.search)) {
