@@ -18,7 +18,6 @@ export async function initSearchWidget() {
     const indexName = algoliasearchConfig.indexName
     const index = client.initIndex(indexName)
     const job = userConfig.get('currentJob') ?? defaultJob
-    console.log('current job: %s', job)
     const section = location.pathname.split('/sections/').pop()
 
     const scrollbar = new ScrollBarHelper()
