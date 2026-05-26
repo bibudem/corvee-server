@@ -1,5 +1,5 @@
-const currentJob = '2025-12-18'
-const deadline = '2026-02-16'
+const currentJob = '2026-05-20'
+const deadline = '2026-07-30'
 
 // ----------------------------
 
