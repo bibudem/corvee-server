@@ -1,5 +1,23 @@
 # Changelog
 
+## [3.0.4](https://github.com/bibudem/corvee-server/compare/v3.0.3...v3.0.4) (2026-05-26)
+
+
+### Features
+
+* **server:** MAJ de la config ([a347ec8](https://github.com/bibudem/corvee-server/commit/a347ec8a6e6beb5b74deacfc9ce0a3a3df663c38))
+
+
+### Bug Fixes
+
+* **server:** Correction mineure ([35180bc](https://github.com/bibudem/corvee-server/commit/35180bc512055c6cd4b1c789db279c75682672ad))
+* **server:** La recherche ne fonctionnait plus ([13401c3](https://github.com/bibudem/corvee-server/commit/13401c397846e4946d39ae3e92baadc509850148))
+
+
+### Miscellaneous Chores
+
+* Build pour v3.0.4 ([d3bdcb2](https://github.com/bibudem/corvee-server/commit/d3bdcb24cb0aa6bd25168413b552644d97121ed7))
+
 ## [3.0.3](https://github.com/bibudem/corvee-server/compare/v3.0.2...v3.0.3) (2026-03-26)
 
 
